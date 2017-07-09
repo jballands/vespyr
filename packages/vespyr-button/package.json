@@ -1,0 +1,11 @@
+{
+  "name": "vespyr-button",
+  "version": "1.0.0",
+  "description": "Button component for jonathanballands.me",
+  "repository": "github.com/jballands/vespyr",
+  "author": "Jon Ballands <jballands@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^15.6.1"
+  }
+}

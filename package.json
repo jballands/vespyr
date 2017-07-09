@@ -1,0 +1,22 @@
+{
+  "name": "vespyr",
+  "version": "1.0.0",
+  "description": "UI components for jonathanballands.me",
+  "repository": "github.com/jballands/vespyr",
+  "author": "Jon Ballands <jballands@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "export-storybook": "build-storybook -c .storybook -o .storybook/.out"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.1.8",
+    "lerna": "^2.0.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "peerDependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+}
