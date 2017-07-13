@@ -1,0 +1,5 @@
+stories
+node_modules
+src
+.storybook
+.babelrc
