@@ -12,6 +12,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
+    "color": "^2.0.0",
     "radium": "^0.19.1"
   },
   "peerDependencies": {

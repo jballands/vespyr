@@ -4,5 +4,7 @@ import BoldButton from '../src/BoldButton';
 
 storiesOf('BoldButton', module)
 	.add('as default', () => (
-		<BoldButton />
+		<BoldButton>
+			Hello world
+		</BoldButton>
 	));
