@@ -14,8 +14,9 @@ import DefaultFont from './utils/DefaultFontStyles';
 function getStyles() {
 	return {
 		container: {
+			display: 'block',
 			position: 'relative',
-			':hover': {}
+			margin: '5px'
 		},
 		base: {
 			padding: '8px',
@@ -34,9 +35,14 @@ function getStyles() {
 			':hover': {
 				border: '2px solid #EBEBEB',
 				transform: 'translate(0, -5px)'
+			},
+			':active': {
+				border: '2px solid #EBEBEB',
+				transform: 'translate(0, 0)'
 			}
 		},
 		side: {
+			position: 'static',
 			background: '#EBEBEB',
 			left: 0,
 			top: 0,
