@@ -22,4 +22,15 @@ storiesOf('FlatButton', module)
 				#D53DFF
 			</FlatButton>
 		</div>
+	))
+	.add('with arbitrary children', () => (
+		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
+			<FlatButton>
+				<div style={{ display: 'flex', flexFlow: 'row nowrap', alignContent: 'center' }}>
+					<img src='https://cdns.iconmonstr.com/wp-content/assets/preview/2017/240/iconmonstr-x-mark-10.png' 
+						style={{ width: 17, height: 17, marginRight: 5 }} />
+					<span>Delete</span>
+				</div>
+			</FlatButton>
+		</div>
 	));

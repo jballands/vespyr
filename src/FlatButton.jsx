@@ -29,11 +29,12 @@ function getStyles(props) {
 			color: _color,
 		},
 		underline: {
+			marginTop: '2px',
 			display: 'block',
 			content: '',
 			borderBottom: `solid 1px ${_color}`,
 			transform: 'scaleX(0)',
-			transition: 'transform 250ms ease'
+			transition: 'transform 200ms ease'
 		},
 		underlineHover: {
 			transform: 'scaleX(1)'

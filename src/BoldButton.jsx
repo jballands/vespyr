@@ -86,7 +86,7 @@ function getStyles(props) {
 			borderRadius: '5px',
 			fontSize: '12px',
 			textTransform: 'uppercase',
-			transition: 'all ease 0.15s',
+			transition: 'all ease 200ms',
 			color: _fontColor
 		},
     	top: {
