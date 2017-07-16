@@ -13,17 +13,30 @@ import DefaultFont from './utils/DefaultFontStyles';
 
 function getStyles(props) {
 	const { accentColor, disabled } = props;
+	const _color = accentColor ? accentColor : '#000000';
 
 	return {
 		base: {
 			padding: '5px',
+			':hover': {
+				cursor: disabled ? 'not-allowed' : 'pointer',
+			},
+		},
+		text: {
 			textTransform: 'uppercase',
 			fontSize: '12px',
 			userSelect: 'none',
-			color: accentColor ? accentColor : '#000000',
-			':hover': {
-				cursor: disabled ? 'not-allowed' : 'pointer'
-			},
+			color: _color,
+		},
+		underline: {
+			display: 'block',
+			content: '',
+			borderBottom: `solid 1px ${_color}`,
+			transform: 'scaleX(0)',
+			transition: 'transform 250ms ease'
+		},
+		underlineHover: {
+			transform: 'scaleX(1)'
 		}
 	};
 }
@@ -38,11 +51,15 @@ export default class FlatButton extends React.Component {
 
 	render() {
 		const styles = getStyles(this.props);
+		const isHovering = Radium.getState(this.state, 'VespyrFlatButton', ':hover');
 		const { children } = this.props;
 
 		return (
-			<div style={[DefaultFont, styles.base]}>
-				{children}
+			<div style={styles.base} key='VespyrFlatButton'>
+				<div style={[DefaultFont, styles.text]}>
+					{children}
+				</div>
+				<div style={[styles.underline, isHovering ? styles.underlineHover : null]} />
 			</div>
 		);
 	}

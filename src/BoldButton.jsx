@@ -34,7 +34,7 @@ function calculateSideAccentColor(_backgroundColor, disabled) {
 	const luminosity = _backgroundColor.luminosity();
 
 	if (luminosity > 0.91) {
-		return _backgroundColor.darken(.07);
+		return _backgroundColor.darken(.10);
 	}
 	else if (luminosity <= 0.91 && luminosity > 0.74) {
 		return _backgroundColor.darken(.30);
