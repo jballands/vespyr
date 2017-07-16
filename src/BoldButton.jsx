@@ -9,21 +9,71 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Radium from 'radium';
 import Color from 'color';
-import DefaultButton from './utils/DefaultButtonStyles';
+
+import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
-function getStyles(props) {
-	const { accentColor } = props;
+function calculateAccentColor(accentColor, disabled) {
+	if (disabled) {
+		if (!accentColor) {
+			return ColorUtility.white();
+		}
+		return ColorUtility.disabledGray();
+	}
+	if (accentColor) {
+		return Color(accentColor);
+	}
+	return ColorUtility.white();
+}
 
-	const _accentColor = accentColor ? Color(accentColor) : Color('white');
-	const _sideAccentColor = _accentColor.luminosity() > 0.91 ? Color(_accentColor).darken(.10) : Color(_accentColor).darken(.25);
-	const _fontColor = _accentColor.luminosity() > 0.75 ? Color('black') : Color('white');
+function calculateSideAccentColor(_backgroundColor, disabled) {
+	if (disabled) {
+		return ColorUtility.disabledGray();
+	}
+
+	const luminosity = _backgroundColor.luminosity();
+
+	if (luminosity > 0.91) {
+		return _backgroundColor.darken(.07);
+	}
+	else if (luminosity <= 0.91 && luminosity > 0.74) {
+		return _backgroundColor.darken(.30);
+	}
+	else {
+		return _backgroundColor.darken(.25);
+	}
+}
+
+function calculateFontColor(accentColor, _backgroundColor, disabled) {
+	if (disabled) {
+		if (!accentColor) {
+			return ColorUtility.disabledGray();
+		}
+		return ColorUtility.white();
+	}
+
+	const luminosity = _backgroundColor.luminosity();
+
+	if (luminosity > 0.75) {
+		return ColorUtility.black();
+	}
+	return ColorUtility.white();
+}
+
+function getStyles(props) {
+	const { accentColor, disabled } = props;
+
+	const _backgroundColor = calculateAccentColor(accentColor, disabled);
+	const _sideColor = calculateSideAccentColor(_backgroundColor, disabled);
+	const _fontColor = calculateFontColor(accentColor, _backgroundColor, disabled);
 
 	return {
 		container: {
 			display: 'block',
 			position: 'relative',
-			margin: '5px'
+			margin: '5px',
+			cursor: disabled ? 'not-allowed' : 'pointer',
+			userSelect: 'none'
 		},
 		base: {
 			padding: '8px',
@@ -31,8 +81,8 @@ function getStyles(props) {
 			display: 'flex',
 			flexFlow: 'row nowrap',
 			justifyContent: 'center',
-			background: _accentColor,
-			border: `2px solid ${_sideAccentColor}`,
+			background: _backgroundColor,
+			border: `2px solid ${_sideColor}`,
 			borderRadius: '5px',
 			fontSize: '12px',
 			textTransform: 'uppercase',
@@ -41,17 +91,17 @@ function getStyles(props) {
 		},
     	top: {
 			':hover': {
-				border: `2px solid ${_sideAccentColor}`,
+				border: `2px solid ${_sideColor}`,
 				transform: 'translate(0, -5px)'
 			},
 			':active': {
-				border: `2px solid ${_sideAccentColor}`,
+				border: `2px solid ${_sideColor}`,
 				transform: 'translate(0, 0)'
 			}
 		},
 		side: {
 			position: 'static',
-			background: _sideAccentColor,
+			background: _sideColor,
 			left: 0,
 			top: 0,
 			zIndex: -1
@@ -63,7 +113,16 @@ function getStyles(props) {
 class BoldButton extends React.Component {
 
 	static propTypes = {
-		accentColor: PropTypes.string
+		accentColor: PropTypes.string,
+		disabled: PropTypes.bool,
+		onClick: PropTypes.func
+	};
+
+	invokeOnClick = () => {
+		const { disabled, onClick } = this.props;
+		if (onClick && !disabled) {
+			this.props.onClick();
+		}
 	};
 
 	renderShade = styles => (
@@ -74,11 +133,11 @@ class BoldButton extends React.Component {
 
 	render () {
 		const styles = getStyles(this.props);
-		const { children } = this.props;
+		const { children, disabled } = this.props;
 
 		return (
-			<div style={[DefaultButton, styles.container]}>
-				<div style={[DefaultFont, styles.base, styles.top]} key='vespyrButtonTop'>
+			<div style={styles.container} onClick={this.invokeOnClick}>
+				<div style={[DefaultFont, styles.base, disabled ? null : styles.top]} key='vespyrButtonTop'>
 					{children}
 				</div>
 				{this.renderShade(styles)}

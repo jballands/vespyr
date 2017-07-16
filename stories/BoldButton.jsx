@@ -6,7 +6,7 @@ storiesOf('BoldButton', module)
 	.add('as default', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
 			<BoldButton>
-				Hello world!
+				Hello, Vespyr!
 			</BoldButton>
 		</div>
 	))
@@ -25,8 +25,15 @@ storiesOf('BoldButton', module)
 	))
 	.add('as disabled', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
-			<BoldButton>
-				Hello world!
+			<BoldButton disabled>
+				Disabled
+			</BoldButton>
+		</div>
+	))
+	.add('as disabled with accent color', () => (
+		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
+			<BoldButton disabled accentColor={'#00B7FF'}>
+				Disabled
 			</BoldButton>
 		</div>
 	));
