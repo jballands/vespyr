@@ -8,11 +8,18 @@ storiesOf('BoldButton', module)
 			<BoldButton>
 				Hello world!
 			</BoldButton>
-			<BoldButton>
-				I am a button
+		</div>
+	))
+	.add('with accent color', () => (
+		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
+			<BoldButton accentColor={'#00B7FF'}>
+				#00B7FF
 			</BoldButton>
-			<BoldButton>
-				I always take the width of my children
+			<BoldButton accentColor={'#FFEC00'}>
+				#FFEC00
+			</BoldButton>
+			<BoldButton accentColor={'#D53DFF'}>
+				#D53DFF
 			</BoldButton>
 		</div>
 	));

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "color": "^2.0.0",
+    "prop-types": "^15.5.10",
     "radium": "^0.19.1"
   },
   "peerDependencies": {
