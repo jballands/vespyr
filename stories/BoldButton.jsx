@@ -22,4 +22,11 @@ storiesOf('BoldButton', module)
 				#D53DFF
 			</BoldButton>
 		</div>
+	))
+	.add('as disabled', () => (
+		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
+			<BoldButton>
+				Hello world!
+			</BoldButton>
+		</div>
 	));
