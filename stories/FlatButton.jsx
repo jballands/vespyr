@@ -15,8 +15,8 @@ storiesOf('FlatButton', module)
 			<FlatButton accentColor={'#00B7FF'}>
 				#00B7FF
 			</FlatButton>
-			<FlatButton accentColor={'#FFEC00'}>
-				#FFEC00
+			<FlatButton accentColor={'#49C617'}>
+				#49C617
 			</FlatButton>
 			<FlatButton accentColor={'#D53DFF'}>
 				#D53DFF

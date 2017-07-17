@@ -27,9 +27,9 @@ storiesOf('BoldButton', module)
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
 			<BoldButton>
 				<div style={{ display: 'flex', flexFlow: 'row nowrap', alignContent: 'center' }}>
-					<img src='https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-speech-bubble-2.png' 
+					<img src='https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-paper-plane-1.png' 
 						style={{ width: 17, height: 17, marginRight: 5 }} />
-					<span>Respond</span>
+					<span>Send</span>
 				</div>
 			</BoldButton>
 		</div>

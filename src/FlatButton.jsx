@@ -34,7 +34,7 @@ function getStyles(props) {
 			content: '',
 			borderBottom: `solid 1px ${_color}`,
 			transform: 'scaleX(0)',
-			transition: 'transform 200ms ease'
+			transition: 'transform 250ms ease'
 		},
 		underlineHover: {
 			transform: 'scaleX(1)'
