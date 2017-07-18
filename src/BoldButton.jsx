@@ -100,6 +100,7 @@ function getStyles(props) {
 			}
 		},
 		side: {
+			display: 'inline-block',
 			position: 'static',
 			background: _sideColor,
 			left: 0,
@@ -115,7 +116,12 @@ class BoldButton extends React.Component {
 	static propTypes = {
 		accentColor: PropTypes.string,
 		disabled: PropTypes.bool,
-		onClick: PropTypes.func
+		onClick: PropTypes.func,
+		styles: PropTypes.object
+	};
+
+	static defaultProps = {
+		disabled: false
 	};
 
 	invokeOnClick = () => {
@@ -129,14 +135,14 @@ class BoldButton extends React.Component {
 		<div style={[DefaultFont, styles.base, styles.side]}>
 			{this.props.children}
 		</div>
-	)
+	);
 
 	render () {
 		const styles = getStyles(this.props);
-		const { children, disabled } = this.props;
+		const { children, disabled, style } = this.props;
 
 		return (
-			<div style={styles.container} onClick={this.invokeOnClick}>
+			<div style={[styles.container, style ? style : null]} onClick={this.invokeOnClick}>
 				<div style={[DefaultFont, styles.base, disabled ? null : styles.top]} key='vespyrButtonTop'>
 					{children}
 				</div>
