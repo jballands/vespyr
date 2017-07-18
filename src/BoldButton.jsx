@@ -34,13 +34,13 @@ function calculateSideAccentColor(_backgroundColor, disabled) {
 	const luminosity = _backgroundColor.luminosity();
 
 	if (luminosity > 0.91) {
-		return _backgroundColor.darken(.10);
+		return _backgroundColor.darken(0.10);
 	}
 	else if (luminosity <= 0.91 && luminosity > 0.74) {
-		return _backgroundColor.darken(.30);
+		return _backgroundColor.darken(0.30);
 	}
 	else {
-		return _backgroundColor.darken(.25);
+		return _backgroundColor.darken(0.25);
 	}
 }
 
@@ -73,7 +73,7 @@ function getStyles(props) {
 			position: 'relative',
 			margin: '5px',
 			cursor: disabled ? 'not-allowed' : 'pointer',
-			userSelect: 'none'
+			userSelect: 'none',
 		},
 		base: {
 			padding: '8px',
@@ -87,17 +87,17 @@ function getStyles(props) {
 			fontSize: '12px',
 			textTransform: 'uppercase',
 			transition: 'all ease 200ms',
-			color: _fontColor
+			color: _fontColor,
 		},
-    	top: {
+		top: {
 			':hover': {
 				border: `2px solid ${_sideColor}`,
-				transform: 'translate(0, -5px)'
+				transform: 'translate(0, -5px)',
 			},
 			':active': {
 				border: `2px solid ${_sideColor}`,
-				transform: 'translate(0, 0)'
-			}
+				transform: 'translate(0, 0)',
+			},
 		},
 		side: {
 			display: 'inline-block',
@@ -105,9 +105,9 @@ function getStyles(props) {
 			background: _sideColor,
 			left: 0,
 			top: 0,
-			zIndex: -1
-		}
-  	};
+			zIndex: -1,
+		},
+	};
 }
 
 @Radium
@@ -115,13 +115,14 @@ class BoldButton extends React.Component {
 
 	static propTypes = {
 		accentColor: PropTypes.string,
+		children: PropTypes.node,
 		disabled: PropTypes.bool,
 		onClick: PropTypes.func,
-		styles: PropTypes.object
+		style: PropTypes.object,
 	};
 
 	static defaultProps = {
-		disabled: false
+		disabled: false,
 	};
 
 	invokeOnClick = () => {
@@ -137,13 +138,13 @@ class BoldButton extends React.Component {
 		</div>
 	);
 
-	render () {
+	render() {
 		const styles = getStyles(this.props);
 		const { children, disabled, style } = this.props;
 
 		return (
 			<div style={[styles.container, style ? style : null]} onClick={this.invokeOnClick}>
-				<div style={[DefaultFont, styles.base, disabled ? null : styles.top]} key='vespyrButtonTop'>
+				<div style={[DefaultFont, styles.base, disabled ? null : styles.top]} key="vespyrButtonTop">
 					{children}
 				</div>
 				{this.renderShade(styles)}

@@ -46,11 +46,11 @@ function getStyles(props) {
 			content: '',
 			borderBottom: `solid 1px ${_color}`,
 			transform: 'scaleX(0)',
-			transition: 'transform 250ms ease'
+			transition: 'transform 250ms ease',
 		},
 		underlineHover: {
-			transform: 'scaleX(1)'
-		}
+			transform: 'scaleX(1)',
+		},
 	};
 }
 
@@ -59,7 +59,9 @@ export default class FlatButton extends React.Component {
 
 	static propTypes = {
 		accentColor: PropTypes.string,
-		disabled: PropTypes.bool
+		children: PropTypes.node,
+		disabled: PropTypes.bool,
+		onClick: PropTypes.func,
 	};
 
 	invokeOnClick = () => {
@@ -75,7 +77,7 @@ export default class FlatButton extends React.Component {
 		const { children, disabled } = this.props;
 
 		return (
-			<div style={styles.base} key='VespyrFlatButton' onClick={this.invokeOnClick}>
+			<div style={styles.base} key="VespyrFlatButton" onClick={this.invokeOnClick}>
 				<div style={[DefaultFont, styles.text]}>
 					{children}
 				</div>
