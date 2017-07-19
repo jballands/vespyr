@@ -114,8 +114,9 @@ function getStyles(props) {
 class BoldButton extends React.Component {
 
 	static propTypes = {
-		accentColor: PropTypes.string,
+		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
+		className: PropTypes.string,
 		disabled: PropTypes.bool,
 		onClick: PropTypes.func,
 		style: PropTypes.object,
@@ -140,10 +141,10 @@ class BoldButton extends React.Component {
 
 	render() {
 		const styles = getStyles(this.props);
-		const { children, disabled, style } = this.props;
+		const { children, className, disabled, style } = this.props;
 
 		return (
-			<div style={[styles.container, style ? style : null]} onClick={this.invokeOnClick}>
+			<div style={[styles.container, style ? style : null]} onClick={this.invokeOnClick} className={className}>
 				<div style={[DefaultFont, styles.base, disabled ? null : styles.top]} key="vespyrButtonTop">
 					{children}
 				</div>

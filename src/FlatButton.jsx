@@ -41,10 +41,10 @@ function getStyles(props) {
 			color: _color,
 		},
 		underline: {
-			marginTop: '2px',
+			marginTop: '3px',
 			display: 'block',
 			content: '',
-			borderBottom: `solid 1px ${_color}`,
+			borderBottom: `solid 2px ${_color}`,
 			transform: 'scaleX(0)',
 			transition: 'transform 250ms ease',
 		},
@@ -58,10 +58,12 @@ function getStyles(props) {
 export default class FlatButton extends React.Component {
 
 	static propTypes = {
-		accentColor: PropTypes.string,
+		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
+		className: PropTypes.string,
 		disabled: PropTypes.bool,
 		onClick: PropTypes.func,
+		style: PropTypes.object,
 	};
 
 	invokeOnClick = () => {
@@ -74,10 +76,10 @@ export default class FlatButton extends React.Component {
 	render() {
 		const styles = getStyles(this.props);
 		const isHovering = Radium.getState(this.state, 'VespyrFlatButton', ':hover');
-		const { children, disabled } = this.props;
+		const { children, className, disabled, style } = this.props;
 
 		return (
-			<div style={styles.base} key="VespyrFlatButton" onClick={this.invokeOnClick}>
+			<div style={[styles.base, style]} key="VespyrFlatButton" onClick={this.invokeOnClick} className={className}>
 				<div style={[DefaultFont, styles.text]}>
 					{children}
 				</div>
