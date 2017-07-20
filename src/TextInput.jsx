@@ -35,6 +35,15 @@ function getStyles(props) {
 			flexFlow: 'column nowrap',
 			justifyContent: 'flex-start',
 		},
+		title: {
+			fontSize: '10px',
+			textTransform: 'uppercase',
+			marginTop: '3px',
+			transition: 'color 250ms ease',
+		},
+		titleFocus: {
+			color: accentColor,
+		},
 		underlineDefault: {
 			position: 'absolute',
 			top: 0,
@@ -103,7 +112,7 @@ export default class TextInput extends React.Component {
 	};
 
 	renderTextInput = styles => {
-		const { hint, type } = this.props;
+		const { hint, title, type } = this.props;
 		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
 
 		return (
@@ -122,6 +131,9 @@ export default class TextInput extends React.Component {
 				<div style={styles.underlines}>
 					<div style={styles.underlineDefault} />
 					<div style={[styles.underlineFocus, isFocused ? styles.underlineFocusShow : null]} />
+				</div>
+				<div style={[styles.title, isFocused ? styles.titleFocus : null]}>
+					{title}
 				</div>
 			</div>
 		);
