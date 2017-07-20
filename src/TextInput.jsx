@@ -95,6 +95,7 @@ export default class TextInput extends React.Component {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		disabled: PropTypes.bool,
 		hint: PropTypes.string,
 		hintColor: PropTypes.string,
 		icon: PropTypes.node,
@@ -110,6 +111,7 @@ export default class TextInput extends React.Component {
 	static defaultProps = {
 		accentColor: ColorUtility.blue(),
 		color: ColorUtility.black(),
+		disabled: false,
 		hintColor: ColorUtility.hintGray(),
 		invalid: false,
 		invalidColor: ColorUtility.red(),

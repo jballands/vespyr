@@ -31,15 +31,15 @@ storiesOf('TextInput', module)
 	))
 	.add('as default', () => (
 		<StatefulTextInput
+			title="Name"
+			hint="What's your name?"
+		/>
+	))
+	.add('with icon', () => (
+		<StatefulTextInput
 			title="Search"
 			hint="Look for something..."
 			icon={<img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-magnifier-2.png" />}
-		/>
-	))
-	.add('with no icon', () => (
-		<StatefulTextInput
-			title="Name"
-			hint="Type your name..."
 		/>
 	))
 	.add('with default value', () => (
@@ -69,7 +69,7 @@ storiesOf('TextInput', module)
 			hintColor="#00B7FF"
 		/>
 	))
-	.add('with password type', () => (
+	.add('with input type', () => (
 		<StatefulTextInput
 			title="Secret Message"
 			hint="Psst!"
