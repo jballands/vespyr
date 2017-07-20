@@ -12,6 +12,7 @@ storiesOf('TextInput', module)
 	.add('as default', () => (
 		<TextInput
 			title={'Search'}
-			hint={'Type something...'}
+			hint={'Look for something...'}
+			icon={<img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-magnifier-2.png" />}
 		/>
 	));

@@ -13,13 +13,22 @@ import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
 function getStyles(props) {
-	const { accentColor, color } = props;
+	const { accentColor, color, hintColor } = props;
 
 	return {
 		base: {
 			display: 'flex',
 			flexFlow: 'row nowrap',
 			alignItems: 'center',
+		},
+		icon: {
+			maxWidth: '25px',
+			maxHeight: '25px',
+			marginRight: '10px',
+		},
+		iconChildren: {
+			maxWidth: '100%',
+			maxHeight: '100%',
 		},
 		input: {
 			border: 0,
@@ -28,12 +37,17 @@ function getStyles(props) {
 			padding: '5px 0',
 			fontSize: '16px',
 			color: color,
+			background: 'transparent',
 			':focus': {},
 		},
 		inputContainer: {
 			display: 'flex',
 			flexFlow: 'column nowrap',
 			justifyContent: 'flex-start',
+		},
+		inputPlaceholder: {
+			fontStyle: 'italic',
+			color: hintColor,
 		},
 		title: {
 			fontSize: '10px',
@@ -102,34 +116,39 @@ export default class TextInput extends React.Component {
 		type: 'text',
 	};
 
+	focus = () => {
+		this.input.focus();
+	};
+
+	inputReference = input => {
+		this.input = input;
+	};
+
 	renderIcon = styles => {
 		const { icon } = this.props;
 		if (!icon) {
 			return null;
 		}
 		return (
-			<div>
-				ico
+			<div style={styles.icon}>
+				<Style rules={{ '*': styles.iconChildren }} />
+				{icon}
 			</div>
 		);
 	};
 
 	renderTextInput = styles => {
-		const { hint, hintColor, title, type } = this.props;
+		const { hint, title, type } = this.props;
 		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
 
 		return (
 			<div style={styles.inputContainer}>
-				<Style rules={{
-					'input::placeholder': {
-						fontStyle: 'italic',
-						color: hintColor,
-					},
-				}} />
+				<Style rules={{ 'input::placeholder': styles.inputPlaceholder }} />
 				<input type={type}
 					key="VespyrTextInput"
 					style={styles.input}
 					placeholder={hint}
+					ref={this.inputReference}
 				/>
 				<div style={styles.underlines}>
 					<div style={styles.underlineDefault} />
@@ -147,7 +166,9 @@ export default class TextInput extends React.Component {
 		const { className, style } = this.props;
 
 		return (
-			<div style={[DefaultFont, styles.base, style]} className={className}>
+			<div style={[DefaultFont, styles.base, style]}
+				className={className}
+				onClick={this.focus}>
 				{this.renderIcon(styles)}
 				{this.renderTextInput(styles)}
 			</div>
