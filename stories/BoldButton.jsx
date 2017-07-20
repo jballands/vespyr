@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-no-bind */
+
 import React from 'react';
-import { addDecorator, storiesOf } from '@storybook/react';
+import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import BoldButton from '../src/BoldButton';
 

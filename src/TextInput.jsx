@@ -120,6 +120,10 @@ export default class TextInput extends React.Component {
 		this.input.focus();
 	};
 
+	handleUpdate = e => {
+		this.props.onUpdate(e.target.value);
+	};
+
 	inputReference = input => {
 		this.input = input;
 	};
@@ -138,7 +142,7 @@ export default class TextInput extends React.Component {
 	};
 
 	renderTextInput = styles => {
-		const { hint, title, type } = this.props;
+		const { hint, title, type, value } = this.props;
 		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
 
 		return (
@@ -149,6 +153,8 @@ export default class TextInput extends React.Component {
 					style={styles.input}
 					placeholder={hint}
 					ref={this.inputReference}
+					onChange={this.handleUpdate}
+					value={value}
 				/>
 				<div style={styles.underlines}>
 					<div style={styles.underlineDefault} />
