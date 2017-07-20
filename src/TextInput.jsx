@@ -8,7 +8,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Radium, { Style } from 'radium';
-import Color from 'color';
 
 import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
@@ -28,6 +27,7 @@ function getStyles(props) {
 			width: '250px',
 			padding: '5px 0',
 			fontSize: '16px',
+			color: color,
 			':focus': {},
 		},
 		inputContainer: {
@@ -40,6 +40,7 @@ function getStyles(props) {
 			textTransform: 'uppercase',
 			marginTop: '3px',
 			transition: 'color 250ms ease',
+			color: color,
 		},
 		titleFocus: {
 			color: accentColor,
@@ -81,6 +82,7 @@ export default class TextInput extends React.Component {
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		hint: PropTypes.string,
+		hintColor: PropTypes.string,
 		icon: PropTypes.node,
 		invalid: PropTypes.bool,
 		invalidColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -94,6 +96,7 @@ export default class TextInput extends React.Component {
 	static defaultProps = {
 		accentColor: ColorUtility.blue(),
 		color: ColorUtility.black(),
+		hintColor: ColorUtility.hintGray(),
 		invalid: false,
 		invalidColor: ColorUtility.red(),
 		type: 'text',
@@ -112,7 +115,7 @@ export default class TextInput extends React.Component {
 	};
 
 	renderTextInput = styles => {
-		const { hint, title, type } = this.props;
+		const { hint, hintColor, title, type } = this.props;
 		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
 
 		return (
@@ -120,11 +123,11 @@ export default class TextInput extends React.Component {
 				<Style rules={{
 					'input::placeholder': {
 						fontStyle: 'italic',
-						color: ColorUtility.hintGray(),
+						color: hintColor,
 					},
 				}} />
 				<input type={type}
-					key='VespyrTextInput'
+					key="VespyrTextInput"
 					style={styles.input}
 					placeholder={hint}
 				/>

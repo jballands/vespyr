@@ -10,7 +10,7 @@ storiesOf('TextInput', module)
 		</div>
 	))
 	.add('as default', () => (
-		<TextInput 
+		<TextInput
 			title={'Search'}
 			hint={'Type something...'}
 		/>
