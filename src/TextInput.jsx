@@ -20,12 +20,11 @@ function getStyles(props) {
 
 	return {
 		base: {
-			display: 'flex',
+			display: 'inline-flex',
 			flexFlow: 'row nowrap',
 			alignItems: 'center',
 		},
 		baseDisabled: {
-			pointerEvents: 'none',
 			':hover': {
 				cursor: 'not-allowed',
 			},
@@ -53,6 +52,11 @@ function getStyles(props) {
 			display: 'flex',
 			flexFlow: 'column nowrap',
 			justifyContent: 'flex-start',
+		},
+		inputDisabled: {
+			':disabled': {
+				cursor: 'not-allowed',
+			},
 		},
 		inputPlaceholder: {
 			fontStyle: 'italic',
@@ -153,7 +157,7 @@ export default class TextInput extends React.Component {
 	};
 
 	renderTextInput = styles => {
-		const { hint, title, type, value } = this.props;
+		const { disabled, hint, title, type, value } = this.props;
 		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
 
 		return (
@@ -161,7 +165,8 @@ export default class TextInput extends React.Component {
 				<Style rules={{ 'input::placeholder': styles.inputPlaceholder }} />
 				<input type={type}
 					key="VespyrTextInput"
-					style={styles.input}
+					style={[styles.input, disabled ? styles.inputDisabled : null]}
+					disabled={disabled}
 					placeholder={hint}
 					ref={this.inputReference}
 					onChange={this.handleUpdate}
@@ -185,7 +190,8 @@ export default class TextInput extends React.Component {
 		return (
 			<div style={[DefaultFont, styles.base, disabled ? styles.baseDisabled : null, style]}
 				className={className}
-				onClick={this.focus}>
+				onClick={this.focus}
+				key="VespyrTextInputContainer">
 				{this.renderIcon(styles)}
 				{this.renderTextInput(styles)}
 			</div>
