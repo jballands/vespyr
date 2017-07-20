@@ -75,4 +75,11 @@ storiesOf('TextInput', module)
 			hint="Psst!"
 			type="password"
 		/>
+	))
+	.add('as disabled', () => (
+		<StatefulTextInput
+			title="Disabled"
+			hint="I can't take input right now"
+			disabled
+		/>
 	));

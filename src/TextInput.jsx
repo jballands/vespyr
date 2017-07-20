@@ -13,13 +13,22 @@ import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
 function getStyles(props) {
-	const { accentColor, color, hintColor } = props;
+	const { accentColor, color, disabled, hintColor } = props;
+
+	const _accentColor = disabled ? ColorUtility.disabledGray() : accentColor;
+	const _color = disabled ? ColorUtility.disabledGray() : color;
 
 	return {
 		base: {
 			display: 'flex',
 			flexFlow: 'row nowrap',
 			alignItems: 'center',
+		},
+		baseDisabled: {
+			pointerEvents: 'none',
+			':hover': {
+				cursor: 'not-allowed',
+			},
 		},
 		icon: {
 			maxWidth: '25px',
@@ -54,10 +63,10 @@ function getStyles(props) {
 			textTransform: 'uppercase',
 			marginTop: '3px',
 			transition: 'color 250ms ease',
-			color: color,
+			color: _color,
 		},
 		titleFocus: {
-			color: accentColor,
+			color: _accentColor,
 		},
 		underlineDefault: {
 			position: 'absolute',
@@ -66,7 +75,7 @@ function getStyles(props) {
 			width: '100%',
 			display: 'block',
 			content: '',
-			borderBottom: `solid 1px ${color}`,
+			borderBottom: `solid 1px ${_color}`,
 		},
 		underlineFocus: {
 			position: 'absolute',
@@ -75,7 +84,7 @@ function getStyles(props) {
 			width: '100%',
 			display: 'block',
 			content: '',
-			borderBottom: `solid 2px ${accentColor}`,
+			borderBottom: `solid 2px ${_accentColor}`,
 			transform: 'scaleX(0)',
 			transition: 'transform 250ms ease',
 		},
@@ -171,10 +180,10 @@ export default class TextInput extends React.Component {
 
 	render() {
 		const styles = getStyles(this.props);
-		const { className, style } = this.props;
+		const { className, disabled, style } = this.props;
 
 		return (
-			<div style={[DefaultFont, styles.base, style]}
+			<div style={[DefaultFont, styles.base, disabled ? styles.baseDisabled : null, style]}
 				className={className}
 				onClick={this.focus}>
 				{this.renderIcon(styles)}
