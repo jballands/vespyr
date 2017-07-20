@@ -35,16 +35,16 @@ function getStyles(props) {
 			flexFlow: 'column nowrap',
 			justifyContent: 'flex-start',
 		},
-		defaultUnderline: {
+		underlineDefault: {
 			position: 'absolute',
 			top: 0,
 			left: 0,
 			width: '100%',
 			display: 'block',
 			content: '',
-			borderBottom: `solid 2px ${color}`,
+			borderBottom: `solid 1px ${color}`,
 		},
-		focusedUnderline: {
+		underlineFocus: {
 			position: 'absolute',
 			top: 0,
 			left: 0,
@@ -52,6 +52,11 @@ function getStyles(props) {
 			display: 'block',
 			content: '',
 			borderBottom: `solid 2px ${accentColor}`,
+			transform: 'scaleX(0)',
+			transition: 'transform 250ms ease',
+		},
+		underlineFocusShow: {
+			transform: 'scaleX(1)',
 		},
 		underlines: {
 			position: 'relative',
@@ -99,6 +104,8 @@ export default class TextInput extends React.Component {
 
 	renderTextInput = styles => {
 		const { hint, type } = this.props;
+		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
+
 		return (
 			<div style={styles.inputContainer}>
 				<Style rules={{
@@ -107,10 +114,14 @@ export default class TextInput extends React.Component {
 						color: ColorUtility.hintGray(),
 					},
 				}} />
-				<input type={type} style={styles.input} placeholder={hint} />
+				<input type={type}
+					key='VespyrTextInput'
+					style={styles.input}
+					placeholder={hint}
+				/>
 				<div style={styles.underlines}>
-					<div style={styles.defaultUnderline} />
-					<div style={styles.focusedUnderline} />
+					<div style={styles.underlineDefault} />
+					<div style={[styles.underlineFocus, isFocused ? styles.underlineFocusShow : null]} />
 				</div>
 			</div>
 		);
