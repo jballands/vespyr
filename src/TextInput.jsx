@@ -13,10 +13,11 @@ import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
 function getStyles(props) {
-	const { accentColor, color, disabled, hintColor } = props;
+	const { accentColor, color, disabled, hintColor, invalidColor } = props;
 
 	const _accentColor = disabled ? ColorUtility.disabledGray() : accentColor;
 	const _color = disabled ? ColorUtility.disabledGray() : color;
+	const _invalidColor = disabled ? ColorUtility.disabledGray() : invalidColor;
 
 	return {
 		base: {
@@ -46,6 +47,7 @@ function getStyles(props) {
 			fontSize: '16px',
 			color: color,
 			background: 'transparent',
+			resize: 'none',
 			':focus': {},
 		},
 		inputContainer: {
@@ -72,6 +74,9 @@ function getStyles(props) {
 		titleFocus: {
 			color: _accentColor,
 		},
+		titleInvalid: {
+			color: _invalidColor,
+		},
 		underlineDefault: {
 			position: 'absolute',
 			top: 0,
@@ -95,6 +100,20 @@ function getStyles(props) {
 		underlineFocusShow: {
 			transform: 'scaleX(1)',
 		},
+		underlineInvalid: {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			width: '100%',
+			display: 'block',
+			content: '',
+			borderBottom: `solid 2px ${_invalidColor}`,
+			transform: 'scaleX(0)',
+			transition: 'transform 250ms ease',
+		},
+		underlineInvalidShow: {
+			transform: 'scaleX(1)',
+		},
 		underlines: {
 			position: 'relative',
 		},
@@ -110,10 +129,11 @@ export default class TextInput extends React.Component {
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		disabled: PropTypes.bool,
 		hint: PropTypes.string,
-		hintColor: PropTypes.string,
+		hintColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		icon: PropTypes.node,
 		invalid: PropTypes.bool,
 		invalidColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		lines: PropTypes.number,
 		onUpdate: PropTypes.func,
 		value: PropTypes.string,
 		style: PropTypes.object,
@@ -128,6 +148,7 @@ export default class TextInput extends React.Component {
 		hintColor: ColorUtility.hintGray(),
 		invalid: false,
 		invalidColor: ColorUtility.red(),
+		lines: 1,
 		type: 'text',
 	};
 
@@ -156,12 +177,31 @@ export default class TextInput extends React.Component {
 		);
 	};
 
-	renderTextInput = styles => {
-		const { disabled, hint, title, type, value } = this.props;
-		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
+	renderTextArea = styles => {
+		const { disabled, hint, lines, type, value } = this.props;
 
 		return (
-			<div style={styles.inputContainer}>
+			<div>
+				<Style rules={{ 'textarea::placeholder': styles.inputPlaceholder }} />
+				<textarea type={type}
+					key="VespyrTextInput"
+					style={[styles.input, disabled ? styles.inputDisabled : null]}
+					disabled={disabled}
+					placeholder={hint}
+					ref={this.inputReference}
+					onChange={this.handleUpdate}
+					value={value ? value : ''}
+					rows={lines}
+				/>
+			</div>
+		);
+	};
+
+	renderTextInput = styles => {
+		const { disabled, hint, type, value } = this.props;
+
+		return (
+			<div>
 				<Style rules={{ 'input::placeholder': styles.inputPlaceholder }} />
 				<input type={type}
 					key="VespyrTextInput"
@@ -170,13 +210,33 @@ export default class TextInput extends React.Component {
 					placeholder={hint}
 					ref={this.inputReference}
 					onChange={this.handleUpdate}
-					value={value}
+					value={value ? value : ''}
 				/>
+			</div>
+		);
+	};
+
+	renderInput = styles => {
+		const { lines } = this.props;
+		if (lines > 1) {
+			return this.renderTextArea(styles);
+		}
+		return this.renderTextInput(styles);
+	};
+
+	renderInputContainer = styles => {
+		const { invalid, title } = this.props;
+		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
+
+		return (
+			<div style={styles.inputContainer}>
+				{this.renderInput(styles)}
 				<div style={styles.underlines}>
 					<div style={styles.underlineDefault} />
+					<div style={[styles.underlineInvalid, invalid ? styles.underlineInvalidShow : null]} />
 					<div style={[styles.underlineFocus, isFocused ? styles.underlineFocusShow : null]} />
 				</div>
-				<div style={[styles.title, isFocused ? styles.titleFocus : null]}>
+				<div style={[styles.title, isFocused ? styles.titleFocus : null, invalid ? styles.titleInvalid : null]}>
 					{title}
 				</div>
 			</div>
@@ -193,7 +253,7 @@ export default class TextInput extends React.Component {
 				onClick={this.focus}
 				key="VespyrTextInputContainer">
 				{this.renderIcon(styles)}
-				{this.renderTextInput(styles)}
+				{this.renderInputContainer(styles)}
 			</div>
 		);
 	}

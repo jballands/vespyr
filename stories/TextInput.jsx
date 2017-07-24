@@ -17,8 +17,13 @@ class StatefulTextInput extends React.Component {
 	};
 
 	render() {
+		let isInvalid = false;
+		if (this.props.validateInput) {
+			isInvalid = this.state.value !== this.props.validateInput;
+		}
+
 		return (
-			<TextInput {...this.props} onUpdate={this.update} value={this.state.value} />
+			<TextInput {...this.props} onUpdate={this.update} value={this.state.value} invalid={isInvalid} />
 		);
 	}
 };
@@ -76,10 +81,24 @@ storiesOf('TextInput', module)
 			type="password"
 		/>
 	))
+	.add('with multi-line', () => (
+		<StatefulTextInput
+			title="Multi-line"
+			hint="Type a long sentence..."
+			lines={3}
+		/>
+	))
 	.add('as disabled', () => (
 		<StatefulTextInput
 			title="Disabled"
 			hint="I can't take input right now"
 			disabled
+		/>
+	))
+	.add('with validation', () => (
+		<StatefulTextInput
+			title="Name"
+			hint="Type 'Brutalmoose'"
+			validateInput="Brutalmoose"
 		/>
 	));
