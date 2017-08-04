@@ -1,6 +1,6 @@
 //
 //	jballands/vespyr
-//	BoldButton.js
+//	BoldButton.jsx
 //	
 //	© 2017 Jonathan Ballands
 //
@@ -112,6 +112,8 @@ function getStyles(props) {
 
 @Radium
 class BoldButton extends React.Component {
+
+	static displayName = 'BoldButton';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

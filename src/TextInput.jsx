@@ -1,6 +1,6 @@
 //
 //	jballands/vespyr
-//	TextInput.js
+//	TextInput.jsx
 //	
 //	© 2017 Jonathan Ballands
 //
@@ -9,36 +9,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Radium, { Style } from 'radium';
 
+import VespyrInput from './VespyrInput';
 import ColorUtility from './utils/ColorUtility';
-import DefaultFont from './utils/DefaultFontStyles';
 
 function getStyles(props) {
-	const { accentColor, color, disabled, hintColor, invalidColor } = props;
-
-	const _accentColor = disabled ? ColorUtility.disabledGray() : accentColor;
-	const _color = disabled ? ColorUtility.disabledGray() : color;
-	const _invalidColor = disabled ? ColorUtility.disabledGray() : invalidColor;
+	const { color, hintColor } = props;
 
 	return {
-		base: {
-			display: 'inline-flex',
-			flexFlow: 'row nowrap',
-			alignItems: 'center',
-		},
-		baseDisabled: {
-			':hover': {
-				cursor: 'not-allowed',
-			},
-		},
-		icon: {
-			maxWidth: '25px',
-			maxHeight: '25px',
-			marginRight: '10px',
-		},
-		iconChildren: {
-			maxWidth: '100%',
-			maxHeight: '100%',
-		},
 		input: {
 			border: 0,
 			outline: 'none',
@@ -64,64 +41,13 @@ function getStyles(props) {
 			fontStyle: 'italic',
 			color: hintColor,
 		},
-		title: {
-			fontSize: '10px',
-			textTransform: 'uppercase',
-			marginTop: '3px',
-			transition: 'color 250ms ease',
-			color: _color,
-		},
-		titleFocus: {
-			color: _accentColor,
-		},
-		titleInvalid: {
-			color: _invalidColor,
-		},
-		underlineDefault: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: '100%',
-			display: 'block',
-			content: '',
-			borderBottom: `solid 1px ${_color}`,
-		},
-		underlineFocus: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: '100%',
-			display: 'block',
-			content: '',
-			borderBottom: `solid 2px ${_accentColor}`,
-			transform: 'scaleX(0)',
-			transition: 'transform 250ms ease',
-		},
-		underlineFocusShow: {
-			transform: 'scaleX(1)',
-		},
-		underlineInvalid: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: '100%',
-			display: 'block',
-			content: '',
-			borderBottom: `solid 2px ${_invalidColor}`,
-			transform: 'scaleX(0)',
-			transition: 'transform 250ms ease',
-		},
-		underlineInvalidShow: {
-			transform: 'scaleX(1)',
-		},
-		underlines: {
-			position: 'relative',
-		},
 	};
 }
 
 @Radium
 export default class TextInput extends React.Component {
+
+	static displayName = 'TextInput';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -156,25 +82,16 @@ export default class TextInput extends React.Component {
 		this.input.focus();
 	};
 
+	hasFocus = () => {
+		return Radium.getState(this.state, 'VespyrTextInput', ':focus');
+	};
+
 	handleUpdate = e => {
 		this.props.onUpdate(e.target.value);
 	};
 
 	inputReference = input => {
 		this.input = input;
-	};
-
-	renderIcon = styles => {
-		const { icon } = this.props;
-		if (!icon) {
-			return null;
-		}
-		return (
-			<div style={styles.icon}>
-				<Style rules={{ '*': styles.iconChildren }} />
-				{icon}
-			</div>
-		);
 	};
 
 	renderTextArea = styles => {
@@ -224,37 +141,26 @@ export default class TextInput extends React.Component {
 		return this.renderTextInput(styles);
 	};
 
-	renderInputContainer = styles => {
-		const { invalid, title } = this.props;
-		const isFocused = Radium.getState(this.state, 'VespyrTextInput', ':focus');
-
-		return (
-			<div style={styles.inputContainer}>
-				{this.renderInput(styles)}
-				<div style={styles.underlines}>
-					<div style={styles.underlineDefault} />
-					<div style={[styles.underlineInvalid, invalid ? styles.underlineInvalidShow : null]} />
-					<div style={[styles.underlineFocus, isFocused ? styles.underlineFocusShow : null]} />
-				</div>
-				<div style={[styles.title, isFocused ? styles.titleFocus : null, invalid ? styles.titleInvalid : null]}>
-					{title}
-				</div>
-			</div>
-		);
-	};
-
 	render() {
+		const { accentColor, className, color, disabled, icon, invalid,
+			invalidColor, title } = this.props;
+
 		const styles = getStyles(this.props);
-		const { className, disabled, style } = this.props;
+		const vespyrInputProps = {
+			accentColor,
+			className,
+			color,
+			disabled,
+			icon,
+			invalid,
+			invalidColor,
+			title,
+		};
 
 		return (
-			<div style={[DefaultFont, styles.base, disabled ? styles.baseDisabled : null, style]}
-				className={className}
-				onClick={this.focus}
-				key="VespyrTextInputContainer">
-				{this.renderIcon(styles)}
-				{this.renderInputContainer(styles)}
-			</div>
+			<VespyrInput focus={this.focus} hasFocus={this.hasFocus} {...vespyrInputProps}>
+				{() => this.renderInput(styles)}
+			</VespyrInput>
 		);
 	}
 

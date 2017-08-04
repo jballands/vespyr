@@ -1,6 +1,6 @@
 //
 //	jballands/vespyr
-//	FlatButton.js
+//	FlatButton.jsx
 //	
 //	© 2017 Jonathan Ballands
 //
@@ -56,6 +56,8 @@ function getStyles(props) {
 
 @Radium
 export default class FlatButton extends React.Component {
+
+	static displayName = 'FlatButton';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
