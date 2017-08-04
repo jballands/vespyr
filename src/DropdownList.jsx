@@ -9,8 +9,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Radium from 'radium';
 
-import ColorUtility from './utils/ColorUtility';
-import DefaultFont from './utils/DefaultFontStyles';
+import VespyrInput from './VespyrInput';
+import CaretDown from './svg/CaretDown';
 
 function getStyles(props) {
 	return {
@@ -19,12 +19,10 @@ function getStyles(props) {
 			flexFlow: 'row nowrap',
 			alignItems: 'center',
 		},
-		baseDisabled: {
-			':hover': {
-				cursor: 'not-allowed',
-			},
+		caret: {
+			marginLeft: '7px',
 		},
-	}
+	};
 }
 
 @Radium
@@ -48,28 +46,49 @@ export default class DropdownList extends React.Component {
 		title: PropTypes.string,
 	};
 
-	renderIcon = styles => {
-		return (
-			<div>Hello</div>
-		);
+	state = {
+		focused: false,
 	};
 
-	renderInputContainer = styles => {
+	addFocus = () => {
+		this.setState({ focused: true });
+	};
+
+	removeFocus = () => {
+		this.setState({ focused: false });
+	};
+
+	hasFocus = () => {
+		return this.state.focused;
+	};
+
+	renderSelection = styles => {
 		return (
-			<div>world!</div>
+			<div>Hello world!</div>
 		);
 	};
 
 	render() {
+		const { accentColor, className, color, disabled, icon, invalid,
+			invalidColor, style, title } = this.props;
+
 		const styles = getStyles(this.props);
-		const { className, disabled, style } = this.props;
+		const vespyrInputProps = {
+			accentColor,
+			color,
+			disabled,
+			icon,
+			invalid,
+			invalidColor,
+			title,
+		};
 
 		return (
-			<div style={[DefaultFont, styles.base, disabled ? styles.baseDisabled : null, style]}
-				className={className}
-				onClick={this.focus}>
-				{this.renderIcon(styles)}
-				{this.renderInputContainer(styles)}
+			<div className={className} style={[styles.base, style]}>
+				<VespyrInput focus={this.addFocus} hasFocus={this.hasFocus} {...vespyrInputProps}>
+					{() => this.renderSelection(styles)}
+				</VespyrInput>
+				<CaretDown style={styles.caret} />
 			</div>
 		);
 	}

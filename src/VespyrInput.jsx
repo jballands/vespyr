@@ -24,6 +24,8 @@ function getStyles(props) {
 			display: 'inline-flex',
 			flexFlow: 'row nowrap',
 			alignItems: 'center',
+			userSelect: 'none',
+			cursor: 'default',
 		},
 		baseDisabled: {
 			':hover': {
@@ -106,8 +108,17 @@ export default class VespyrInput extends React.Component {
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		disabled: PropTypes.bool,
+
+		// Invoked when VespyrInput requests that the child focuses. The child
+		// can ignore this request or handle it. This function doesn't need to
+		// return anything.
 		focus: PropTypes.func,
-		hasFocus: PropTypes.func,
+
+		// Invoked when VespyrInput is rendering and needs to know if it should
+		// render its focused state. This function should return a boolean, true
+		// to render a focused state, false if not.
+		isFocused: PropTypes.func,
+
 		icon: PropTypes.node,
 		invalid: PropTypes.bool,
 		invalidColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -137,8 +148,8 @@ export default class VespyrInput extends React.Component {
 	};
 
 	renderInputContainer = styles => {
-		const { hasFocus, invalid, title } = this.props;
-		const isFocused = hasFocus ? hasFocus() : false;
+		const { isFocused, invalid, title } = this.props;
+		const focused = isFocused ? isFocused() : false;
 
 		return (
 			<div style={styles.inputContainer}>
@@ -146,9 +157,9 @@ export default class VespyrInput extends React.Component {
 				<div style={styles.underlines}>
 					<div style={styles.underlineDefault} />
 					<div style={[styles.underlineInvalid, invalid ? styles.underlineInvalidShow : null]} />
-					<div style={[styles.underlineFocus, isFocused ? styles.underlineFocusShow : null]} />
+					<div style={[styles.underlineFocus, focused ? styles.underlineFocusShow : null]} />
 				</div>
-				<div style={[styles.title, isFocused ? styles.titleFocus : null, invalid ? styles.titleInvalid : null]}>
+				<div style={[styles.title, focused ? styles.titleFocus : null, invalid ? styles.titleInvalid : null]}>
 					{title}
 				</div>
 			</div>
@@ -162,8 +173,7 @@ export default class VespyrInput extends React.Component {
 		return (
 			<div style={[DefaultFont, styles.base, disabled ? styles.baseDisabled : null, style]}
 				className={className}
-				onClick={focus}
-				key="VespyrTextInputContainer">
+				onClick={focus}>
 				{this.renderIcon(styles)}
 				{this.renderInputContainer(styles)}
 			</div>

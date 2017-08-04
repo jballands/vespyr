@@ -78,11 +78,12 @@ export default class TextInput extends React.Component {
 		type: 'text',
 	};
 
-	focus = () => {
+	focus = e => {
 		this.input.focus();
+		e.preventDefault();
 	};
 
-	hasFocus = () => {
+	isFocused = () => {
 		return Radium.getState(this.state, 'VespyrTextInput', ':focus');
 	};
 
@@ -143,7 +144,7 @@ export default class TextInput extends React.Component {
 
 	render() {
 		const { accentColor, className, color, disabled, icon, invalid,
-			invalidColor, title } = this.props;
+			invalidColor, style, title } = this.props;
 
 		const styles = getStyles(this.props);
 		const vespyrInputProps = {
@@ -154,11 +155,12 @@ export default class TextInput extends React.Component {
 			icon,
 			invalid,
 			invalidColor,
+			style,
 			title,
 		};
 
 		return (
-			<VespyrInput focus={this.focus} hasFocus={this.hasFocus} {...vespyrInputProps}>
+			<VespyrInput focus={this.focus} isFocused={this.isFocused} {...vespyrInputProps}>
 				{() => this.renderInput(styles)}
 			</VespyrInput>
 		);

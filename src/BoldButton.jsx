@@ -146,7 +146,7 @@ class BoldButton extends React.Component {
 		const { children, className, disabled, style } = this.props;
 
 		return (
-			<div style={[styles.container, style ? style : null]} onClick={this.invokeOnClick} className={className}>
+			<div style={[styles.container, style]} onClick={this.invokeOnClick} className={className}>
 				<div style={[DefaultFont, styles.base, disabled ? null : styles.top]} key="vespyrButtonTop">
 					{children}
 				</div>

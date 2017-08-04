@@ -4,5 +4,5 @@ import DropdownList from '../src/DropdownList';
 
 storiesOf('DropdownList', module)
 	.add('as default', () => (
-		<DropdownList />
+		<DropdownList title="Foobar" />
 	));
