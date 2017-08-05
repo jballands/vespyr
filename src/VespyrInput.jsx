@@ -26,6 +26,7 @@ function getStyles(props) {
 			alignItems: 'center',
 			userSelect: 'none',
 			cursor: 'default',
+			width: '250px',
 		},
 		baseDisabled: {
 			':hover': {
@@ -40,6 +41,9 @@ function getStyles(props) {
 		iconChildren: {
 			maxWidth: '100%',
 			maxHeight: '100%',
+		},
+		inputContainer: {
+			width: '100%',
 		},
 		title: {
 			fontSize: '10px',

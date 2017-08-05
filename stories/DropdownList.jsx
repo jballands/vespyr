@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import DropdownList from '../src/DropdownList';
+import DropdownInput from '../src/DropdownInput';
 
-storiesOf('DropdownList', module)
+storiesOf('Dropdown', module)
 	.add('as default', () => (
-		<DropdownList title="Foobar" />
+		<DropdownInput title="Foobar" value="Brutalmoose" />
 	));

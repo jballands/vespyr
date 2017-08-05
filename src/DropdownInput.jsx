@@ -1,6 +1,6 @@
 //
 //	jballands/vespyr
-//	DropdownList.jsx
+//	DropdownInput.jsx
 //	
 //	© 2017 Jonathan Ballands
 //
@@ -17,18 +17,23 @@ function getStyles(props) {
 		base: {
 			display: 'inline-flex',
 			flexFlow: 'row nowrap',
-			alignItems: 'center',
+			alignItems: 'flex-end',
 		},
 		caret: {
+			paddingBottom: '10px',
 			marginLeft: '7px',
 		},
+		selection: {
+			padding: '5px 0',
+			fontSize: '16px',
+		}
 	};
 }
 
 @Radium
-export default class DropdownList extends React.Component {
+export default class DropdownInput extends React.Component {
 
-	static displayName = 'DropdownList';
+	static displayName = 'DropdownInput';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -63,8 +68,12 @@ export default class DropdownList extends React.Component {
 	};
 
 	renderSelection = styles => {
+		const { value } = this.props;
+
 		return (
-			<div>Hello world!</div>
+			<div style={styles.selection}>
+				{value}
+			</div>
 		);
 	};
 

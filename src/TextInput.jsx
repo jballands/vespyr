@@ -19,7 +19,7 @@ function getStyles(props) {
 		input: {
 			border: 0,
 			outline: 'none',
-			width: '250px',
+			width: '100%',
 			padding: '5px 0',
 			fontSize: '16px',
 			color: color,
