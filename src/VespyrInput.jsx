@@ -108,7 +108,7 @@ export default class VespyrInput extends React.Component {
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-		children: PropTypes.func.isRequired,
+		children: PropTypes.func,
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		disabled: PropTypes.bool,

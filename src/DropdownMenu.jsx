@@ -1,6 +1,6 @@
 //
 //	jballands/vespyr
-//	DropdownInput.jsx
+//	DropdownMenu.jsx
 //	
 //	© 2017 Jonathan Ballands
 //
@@ -10,12 +10,20 @@ import PropTypes from 'prop-types';
 import Radium from 'radium';
 
 import VespyrInput from './VespyrInput';
+import Menu from './Menu';
 import CaretDown from './svg/CaretDown';
 
 function getStyles(props) {
 	return {
 		base: {
 			display: 'inline-flex',
+			flexFlow: 'column nowrap',
+			alignItems: 'flex-start',
+			border: 0,
+			outline: 'none',
+		},
+		input: {
+			display: 'flex',
 			flexFlow: 'row nowrap',
 			alignItems: 'flex-end',
 		},
@@ -24,16 +32,16 @@ function getStyles(props) {
 			marginLeft: '7px',
 		},
 		selection: {
-			padding: '5px 0',
+			padding: '4px 0',
 			fontSize: '16px',
-		}
+		},
 	};
 }
 
 @Radium
-export default class DropdownInput extends React.Component {
+export default class DropdownMenu extends React.Component {
 
-	static displayName = 'DropdownInput';
+	static displayName = 'DropdownMenu';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -63,25 +71,12 @@ export default class DropdownInput extends React.Component {
 		this.setState({ focused: false });
 	};
 
-	hasFocus = () => {
+	isFocused = () => {
 		return this.state.focused;
 	};
 
-	renderSelection = styles => {
-		const { value } = this.props;
-
-		return (
-			<div style={styles.selection}>
-				{value}
-			</div>
-		);
-	};
-
-	render() {
-		const { accentColor, className, color, disabled, icon, invalid,
-			invalidColor, style, title } = this.props;
-
-		const styles = getStyles(this.props);
+	renderInput = styles => {
+		const { accentColor, color, disabled, icon, invalid, invalidColor, title } = this.props;
 		const vespyrInputProps = {
 			accentColor,
 			color,
@@ -93,11 +88,48 @@ export default class DropdownInput extends React.Component {
 		};
 
 		return (
-			<div className={className} style={[styles.base, style]}>
-				<VespyrInput focus={this.addFocus} hasFocus={this.hasFocus} {...vespyrInputProps}>
+			<div style={styles.input}>
+				<VespyrInput focus={this.addFocus} isFocused={this.isFocused} {...vespyrInputProps}>
 					{() => this.renderSelection(styles)}
 				</VespyrInput>
 				<CaretDown style={styles.caret} />
+			</div>
+		);
+	};
+
+	renderSelection = styles => {
+		const { value } = this.props;
+
+		return (
+			<div style={styles.selection}>
+				{value}
+			</div>
+		)
+	};
+
+	renderMenu = () => {
+		if (!this.state.focused) {
+			return null;
+		}
+
+		const { title } = this.props;
+
+		return (
+			<Menu title={title}>
+				Foobar
+			</Menu>
+		);
+	};
+
+	render() {
+		const { className, style } = this.props;
+
+		const styles = getStyles(this.props);
+
+		return (
+			<div className={className} style={[styles.base, style]} tabIndex="0" onFocus={this.addFocus} onBlur={this.removeFocus}>
+				{this.renderInput(styles)}
+				{this.renderMenu(styles)}
 			</div>
 		);
 	}
