@@ -108,7 +108,7 @@ export default class VespyrInput extends React.Component {
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-		children: PropTypes.func,
+		children: PropTypes.node,
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		disabled: PropTypes.bool,
@@ -157,7 +157,7 @@ export default class VespyrInput extends React.Component {
 
 		return (
 			<div style={styles.inputContainer}>
-				{this.props.children()}
+				{this.props.children}
 				<div style={styles.underlines}>
 					<div style={styles.underlineDefault} />
 					<div style={[styles.underlineInvalid, invalid ? styles.underlineInvalidShow : null]} />

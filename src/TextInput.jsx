@@ -161,7 +161,7 @@ export default class TextInput extends React.Component {
 
 		return (
 			<VespyrInput focus={this.focus} isFocused={this.isFocused} {...vespyrInputProps}>
-				{() => this.renderInput(styles)}
+				{this.renderInput(styles)}
 			</VespyrInput>
 		);
 	}

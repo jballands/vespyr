@@ -17,7 +17,9 @@ function getStyles(props) {
 		base: {
 			padding: '5px 10px 10px 10px',
 			background: ColorUtility.white(),
-		}
+			boxShadow: `0px 3px 5px 0px ${ColorUtility.black().alpha(0.25)}`,
+			width: 'calc(100% - 20px)',
+		},
 	};
 }
 
@@ -28,7 +30,8 @@ export default class Menu extends React.Component {
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-		children: PropTypes.func,
+		children: PropTypes.node,
+		style: PropTypes.object,
 		title: PropTypes.string,
 	};
 
@@ -37,10 +40,15 @@ export default class Menu extends React.Component {
 	};
 
 	render() {
+		const { style } = this.props;
 		const styles = getStyles(this.props);
 
+
+		console.log('rendering');
+		console.log(style);
+
 		return (
-			<div style={[DefaultFont, styles.base]}>
+			<div style={[DefaultFont, styles.base, style]}>
 				{this.renderContent(styles)}
 			</div>
 		);

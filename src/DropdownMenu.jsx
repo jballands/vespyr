@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import Radium from 'radium';
 
 import VespyrInput from './VespyrInput';
-import Menu from './Menu';
+import AnimatedMenu from './AnimatedMenu';
 import CaretDown from './svg/CaretDown';
 
 function getStyles(props) {
@@ -26,6 +26,11 @@ function getStyles(props) {
 			display: 'flex',
 			flexFlow: 'row nowrap',
 			alignItems: 'flex-end',
+		},
+		cursorPointer: {
+			':hover': {
+				cursor: 'pointer',
+			},
 		},
 		caret: {
 			paddingBottom: '10px',
@@ -88,9 +93,9 @@ export default class DropdownMenu extends React.Component {
 		};
 
 		return (
-			<div style={styles.input}>
-				<VespyrInput focus={this.addFocus} isFocused={this.isFocused} {...vespyrInputProps}>
-					{() => this.renderSelection(styles)}
+			<div style={[styles.input, styles.cursorPointer]}>
+				<VespyrInput focus={this.addFocus} isFocused={this.isFocused} {...vespyrInputProps} style={styles.cursorPointer}>
+					{this.renderSelection(styles)}
 				</VespyrInput>
 				<CaretDown style={styles.caret} />
 			</div>
@@ -108,16 +113,12 @@ export default class DropdownMenu extends React.Component {
 	};
 
 	renderMenu = () => {
-		if (!this.state.focused) {
-			return null;
-		}
-
 		const { title } = this.props;
 
 		return (
-			<Menu title={title}>
+			<AnimatedMenu title={title} show={this.state.focused}>
 				Foobar
-			</Menu>
+			</AnimatedMenu>
 		);
 	};
 
