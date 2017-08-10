@@ -18,7 +18,14 @@ function getStyles(props) {
 			padding: '5px 10px 10px 10px',
 			background: ColorUtility.white(),
 			boxShadow: `0px 3px 5px 0px ${ColorUtility.black().alpha(0.25)}`,
-			width: 'calc(100% - 20px)',
+			width: 'calc(100% - 40px)',
+		},
+		title: {
+			fontSize: '10px',
+			textTransform: 'uppercase',
+			marginTop: '3px',
+			transition: 'color 250ms ease',
+			color: props.accentColor,
 		},
 	};
 }
@@ -35,17 +42,28 @@ export default class Menu extends React.Component {
 		title: PropTypes.string,
 	};
 
+	static defaultProps = {
+		accentColor: ColorUtility.blue(),
+	}
+
 	renderContent = styles => {
-		return this.props.children;
+		const { children, title } = this.props;
+
+		return (
+			<div>
+				<div style={styles.title}>
+					{title}
+				</div>
+				<div>
+					{children}
+				</div>
+			</div>
+		);
 	};
 
 	render() {
 		const { style } = this.props;
 		const styles = getStyles(this.props);
-
-
-		console.log('rendering');
-		console.log(style);
 
 		return (
 			<div style={[DefaultFont, styles.base, style]}>

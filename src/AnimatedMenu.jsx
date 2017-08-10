@@ -11,13 +11,20 @@ import Radium from 'radium';
 import { spring, TransitionMotion } from 'react-motion';
 
 import Menu from './Menu';
+import ColorUtility from './utils/ColorUtility';
 
 function getStyles(props, params) {
 	return {
 		menu: {
-			transform: `translateY(${params.y})`,
+			transform: `translateY(${params.y}px)`,
+			opacity: params.opacity,
+			boxShadow: `0px ${params.shadowDistance}px ${params.shadowSpread}px 0px ${ColorUtility.black().alpha(0.25)}`
 		},
 	};
+}
+
+function springTo(value) {
+	return spring(value, { stiffness: 500, damping: 50 });
 }
 
 @Radium
@@ -29,6 +36,7 @@ export default class AnimatedMenu extends React.Component {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
 		show: PropTypes.bool,
+		style: PropTypes.object,
 		title: PropTypes.string,
 	};
 
@@ -38,17 +46,23 @@ export default class AnimatedMenu extends React.Component {
 
 	willEnter = () => {
 		return {
-			y: -5,
+			y: 6,
+			opacity: 0,
+			shadowSpread: 0,
+			shadowDistance: 0,
 		};
 	};
 
 	willLeave = () => {
 		return {
-			y: spring(-5),
+			y: springTo(6),
+			opacity: springTo(0),
+			shadowSpread: springTo(0),
+			shadowDistance: springTo(0),
 		};
 	};
 
-	renderMenu = values => {
+	renderMenu = (values, style) => {
 		const { accentColor, children, title } = this.props;
 
 		const menuProps = {
@@ -60,9 +74,10 @@ export default class AnimatedMenu extends React.Component {
 		return (
 			<div>
 				{values.map(config => {
-					const styles = getStyles(this.props, { y: config.style.y });
+					const styles = getStyles(this.props, config.style);
+
 					return (
-						<Menu style={styles.menu} key={config.key} {...menuProps} />
+						<Menu style={[styles.menu, style]} key={config.key} {...menuProps} />
 					);
 				})}
 			</div>
@@ -70,12 +85,15 @@ export default class AnimatedMenu extends React.Component {
 	};
 
 	render() {
-		const { show } = this.props;
+		const { show, style } = this.props;
 
 		const motionStyles = show ? [{
 			key: 'vespyr-menu',
 			style: {
-				y: spring(0),
+				y: springTo(0),
+				opacity: springTo(1),
+				shadowSpread: springTo(5),
+				shadowDistance: springTo(3),
 			},
 		}] : [];
 
@@ -84,7 +102,7 @@ export default class AnimatedMenu extends React.Component {
 				willEnter={this.willEnter}
 				willLeave={this.willLeave}
 				styles={motionStyles}>
-				{ values => this.renderMenu(values)}
+				{ values => this.renderMenu(values, style)}
 			</TransitionMotion>
 		);
 	}

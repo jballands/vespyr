@@ -17,15 +17,16 @@ function getStyles(props) {
 	return {
 		base: {
 			display: 'inline-flex',
-			flexFlow: 'column nowrap',
-			alignItems: 'flex-start',
+			flexFlow: 'row nowrap',
+			alignItems: 'flex-end',
 			border: 0,
 			outline: 'none',
+			position: 'relative',
 		},
 		input: {
 			display: 'flex',
-			flexFlow: 'row nowrap',
-			alignItems: 'flex-end',
+			flexFlow: 'column nowrap',
+			alignItems: 'flex-start',
 		},
 		cursorPointer: {
 			':hover': {
@@ -35,6 +36,10 @@ function getStyles(props) {
 		caret: {
 			paddingBottom: '10px',
 			marginLeft: '7px',
+		},
+		menu: {
+			position: 'absolute',
+			top: 'calc(100% - 14px)',
 		},
 		selection: {
 			padding: '4px 0',
@@ -97,7 +102,7 @@ export default class DropdownMenu extends React.Component {
 				<VespyrInput focus={this.addFocus} isFocused={this.isFocused} {...vespyrInputProps} style={styles.cursorPointer}>
 					{this.renderSelection(styles)}
 				</VespyrInput>
-				<CaretDown style={styles.caret} />
+				{this.renderMenu(styles)}
 			</div>
 		);
 	};
@@ -109,14 +114,14 @@ export default class DropdownMenu extends React.Component {
 			<div style={styles.selection}>
 				{value}
 			</div>
-		)
+		);
 	};
 
-	renderMenu = () => {
+	renderMenu = styles => {
 		const { title } = this.props;
 
 		return (
-			<AnimatedMenu title={title} show={this.state.focused}>
+			<AnimatedMenu style={styles.menu} title={title} show={this.state.focused}>
 				Foobar
 			</AnimatedMenu>
 		);
@@ -130,7 +135,7 @@ export default class DropdownMenu extends React.Component {
 		return (
 			<div className={className} style={[styles.base, style]} tabIndex="0" onFocus={this.addFocus} onBlur={this.removeFocus}>
 				{this.renderInput(styles)}
-				{this.renderMenu(styles)}
+				<CaretDown style={styles.caret} />
 			</div>
 		);
 	}

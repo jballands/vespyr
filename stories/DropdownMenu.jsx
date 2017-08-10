@@ -9,5 +9,5 @@ storiesOf('DropdownMenu', module)
 		</div>
 	))
 	.add('as default', () => (
-		<DropdownMenu title="Foobar" value="Brutalmoose" />
+		<DropdownMenu title="Creators" value="Brutalmoose" />
 	));
