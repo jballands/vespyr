@@ -29,16 +29,22 @@ export default class MenuItem extends React.Component {
 
 	static propTypes = {
 		children: PropTypes.node,
+		id: PropTypes.string,
 		onClick: PropTypes.func,
 		style: PropTypes.object,
 	};
 
+	handleClick = () => {
+		const { id, onClick } = this.props;
+		onClick && onClick(id);
+	};
+
 	render() {
-		const { children, onClick, style } = this.props;
+		const { children, style } = this.props;
 		const styles = getStyles(this.props);
 
 		return (
-			<div style={[styles.base, style]} onClick={onClick}>
+			<div style={[styles.base, style]} onClick={this.handleClick}>
 				{children}
 			</div>
 		);

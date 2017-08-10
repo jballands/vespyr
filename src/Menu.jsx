@@ -19,6 +19,7 @@ function getStyles(props) {
 			background: ColorUtility.white(),
 			boxShadow: `0px 3px 5px 0px ${ColorUtility.black().alpha(0.25)}`,
 			width: 'calc(100% - 20px)',
+			zIndex: '1',
 		},
 		title: {
 			fontSize: '10px',

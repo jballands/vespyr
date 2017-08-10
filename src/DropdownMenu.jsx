@@ -55,7 +55,7 @@ export default class DropdownMenu extends React.Component {
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-		children: PropTypes.func,
+		children: PropTypes.node,
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		disabled: PropTypes.bool,
@@ -66,6 +66,12 @@ export default class DropdownMenu extends React.Component {
 		invalidColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		onUpdate: PropTypes.func,
 		value: PropTypes.string,
+
+		//	An optional function that takes two arguments: the old value and the new value,
+		//	and returns true if DropdownMenu should lose focus, or false if not. If this prop
+		//	is undefined, DropdownMenu will always lose focus when any props are provided.
+		shouldLoseFocus: PropTypes.func,
+
 		style: PropTypes.object,
 		title: PropTypes.string,
 	};
@@ -73,6 +79,13 @@ export default class DropdownMenu extends React.Component {
 	state = {
 		focused: false,
 	};
+
+	componentWillReceiveProps(newProps) {
+		const { value, shouldLoseFocus } = this.props;
+		if (!shouldLoseFocus || shouldLoseFocus(value, newProps.value)) {
+			this.removeFocus();
+		}
+	}
 
 	addFocus = () => {
 		this.setState({ focused: true });
@@ -123,7 +136,7 @@ export default class DropdownMenu extends React.Component {
 
 		return (
 			<AnimatedMenu style={styles.menu} title={title} show={this.state.focused}>
-				{children(this.removeFocus)}
+				{children}
 			</AnimatedMenu>
 		);
 	};
