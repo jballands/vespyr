@@ -13,6 +13,7 @@ export default {
 	'hintGray': () => Color('#BBBBBB'),
 	'defaultGray': () => Color('#EBEBEB'),
 	'disabledGray': () => Color('#DADADA'),
+	'hoverGray': () => Color('#EFEFEF'),
 	'red': () => Color('#D0011B'),
 	'white': () => Color('#FFFFFF'),
 };

@@ -15,15 +15,17 @@ import DefaultFont from './utils/DefaultFontStyles';
 function getStyles(props) {
 	return {
 		base: {
-			padding: '5px 10px 10px 10px',
+			padding: '5px 0 5px 0',
 			background: ColorUtility.white(),
 			boxShadow: `0px 3px 5px 0px ${ColorUtility.black().alpha(0.25)}`,
-			width: 'calc(100% - 40px)',
+			width: 'calc(100% - 20px)',
 		},
 		title: {
 			fontSize: '10px',
 			textTransform: 'uppercase',
-			marginTop: '3px',
+			marginTop: '5px',
+			marginBottom: '3px',
+			marginLeft: '12px',
 			transition: 'color 250ms ease',
 			color: props.accentColor,
 		},

@@ -111,7 +111,7 @@ function getStyles(props) {
 }
 
 @Radium
-class BoldButton extends React.Component {
+export default class BoldButton extends React.Component {
 
 	static displayName = 'BoldButton';
 
@@ -156,5 +156,3 @@ class BoldButton extends React.Component {
 	}
 
 }
-
-export default BoldButton;
