@@ -65,7 +65,7 @@ export default class DropdownMenu extends React.Component {
 		invalid: PropTypes.bool,
 		invalidColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		onUpdate: PropTypes.func,
-		value: PropTypes.string,
+		value: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
 		//	An optional function that takes two arguments: the old value and the new value,
 		//	and returns true if DropdownMenu should lose focus, or false if not. If this prop

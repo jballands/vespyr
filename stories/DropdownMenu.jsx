@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import DropdownMenu from '../src/DropdownMenu';
 import MenuItem from '../src/MenuItem';
 
@@ -13,6 +14,7 @@ class StatefulDropdownMenu extends React.Component {
 
 	respond = key => {
 		this.setState({ selectedKey: key });
+		action(`DropdownMenu -> ${key}: ${this.props.items[key].displayName}`)();
 	};
 
 	renderNormal = () => {
@@ -46,8 +48,15 @@ class StatefulDropdownMenu extends React.Component {
 			},
 		};
 
+		const value = (
+			<div style={styles.wrapper}>
+				<img src={items[this.state.selectedKey].img} style={styles.img} />
+				<span>{items[this.state.selectedKey].displayName}</span>
+			</div>
+		);
+
 		return (
-			<DropdownMenu {...this.props} value={items[this.state.selectedKey].displayName}>
+			<DropdownMenu {...this.props} value={value}>
 				{keys.map(k => (
 					<MenuItem key={k} id={k} onClick={this.respond} style={styles.wrapper}>
 						<img src={items[k].img} style={styles.img} />
@@ -76,40 +85,52 @@ storiesOf('DropdownMenu', module)
 	))
 	.add('as default', () => {
 		const items = {
-			'brutalmoose': {
-				displayName: 'Brutalmoose',
+			'breckenridge': {
+				displayName: 'Breckenridge',
 			},
-			'lucahjin': {
-				displayName: 'Lucahjin',
+			'keystone': {
+				displayName: 'Keystone',
 			},
-			'squirrel': {
-				displayName: 'Squirrel',
+			'heavenly': {
+				displayName: 'Heavenly',
 			},
-			'lgr': {
-				displayName: 'LGR',
+			'vail': {
+				displayName: 'Vail',
+			},
+			'arapahoe-basin': {
+				displayName: 'A-Basin',
 			},
 		};
 		return (
 			<StatefulDropdownMenu
-				title="Creators"
+				title="Ski Areas"
 				items={items}
-				defaultKey={'brutalmoose'}
+				defaultKey={'keystone'}
 			/>
 		);
 	})
 	.add('with shouldLoseFocus', () => {
 		const items = {
-			'brutalmoose': {
-				displayName: 'Brutalmoose',
+			'nes': {
+				displayName: 'Nintendo',
 			},
-			'lucahjin': {
-				displayName: 'Lucahjin',
+			'snes': {
+				displayName: 'Super Nintendo',
 			},
-			'squirrel': {
-				displayName: 'Squirrel',
+			'n64': {
+				displayName: 'Nintendo 64',
 			},
-			'lgr': {
-				displayName: 'LGR',
+			'gamecube': {
+				displayName: 'Gamecube',
+			},
+			'wii': {
+				displayName: 'Wii',
+			},
+			'wii-u': {
+				displayName: 'Wii U',
+			},
+			'switch': {
+				displayName: 'Switch',
 			},
 		};
 
@@ -117,14 +138,14 @@ storiesOf('DropdownMenu', module)
 
 		return (
 			<StatefulDropdownMenu
-				title="Creators"
+				title="Choose the same item twice"
 				items={items}
-				defaultKey={'brutalmoose'}
+				defaultKey={'n64'}
 				shouldLoseFocus={shouldLoseFocus}
 			/>
 		);
 	})
-	.add('with arbitrary children', () => {
+	.add('with arbitrary children & value', () => {
 		const items = {
 			'brutalmoose': {
 				displayName: 'Brutalmoose',
