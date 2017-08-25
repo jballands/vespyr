@@ -26,9 +26,9 @@ directly from `lib`:
 import BoldButton from '@jballands/vespyr/lib/BoldButton';
 ```
 
-Since Vespyr uses [Radium](https://github.com/FormidableLabs/radium) to style itself,
-there is no CSS that you need to import; Vespyr should be
-styled right out of the box.
+Since Vespyr uses [Styled Components](https://github.com/styled-components/styled-components)
+to style itself, there is no CSS that you need to import; Vespyr
+should be styled right out of the box. :nail_care:
 
 ## Developing
 
