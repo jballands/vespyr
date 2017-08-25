@@ -7,110 +7,113 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium from 'radium';
 import Color from 'color';
+import styled from 'styled-components';
 
 import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
-function calculateAccentColor(accentColor, disabled) {
+function calculateAccentColor(disabled, accentColor = ColorUtility.white()) {
 	if (disabled) {
 		if (!accentColor) {
-			return ColorUtility.white();
+			return ColorUtility.white().string();
 		}
-		return ColorUtility.disabledGray();
+		return ColorUtility.disabledGray().string();
 	}
-	if (accentColor) {
-		return Color(accentColor);
-	}
-	return ColorUtility.white();
+
+	return Color(accentColor).string();
 }
 
-function calculateSideAccentColor(_backgroundColor, disabled) {
+function calculateSideAccentColor(disabled, accentColor = ColorUtility.white()) {
 	if (disabled) {
-		return ColorUtility.disabledGray();
+		return ColorUtility.disabledGray().string();
 	}
 
-	const luminosity = _backgroundColor.luminosity();
+	accentColor = Color(accentColor);
+	const luminosity = accentColor.luminosity();
 
 	if (luminosity > 0.91) {
-		return _backgroundColor.darken(0.10);
+		return accentColor.darken(0.10).string();
 	}
 	else if (luminosity <= 0.91 && luminosity > 0.74) {
-		return _backgroundColor.darken(0.30);
+		return accentColor.darken(0.30).string();
 	}
 	else {
-		return _backgroundColor.darken(0.25);
+		return accentColor.darken(0.25).string();
 	}
 }
 
-function calculateFontColor(accentColor, _backgroundColor, disabled) {
+function calculateFontColor(disabled, accentColor = ColorUtility.white()) {
 	if (disabled) {
 		if (!accentColor) {
-			return ColorUtility.disabledGray();
+			return ColorUtility.disabledGray().string();
 		}
-		return ColorUtility.white();
+		return ColorUtility.white().string();
 	}
 
-	const luminosity = _backgroundColor.luminosity();
+	accentColor = Color(accentColor);
+
+	const luminosity = accentColor.luminosity();
 
 	if (luminosity > 0.75) {
-		return ColorUtility.black();
+		return ColorUtility.black().string();
 	}
-	return ColorUtility.white();
+	return ColorUtility.white().string();
 }
 
-function getStyles(props) {
-	const { accentColor, disabled } = props;
+const Container = styled.div`
+	display: block;
+	position: relative;
+	margin: 5px;
+	cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+	userSelect: none;
+`;
 
-	const _backgroundColor = calculateAccentColor(accentColor, disabled);
-	const _sideColor = calculateSideAccentColor(_backgroundColor, disabled);
-	const _fontColor = calculateFontColor(accentColor, _backgroundColor, disabled);
+const getHoverStyles = props => {
+	if (!props.disabled) {
+		return `
+			border: 2px solid ${calculateSideAccentColor(props.disabled, props.accentColor)};
+			transform: translate(0, -5px);
+		`;
+	}
+};
+const getActiveStyles = props => {
+	if (!props.disabled) {
+		return `
+			border: 2px solid ${calculateSideAccentColor(props.disabled, props.accentColor)};
+			transform: translate(0, 0);
+		`;
+	}
+};
+const Base = styled.div`
+	padding: 8px;
+	position: absolute;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	background: ${props => calculateAccentColor(props.disabled, props.accentColor)};
+	border: 2px solid ${props => calculateSideAccentColor(props.disabled, props.accentColor)};
+	border-radius: 5px;
+	font-size: 12px;
+	text-transform: uppercase;
+	transition: all ease 200ms;
+	color: ${props => calculateFontColor(props.disabled, props.accentColor)};
+`;
 
-	return {
-		container: {
-			display: 'block',
-			position: 'relative',
-			margin: '5px',
-			cursor: disabled ? 'not-allowed' : 'pointer',
-			userSelect: 'none',
-		},
-		base: {
-			padding: '8px',
-			position: 'absolute',
-			display: 'flex',
-			flexFlow: 'row nowrap',
-			justifyContent: 'center',
-			background: _backgroundColor,
-			border: `2px solid ${_sideColor}`,
-			borderRadius: '5px',
-			fontSize: '12px',
-			textTransform: 'uppercase',
-			transition: 'all ease 200ms',
-			color: _fontColor,
-		},
-		top: {
-			':hover': {
-				border: `2px solid ${_sideColor}`,
-				transform: 'translate(0, -5px)',
-			},
-			':active': {
-				border: `2px solid ${_sideColor}`,
-				transform: 'translate(0, 0)',
-			},
-		},
-		side: {
-			display: 'inline-block',
-			position: 'static',
-			background: _sideColor,
-			left: 0,
-			top: 0,
-			zIndex: -1,
-		},
-	};
-}
+const Top = Base.extend`
+	&:hover { ${props => getHoverStyles(props)} }
+	&:active { ${props => getActiveStyles(props)} }
+`;
 
-@Radium
+const Side = Base.extend`
+	display: inline-block;
+	position: static;
+	background: ${props => calculateSideAccentColor(props.disabled, props.accentColor)};
+	left: 0;
+	top: 0;
+	zIndex: -1;
+`;
+
 export default class BoldButton extends React.Component {
 
 	static displayName = 'BoldButton';
@@ -135,23 +138,26 @@ export default class BoldButton extends React.Component {
 		}
 	};
 
-	renderShade = styles => (
-		<div style={[DefaultFont, styles.base, styles.side]}>
-			{this.props.children}
-		</div>
-	);
-
-	render() {
-		const styles = getStyles(this.props);
-		const { children, className, disabled, style } = this.props;
+	renderShade = () => {
+		const { accentColor, disabled } = this.props;
 
 		return (
-			<div style={[styles.container, style]} onClick={this.invokeOnClick} className={className}>
-				<div style={[DefaultFont, styles.base, disabled ? null : styles.top]} key="vespyrButtonTop">
+			<Side accentColor={accentColor} disabled={disabled} style={DefaultFont}>
+				{this.props.children}
+			</Side>
+		);
+	};
+
+	render() {
+		const { accentColor, children, className, disabled, style } = this.props;
+
+		return (
+			<Container disabled={disabled} onClick={this.invokeOnClick} style={style} className={className}>
+				<Top accentColor={accentColor} disabled={disabled} style={DefaultFont} key="vespyrButtonTop">
 					{children}
-				</div>
-				{this.renderShade(styles)}
-			</div>
+				</Top>
+				{this.renderShade()}
+			</Container>
 		);
 	}
 
