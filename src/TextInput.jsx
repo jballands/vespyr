@@ -7,44 +7,33 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium, { Style } from 'radium';
+import styled from 'styled-components';
 
 import VespyrInput from './VespyrInput';
 import ColorUtility from './utils/ColorUtility';
 
-function getStyles(props) {
-	const { color, hintColor } = props;
+const Input = styled.input`
+	border: 0;
+	outline: none;
+	width: 100%;
+	padding: 5px 0;
+	font-size: 16px;
+	color: ${props => props.color};
+	background: transparent;
+	resize: none;
 
-	return {
-		input: {
-			border: 0,
-			outline: 'none',
-			width: '100%',
-			padding: '5px 0',
-			fontSize: '16px',
-			color: color,
-			background: 'transparent',
-			resize: 'none',
-			':focus': {},
-		},
-		inputContainer: {
-			display: 'flex',
-			flexFlow: 'column nowrap',
-			justifyContent: 'flex-start',
-		},
-		inputDisabled: {
-			':disabled': {
-				cursor: 'not-allowed',
-			},
-		},
-		inputPlaceholder: {
-			fontStyle: 'italic',
-			color: hintColor,
-		},
-	};
-}
+	input::placeholder { 
+		font-style: italic;
+		color: ${props => props.hintColor};
+	}
 
-@Radium
+	&:disabled {
+		cursor: not-allowed;
+	}
+`;
+
+const TextArea = Input.withComponent('textarea');
+
 export default class TextInput extends React.Component {
 
 	static displayName = 'TextInput';
@@ -78,13 +67,23 @@ export default class TextInput extends React.Component {
 		type: 'text',
 	};
 
+	state = {
+		isFocused: false,
+	};
+
 	focus = e => {
-		this.input.focus();
+		this.setState({ isFocused: true });
+		// this.input.focus();
 		e.preventDefault();
 	};
 
+	unfocus = () => {
+		this.setState({ isFocused: false });
+	};
+
 	isFocused = () => {
-		return Radium.getState(this.state, 'VespyrTextInput', ':focus');
+		return this.state.isFocused;
+		// return Radium.getState(this.state, 'VespyrTextInput', ':focus');
 	};
 
 	handleUpdate = e => {
@@ -95,58 +94,62 @@ export default class TextInput extends React.Component {
 		this.input = input;
 	};
 
-	renderTextArea = styles => {
-		const { disabled, hint, lines, type, value } = this.props;
+	renderTextArea = () => {
+		const { color, disabled, hint, hintColor, lines, type, value } = this.props;
 
 		return (
 			<div>
-				<Style rules={{ 'textarea::placeholder': styles.inputPlaceholder }} />
-				<textarea type={type}
+				<TextArea
+					type={type}
 					key="VespyrTextInput"
-					style={[styles.input, disabled ? styles.inputDisabled : null]}
+					color={color}
 					disabled={disabled}
 					placeholder={hint}
+					hintColor={hintColor}
 					ref={this.inputReference}
 					onChange={this.handleUpdate}
 					value={value ? value : ''}
 					rows={lines}
+					onFocus={this.focus}
+					onBlur={this.unfocus}
 				/>
 			</div>
 		);
 	};
 
-	renderTextInput = styles => {
-		const { disabled, hint, type, value } = this.props;
+	renderTextInput = () => {
+		const { color, disabled, hint, hintColor, type, value } = this.props;
 
 		return (
 			<div>
-				<Style rules={{ 'input::placeholder': styles.inputPlaceholder }} />
-				<input type={type}
+				<Input type={type}
 					key="VespyrTextInput"
-					style={[styles.input, disabled ? styles.inputDisabled : null]}
+					color={color}
 					disabled={disabled}
 					placeholder={hint}
+					hintColor={hintColor}
 					ref={this.inputReference}
 					onChange={this.handleUpdate}
 					value={value ? value : ''}
+					onFocus={this.focus}
+					onBlur={this.unfocus}
 				/>
 			</div>
 		);
 	};
 
-	renderInput = styles => {
+	renderInput = () => {
 		const { lines } = this.props;
 		if (lines > 1) {
-			return this.renderTextArea(styles);
+			return this.renderTextArea();
 		}
-		return this.renderTextInput(styles);
+		return this.renderTextInput();
 	};
 
 	render() {
 		const { accentColor, className, color, disabled, icon, invalid,
 			invalidColor, style, title } = this.props;
 
-		const styles = getStyles(this.props);
 		const vespyrInputProps = {
 			accentColor,
 			className,
@@ -161,7 +164,7 @@ export default class TextInput extends React.Component {
 
 		return (
 			<VespyrInput focus={this.focus} isFocused={this.isFocused} {...vespyrInputProps}>
-				{this.renderInput(styles)}
+				{this.renderInput()}
 			</VespyrInput>
 		);
 	}

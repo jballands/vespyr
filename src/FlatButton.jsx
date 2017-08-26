@@ -7,54 +7,48 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium from 'radium';
+import styled, { ThemeProvider } from 'styled-components';
 
 import DefaultFont from './utils/DefaultFontStyles';
 import ColorUtility from './utils/ColorUtility';
 
-function getColor(accentColor, disabled) {
-	if (disabled) {
-		return ColorUtility.disabledGray();
+function getColor(props) {
+	if (props.disabled) {
+		return ColorUtility.disabledGray().string();
 	}
-	else if (accentColor) {
-		return accentColor;
+	else if (props.accentColor) {
+		return props.accentColor.string();
 	}
-	return ColorUtility.black();
+	return ColorUtility.black().string();
 }
 
-function getStyles(props) {
-	const { accentColor, disabled } = props;
-	const _color = getColor(accentColor, disabled);
+const Container = styled.div`
+	display: inline-block;
+	padding: 5px;
 
-	return {
-		base: {
-			display: 'inline-block',
-			padding: '5px',
-			':hover': {
-				cursor: disabled ? 'not-allowed' : 'pointer',
-			},
-		},
-		text: {
-			textTransform: 'uppercase',
-			fontSize: '12px',
-			userSelect: 'none',
-			color: _color,
-		},
-		underline: {
-			marginTop: '3px',
-			display: 'block',
-			content: '',
-			borderBottom: `solid 2px ${_color}`,
-			transform: 'scaleX(0)',
-			transition: 'transform 250ms ease',
-		},
-		underlineHover: {
-			transform: 'scaleX(1)',
-		},
-	};
-}
+	&:hover {
+		cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+	}
+`;
 
-@Radium
+const Text = styled.div`
+	text-transform: uppercase;
+	font-size: 12px;
+	user-select: none;
+	color: ${props => getColor(props)};
+	font-family: ${props => props.theme.fontFamily};
+	letter-spacing: ${props => props.theme.letterSpacing};
+`;
+
+const Underline = styled.div`
+	margin-top: 3px;
+	display: block;
+	content: '';
+	border-bottom: solid 1px ${props => getColor(props)};
+	transform: ${props => props.isHovering && !props.disabled ? 'scaleX(1)' : 'scaleX(0)'};
+	transition: transform 250ms ease;
+`;
+
 export default class FlatButton extends React.Component {
 
 	static displayName = 'FlatButton';
@@ -68,6 +62,18 @@ export default class FlatButton extends React.Component {
 		style: PropTypes.object,
 	};
 
+	state = {
+		isHovering: false,
+	};
+
+	mouseOver = () => {
+		this.setState({ isHovering: true });
+	};
+
+	mouseOut = () => {
+		this.setState({ isHovering: false });
+	};
+
 	invokeOnClick = () => {
 		const { disabled, onClick } = this.props;
 		if (onClick && !disabled) {
@@ -76,17 +82,27 @@ export default class FlatButton extends React.Component {
 	};
 
 	render() {
-		const styles = getStyles(this.props);
-		const isHovering = Radium.getState(this.state, 'VespyrFlatButton', ':hover');
-		const { children, className, disabled, style } = this.props;
+		const { children, className, accentColor, disabled, style } = this.props;
 
 		return (
-			<div style={[styles.base, style]} key="VespyrFlatButton" onClick={this.invokeOnClick} className={className}>
-				<div style={[DefaultFont, styles.text]}>
-					{children}
-				</div>
-				<div style={[styles.underline, isHovering && !disabled ? styles.underlineHover : null]} />
-			</div>
+			<ThemeProvider theme={DefaultFont}>
+				<Container
+					accentColor={ColorUtility.makeColor(accentColor)}
+					disabled={disabled}
+					style={style}
+					onClick={this.invokeOnClick}
+					className={className}
+					onMouseOver={this.mouseOver}
+					onMouseOut={this.mouseOut}>
+					<Text accentColor={ColorUtility.makeColor(accentColor)} disabled={disabled}>
+						{children}
+					</Text>
+					<Underline
+						accentColor={ColorUtility.makeColor(accentColor)}
+						disabled={disabled}
+						isHovering={this.state.isHovering} />
+				</Container>
+			</ThemeProvider>
 		);
 	}
 

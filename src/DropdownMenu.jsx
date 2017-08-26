@@ -149,7 +149,7 @@ export default class DropdownMenu extends React.Component {
 		const { className, style } = this.props;
 
 		return (
-			<Container className={className} style={style} tabIndex="0" onFocus={this.addFocus}>
+			<Container className={className} style={style} tabIndex="0" onFocus={this.addFocus} onBlur={this.removeFocus}>
 				{this.renderInput()}
 				<StyledCaretDown />
 			</Container>

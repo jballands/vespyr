@@ -7,22 +7,18 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium from 'radium';
+import styled from 'styled-components';
 
 import ColorUtility from './utils/ColorUtility';
 
-function getStyles(props) {
-	return {
-		base: {
-			padding: '7px 10px 7px 12px',
-			':hover': {
-				background: ColorUtility.hoverGray(),
-			},
-		},
-	};
-}
+const Container = styled.div`
+	padding: 7px 10px 7px 12px;
 
-@Radium
+	&:hover {
+		background: ${ColorUtility.hoverGray().string()};
+	}
+`;
+
 export default class MenuItem extends React.Component {
 
 	static displayName = 'MenuItem';
@@ -41,12 +37,11 @@ export default class MenuItem extends React.Component {
 
 	render() {
 		const { children, style } = this.props;
-		const styles = getStyles(this.props);
 
 		return (
-			<div style={[styles.base, style]} onClick={this.handleClick}>
+			<Container style={style} onClick={this.handleClick}>
 				{children}
-			</div>
+			</Container>
 		);
 	}
 
