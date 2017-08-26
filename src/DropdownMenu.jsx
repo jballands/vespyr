@@ -7,48 +7,52 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium from 'radium';
+import styled from 'styled-components';
 
 import VespyrInput from './VespyrInput';
 import AnimatedMenu from './AnimatedMenu';
 import CaretDown from './svg/CaretDown';
 
-function getStyles(props) {
-	return {
-		base: {
-			display: 'inline-flex',
-			flexFlow: 'row nowrap',
-			alignItems: 'flex-end',
-			border: 0,
-			outline: 'none',
-			position: 'relative',
-		},
-		input: {
-			display: 'flex',
-			flexFlow: 'column nowrap',
-			alignItems: 'flex-start',
-		},
-		cursorPointer: {
-			':hover': {
-				cursor: 'pointer',
-			},
-		},
-		caret: {
-			paddingBottom: '10px',
-			marginLeft: '7px',
-		},
-		menu: {
-			position: 'absolute',
-			top: 'calc(100% - 14px)',
-		},
-		selection: {
-			padding: '4px 0',
-			fontSize: '16px',
-		},
-	};
-}
+const Container = styled.div`
+	display: inline-flex;
+	flex-flow: row nowrap;
+	align-items: flex-end;
+	border: 0;
+	outline: none;
+	position: relative;
+`;
 
-@Radium
+const Input = styled.div`
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: flex-start;
+
+	&:hover {
+		cursor: pointer;
+	}
+`;
+
+const StyledCaretDown = styled(CaretDown)`
+	padding-bottom: 10px;
+	margin-left: 7px;
+`;
+
+const PositionedAnimatedMenu = styled(AnimatedMenu)`
+	position: absolute;
+	top: calc(100% - 14px);
+`;
+
+const Selection = styled.div`
+	padding: 4px 0;
+	font-size: 16px;
+`;
+
+const VespyrInputWithPointer = styled(VespyrInput)`
+	&:hover {
+		cursor: pointer;
+	}
+`;
+
 export default class DropdownMenu extends React.Component {
 
 	static displayName = 'DropdownMenu';
@@ -99,7 +103,7 @@ export default class DropdownMenu extends React.Component {
 		return this.state.focused;
 	};
 
-	renderInput = styles => {
+	renderInput = () => {
 		const { accentColor, color, disabled, icon, invalid, invalidColor, title } = this.props;
 		const vespyrInputProps = {
 			accentColor,
@@ -112,45 +116,43 @@ export default class DropdownMenu extends React.Component {
 		};
 
 		return (
-			<div style={[styles.input, styles.cursorPointer]}>
-				<VespyrInput focus={this.addFocus} isFocused={this.isFocused} {...vespyrInputProps} style={styles.cursorPointer}>
-					{this.renderSelection(styles)}
-				</VespyrInput>
-				{this.renderMenu(styles)}
-			</div>
+			<Input>
+				<VespyrInputWithPointer focus={this.addFocus} isFocused={this.isFocused} {...vespyrInputProps}>
+					{this.renderSelection()}
+				</VespyrInputWithPointer>
+				{this.renderMenu()}
+			</Input>
 		);
 	};
 
-	renderSelection = styles => {
+	renderSelection = () => {
 		const { value } = this.props;
 
 		return (
-			<div style={styles.selection}>
+			<Selection>
 				{value}
-			</div>
+			</Selection>
 		);
 	};
 
-	renderMenu = styles => {
+	renderMenu = () => {
 		const { children, title } = this.props;
 
 		return (
-			<AnimatedMenu style={styles.menu} title={title} show={this.state.focused}>
+			<PositionedAnimatedMenu title={title} show={this.state.focused}>
 				{children}
-			</AnimatedMenu>
+			</PositionedAnimatedMenu>
 		);
 	};
 
 	render() {
 		const { className, style } = this.props;
 
-		const styles = getStyles(this.props);
-
 		return (
-			<div className={className} style={[styles.base, style]} tabIndex="0" onFocus={this.addFocus} onBlur={this.removeFocus}>
-				{this.renderInput(styles)}
-				<CaretDown style={styles.caret} />
-			</div>
+			<Container className={className} style={style} tabIndex="0" onFocus={this.addFocus}>
+				{this.renderInput()}
+				<StyledCaretDown />
+			</Container>
 		);
 	}
 

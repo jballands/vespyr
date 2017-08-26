@@ -7,104 +7,108 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium, { Style } from 'radium';
+import Color from 'color';
+import styled, { ThemeProvider } from 'styled-components';
 
 import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
-function getStyles(props) {
-	const { accentColor, color, disabled, invalidColor } = props;
+const getHoverStyles = props => {
+	if (props.disabled) {
+		return `
+			cursor: not-allowed;
+		`;
+	}
+};
+const Container = styled.div`
+	display: inline-flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	user-select: none;
+	cursor: default;
+	width: 250px;
+	font-family: ${props => props.theme.fontFamily};
+	letter-spacing: ${props => props.theme.letterSpacing};
 
-	const _accentColor = disabled ? ColorUtility.disabledGray() : accentColor;
-	const _color = disabled ? ColorUtility.disabledGray() : color;
-	const _invalidColor = disabled ? ColorUtility.disabledGray() : invalidColor;
+	&:hover { ${props => getHoverStyles(props)} }
+`;
 
-	return {
-		base: {
-			display: 'inline-flex',
-			flexFlow: 'row nowrap',
-			alignItems: 'center',
-			userSelect: 'none',
-			cursor: 'default',
-			width: '250px',
-		},
-		baseDisabled: {
-			':hover': {
-				cursor: 'not-allowed',
-			},
-		},
-		icon: {
-			maxWidth: '25px',
-			maxHeight: '25px',
-			marginRight: '10px',
-		},
-		iconChildren: {
-			maxWidth: '100%',
-			maxHeight: '100%',
-		},
-		inputContainer: {
-			width: '100%',
-		},
-		title: {
-			fontSize: '10px',
-			textTransform: 'uppercase',
-			marginTop: '3px',
-			transition: 'color 250ms ease',
-			color: _color,
-		},
-		titleFocus: {
-			color: _accentColor,
-		},
-		titleInvalid: {
-			color: _invalidColor,
-		},
-		underlineDefault: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: '100%',
-			display: 'block',
-			content: '',
-			borderBottom: `solid 1px ${_color}`,
-		},
-		underlineFocus: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: '100%',
-			display: 'block',
-			content: '',
-			borderBottom: `solid 2px ${_accentColor}`,
-			transform: 'scaleX(0)',
-			transition: 'transform 250ms ease',
-		},
-		underlineFocusShow: {
-			transform: 'scaleX(1)',
-		},
-		underlineInvalid: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: '100%',
-			display: 'block',
-			content: '',
-			borderBottom: `solid 2px ${_invalidColor}`,
-			transform: 'scaleX(0)',
-			transition: 'transform 250ms ease',
-		},
-		underlineInvalidShow: {
-			transform: 'scaleX(1)',
-		},
-		underlines: {
-			position: 'relative',
-		},
-	};
-}
+const Icon = styled.div`
+	max-width: 25px;
+	max-height: 25px;
+	margin-right: 10px;
 
-@Radium
+	* {
+		max-width: 100%;
+		max-height: 100%;
+	}
+`;
+
+const InputContainer = styled.div`
+	width: 100%;
+`;
+
+const Underlines = styled.div`
+	position: relative;
+`;
+
+const UnderlineDefault = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: block;
+	content: '';
+	border-bottom: solid 1px ${props => props.disabled ? ColorUtility.disabledGray().string() : props.color.string()};
+`;
+
+const UnderlineInvalid = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: block;
+	content: '';
+	border-bottom: solid 1px ${props => props.disabled ? ColorUtility.disabledGray().string() : props.invalidColor.string()};
+	transform: ${props => props.invalid ? 'scaleX(1)' : 'scaleX(0)'};
+	transition: transform 250ms ease;
+`;
+
+const UnderlineFocus = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: block;
+	content: '';
+	border-bottom: solid 1px ${props => props.disabled ? ColorUtility.disabledGray().string() : props.accentColor.string()};
+	transform: ${props => props.focused ? 'scaleX(1)' : 'scaleX(0)'};
+	transition: transform 250ms ease;
+`;
+
+const getTitleColor = props => {
+	if (props.focused) {
+		return props.accentColor.string();
+	}
+	else if (props.invalid) {
+		return props.invalidColor.string();
+	}
+	else if (props.disabled) {
+		return ColorUtility.disabledGray().string();
+	}
+	return props.color.string();
+};
+const Title = styled.div`
+	font-size: 10px;
+	text-transform: uppercase;
+	margin-top: 3px;
+	transition: color 250ms ease;
+	color: ${props => getTitleColor(props)}
+`;
+
 export default class VespyrInput extends React.Component {
 
-	static displayName = 'TextInput';
+	static displayName = 'VespyrInput';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -138,49 +142,52 @@ export default class VespyrInput extends React.Component {
 		invalidColor: ColorUtility.red(),
 	};
 
-	renderIcon = styles => {
+	renderIcon = () => {
 		const { icon } = this.props;
 		if (!icon) {
 			return null;
 		}
 		return (
-			<div style={styles.icon}>
-				<Style rules={{ '*': styles.iconChildren }} />
+			<Icon>
 				{icon}
-			</div>
+			</Icon>
 		);
 	};
 
-	renderInputContainer = styles => {
-		const { isFocused, invalid, title } = this.props;
+	renderInputContainer = () => {
+		const { accentColor, color, disabled, isFocused, invalid, invalidColor, title } = this.props;
 		const focused = isFocused ? isFocused() : false;
 
 		return (
-			<div style={styles.inputContainer}>
+			<InputContainer>
 				{this.props.children}
-				<div style={styles.underlines}>
-					<div style={styles.underlineDefault} />
-					<div style={[styles.underlineInvalid, invalid ? styles.underlineInvalidShow : null]} />
-					<div style={[styles.underlineFocus, focused ? styles.underlineFocusShow : null]} />
-				</div>
-				<div style={[styles.title, focused ? styles.titleFocus : null, invalid ? styles.titleInvalid : null]}>
+
+				<Underlines>
+					<UnderlineDefault color={Color(color)} disabled={disabled} />
+					<UnderlineInvalid disabled={disabled} invalidColor={Color(invalidColor)} invalid={invalid} />
+					<UnderlineFocus disabled={disabled} accentColor={Color(accentColor)} focused={focused} />
+				</Underlines>
+				<Title accentColor={Color(accentColor)} disabled={disabled} focused={focused} invalidColor={Color(invalidColor)} invalid={invalid} color={Color(color)}>
 					{title}
-				</div>
-			</div>
+				</Title>
+			</InputContainer>
 		);
 	};
 
 	render() {
-		const styles = getStyles(this.props);
 		const { className, disabled, focus, style } = this.props;
 
 		return (
-			<div style={[DefaultFont, styles.base, disabled ? styles.baseDisabled : null, style]}
-				className={className}
-				onClick={focus}>
-				{this.renderIcon(styles)}
-				{this.renderInputContainer(styles)}
-			</div>
+			<ThemeProvider theme={DefaultFont}>
+				<Container
+					disabled={disabled}
+					style={style}
+					className={className}
+					onClick={focus}>
+					{this.renderIcon()}
+					{this.renderInputContainer()}
+				</Container>
+			</ThemeProvider>
 		);
 	}
 

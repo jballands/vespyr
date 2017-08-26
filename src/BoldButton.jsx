@@ -8,14 +8,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Color from 'color';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
-function calculateAccentColor(disabled, accentColor = ColorUtility.white()) {
-	accentColor = Color(accentColor);
-
+function calculateAccentColor(disabled, accentColor) {
 	if (disabled) {
 		if (accentColor.rgbNumber() !== ColorUtility.white().rgbNumber()) {
 			return ColorUtility.disabledGray().string();
@@ -23,15 +21,14 @@ function calculateAccentColor(disabled, accentColor = ColorUtility.white()) {
 		return ColorUtility.white().string();
 	}
 
-	return Color(accentColor).string();
+	return accentColor.string();
 }
 
-function calculateSideAccentColor(disabled, accentColor = ColorUtility.white()) {
+function calculateSideAccentColor(disabled, accentColor) {
 	if (disabled) {
 		return ColorUtility.disabledGray().string();
 	}
 
-	accentColor = Color(accentColor);
 	const luminosity = accentColor.luminosity();
 
 	if (luminosity > 0.91) {
@@ -45,9 +42,7 @@ function calculateSideAccentColor(disabled, accentColor = ColorUtility.white()) 
 	}
 }
 
-function calculateFontColor(disabled, accentColor = ColorUtility.white()) {
-	accentColor = Color(accentColor);
-
+function calculateFontColor(disabled, accentColor) {
 	if (disabled) {
 		if (accentColor.rgbNumber() !== ColorUtility.white().rgbNumber()) {
 			return ColorUtility.white().string();
@@ -100,6 +95,8 @@ const Base = styled.div`
 	text-transform: uppercase;
 	transition: all ease 200ms;
 	color: ${props => calculateFontColor(props.disabled, props.accentColor)};
+	font-family: ${props => props.theme.fontFamily};
+	letter-spacing: ${props => props.theme.letterSpacing};
 `;
 
 const Top = Base.extend`
@@ -130,6 +127,7 @@ export default class BoldButton extends React.Component {
 	};
 
 	static defaultProps = {
+		accentColor: ColorUtility.white(),
 		disabled: false,
 	};
 
@@ -144,7 +142,7 @@ export default class BoldButton extends React.Component {
 		const { accentColor, disabled } = this.props;
 
 		return (
-			<Side accentColor={accentColor} disabled={disabled} style={DefaultFont}>
+			<Side accentColor={Color(accentColor)} disabled={disabled}>
 				{this.props.children}
 			</Side>
 		);
@@ -154,12 +152,14 @@ export default class BoldButton extends React.Component {
 		const { accentColor, children, className, disabled, style } = this.props;
 
 		return (
-			<Container disabled={disabled} onClick={this.invokeOnClick} style={style} className={className}>
-				<Top accentColor={accentColor} disabled={disabled} style={DefaultFont} key="vespyrButtonTop">
-					{children}
-				</Top>
-				{this.renderShade()}
-			</Container>
+			<ThemeProvider theme={DefaultFont}>
+				<Container disabled={disabled} onClick={this.invokeOnClick} style={style} className={className}>
+					<Top accentColor={Color(accentColor)} disabled={disabled} key="vespyrButtonTop">
+						{children}
+					</Top>
+					{this.renderShade()}
+				</Container>
+			</ThemeProvider>
 		);
 	}
 

@@ -7,5 +7,5 @@
 
 export default {
 	fontFamily: '\"Roboto\", system, -apple-system, BlinkMacSystemFont',
-	letterSpacing: 1.0,
+	letterSpacing: '1.0px',
 };

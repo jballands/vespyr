@@ -7,39 +7,38 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium from 'radium';
+import styled, { ThemeProvider } from 'styled-components';
 
 import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
-function getStyles(props) {
-	return {
-		base: {
-			padding: '5px 0 5px 0',
-			background: ColorUtility.white(),
-			boxShadow: `0px 3px 5px 0px ${ColorUtility.black().alpha(0.25)}`,
-			width: 'calc(100% - 20px)',
-			zIndex: '1',
-		},
-		title: {
-			fontSize: '10px',
-			textTransform: 'uppercase',
-			marginTop: '5px',
-			marginBottom: '3px',
-			marginLeft: '12px',
-			transition: 'color 250ms ease',
-			color: props.accentColor,
-		},
-	};
-}
+const Container = styled.div`
+	padding: 5px 0 5px 0;
+	background: ${ColorUtility.white().string()};
+	box-shadow: 0 3px 5px 0 ${ColorUtility.black().alpha(0.25).string()};
+	width: calc(100% - 20px);
+	z-index: 1;
+	font-family: ${props => props.theme.fontFamily};
+	letter-spacing: ${props => props.theme.letterSpacing};
+`;
 
-@Radium
+const Title = styled.div`
+	font-size: 10px;
+	text-transform: uppercase;
+	margin-top: 5px;
+	margin-bottom: 3px;
+	margin-left: 12px;
+	transition: color 250ms ease;
+	color: ${props => props.accentColor.string()};
+`;
+
 export default class Menu extends React.Component {
 
 	static displayName = 'Menu';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		className: PropTypes.string,
 		children: PropTypes.node,
 		style: PropTypes.object,
 		title: PropTypes.string,
@@ -49,14 +48,14 @@ export default class Menu extends React.Component {
 		accentColor: ColorUtility.blue(),
 	}
 
-	renderContent = styles => {
-		const { children, title } = this.props;
+	renderContent = () => {
+		const { accentColor, children, title } = this.props;
 
 		return (
 			<div>
-				<div style={styles.title}>
+				<Title accentColor={accentColor}>
 					{title}
-				</div>
+				</Title>
 				<div>
 					{children}
 				</div>
@@ -65,15 +64,14 @@ export default class Menu extends React.Component {
 	};
 
 	render() {
-		const { style } = this.props;
-		const styles = getStyles(this.props);
-
-		console.log(style);
+		const { className, style } = this.props;
 
 		return (
-			<div style={[DefaultFont, styles.base, style]}>
-				{this.renderContent(styles)}
-			</div>
+			<ThemeProvider theme={DefaultFont}>
+				<Container style={style} className={className}>
+					{this.renderContent()}
+				</Container>
+			</ThemeProvider>
 		);
 	}
 

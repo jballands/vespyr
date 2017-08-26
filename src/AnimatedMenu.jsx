@@ -22,7 +22,7 @@ const StyledMenu = styled(Menu).attrs({
 		transform: `translateY(${props.y}px)`,
 		opacity: props.opacity,
 		boxShadow: `0px ${props.shadowDistance}px ${props.shadowSpread}px 0px ${ColorUtility.black().alpha(0.25).string()}`,
-		...props.menuStyle,
+		...props.passedStyles,
 	}),
 })``;
 
@@ -32,6 +32,7 @@ export default class AnimatedMenu extends React.Component {
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		className: PropTypes.string,
 		children: PropTypes.node,
 		show: PropTypes.bool,
 		style: PropTypes.object,
@@ -60,11 +61,13 @@ export default class AnimatedMenu extends React.Component {
 		};
 	};
 
-	renderMenu = (values, style) => {
-		const { accentColor, children, title } = this.props;
+	renderMenu = values => {
+		const { accentColor, className, children, style, title } = this.props;
 
 		const menuProps = {
+			passedStyles: style,
 			accentColor,
+			className,
 			children,
 			title,
 		};
@@ -80,7 +83,6 @@ export default class AnimatedMenu extends React.Component {
 							shadowDistance={shadowDistance}
 							shadowSpread={shadowSpread}
 							y={y}
-							menuStyle={style}
 							key={config.key}
 							{...menuProps}
 						/>
@@ -91,7 +93,7 @@ export default class AnimatedMenu extends React.Component {
 	};
 
 	render() {
-		const { show, style } = this.props;
+		const { show } = this.props;
 
 		const motionStyles = show ? [{
 			key: 'vespyr-menu',
@@ -108,7 +110,7 @@ export default class AnimatedMenu extends React.Component {
 				willEnter={this.willEnter}
 				willLeave={this.willLeave}
 				styles={motionStyles}>
-				{ values => this.renderMenu(values, style)}
+				{ values => this.renderMenu(values)}
 			</TransitionMotion>
 		);
 	}
