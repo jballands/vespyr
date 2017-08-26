@@ -132,7 +132,7 @@ storiesOf('DropdownMenu', module)
 				title="Ski Areas"
 				items={items}
 				defaultKey={'keystone'}
-				style={{ width: 500 }}
+				style={{ width: '100%' }}
 			/>
 		);
 	})

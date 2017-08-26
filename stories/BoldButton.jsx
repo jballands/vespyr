@@ -16,7 +16,12 @@ storiesOf('BoldButton', module)
 			BoldButton
 		</BoldButton>
 	))
-	.add('with accent color', () => (
+	.add('with style', () => (
+		<BoldButton onClick={action('BoldButton')} style={{ width: 200, height: 100 }}>
+			BoldButton
+		</BoldButton>
+	))
+	.add('with accentColor', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
 			<BoldButton accentColor={'#00B7FF'} onClick={action('BoldButton')}>
 				#00B7FF
@@ -29,7 +34,7 @@ storiesOf('BoldButton', module)
 			</BoldButton>
 		</div>
 	))
-	.add('with arbitrary children', () => (
+	.add('with children', () => (
 		<BoldButton onClick={action('BoldButton')}>
 			<div style={{ display: 'flex', flexFlow: 'row nowrap', alignContent: 'center' }}>
 				<img src='https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-paper-plane-1.png' 
@@ -38,12 +43,12 @@ storiesOf('BoldButton', module)
 			</div>
 		</BoldButton>
 	))
-	.add('as disabled', () => (
+	.add('with disabled', () => (
 		<BoldButton disabled onClick={action('BoldButton')}>
 			Disabled
 		</BoldButton>
 	))
-	.add('as disabled with accent color', () => (
+	.add('with disabled & accentColor', () => (
 		<BoldButton disabled accentColor={'#00B7FF'} onClick={action('BoldButton')}>
 			Disabled
 		</BoldButton>

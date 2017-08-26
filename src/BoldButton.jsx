@@ -14,7 +14,7 @@ import DefaultFont from './utils/DefaultFontStyles';
 
 function calculateAccentColor(disabled, accentColor) {
 	if (disabled) {
-		if (accentColor.rgbNumber() !== ColorUtility.white().rgbNumber()) {
+		if (!colorsEqual(accentColor, ColorUtility.white())) {
 			return ColorUtility.disabledGray().string();
 		}
 		return ColorUtility.white().string();
@@ -43,7 +43,7 @@ function calculateSideAccentColor(disabled, accentColor) {
 
 function calculateFontColor(disabled, accentColor) {
 	if (disabled) {
-		if (colorsEqual(accentColor, ColorUtility.white())) {
+		if (!colorsEqual(accentColor, ColorUtility.white())) {
 			return ColorUtility.white().string();
 		}
 		return ColorUtility.disabledGray().string();
@@ -86,6 +86,7 @@ const Base = styled.div`
 	position: absolute;
 	display: flex;
 	flex-flow: row nowrap;
+	align-items: center;
 	justify-content: center;
 	background: ${props => calculateAccentColor(props.disabled, props.accentColor)};
 	border: 2px solid ${props => calculateSideAccentColor(props.disabled, props.accentColor)};
@@ -138,10 +139,13 @@ export default class BoldButton extends React.Component {
 	};
 
 	renderShade = () => {
-		const { accentColor, disabled } = this.props;
+		const { accentColor, disabled, style } = this.props;
 
 		return (
-			<Side accentColor={makeColor(accentColor)} disabled={disabled}>
+			<Side
+				accentColor={makeColor(accentColor)}
+				disabled={disabled}
+				style={style}>
 				{this.props.children}
 			</Side>
 		);
@@ -152,8 +156,15 @@ export default class BoldButton extends React.Component {
 
 		return (
 			<ThemeProvider theme={DefaultFont}>
-				<Container disabled={disabled} onClick={this.invokeOnClick} style={style} className={className}>
-					<Top accentColor={makeColor(accentColor)} disabled={disabled} key="vespyrButtonTop">
+				<Container
+					disabled={disabled}
+					onClick={this.invokeOnClick}
+					className={className}>
+					<Top
+						accentColor={makeColor(accentColor)}
+						disabled={disabled}
+						key="vespyrButtonTop"
+						style={style}>
 						{children}
 					</Top>
 					{this.renderShade()}
