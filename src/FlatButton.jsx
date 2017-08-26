@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 
 import DefaultFont from './utils/DefaultFontStyles';
-import ColorUtility from './utils/ColorUtility';
+import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 function getColor(props) {
 	if (props.disabled) {
@@ -87,18 +87,18 @@ export default class FlatButton extends React.Component {
 		return (
 			<ThemeProvider theme={DefaultFont}>
 				<Container
-					accentColor={ColorUtility.makeColor(accentColor)}
+					accentColor={makeColor(accentColor)}
 					disabled={disabled}
 					style={style}
 					onClick={this.invokeOnClick}
 					className={className}
 					onMouseOver={this.mouseOver}
 					onMouseOut={this.mouseOut}>
-					<Text accentColor={ColorUtility.makeColor(accentColor)} disabled={disabled}>
+					<Text accentColor={makeColor(accentColor)} disabled={disabled}>
 						{children}
 					</Text>
 					<Underline
-						accentColor={ColorUtility.makeColor(accentColor)}
+						accentColor={makeColor(accentColor)}
 						disabled={disabled}
 						isHovering={this.state.isHovering} />
 				</Container>

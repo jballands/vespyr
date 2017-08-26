@@ -31,7 +31,7 @@ class StatefulDropdownMenu extends React.Component {
 	};
 
 	renderWithAvatars = () => {
-		const { items } = this.props;
+		const { items, style } = this.props;
 		const keys = Object.keys(items);
 
 		const styles = {
@@ -56,7 +56,7 @@ class StatefulDropdownMenu extends React.Component {
 		);
 
 		return (
-			<DropdownMenu {...this.props} value={value}>
+			<DropdownMenu {...this.props} value={value} style={style}>
 				{keys.map(k => (
 					<MenuItem key={k} id={k} onClick={this.respond} style={styles.wrapper}>
 						<img src={items[k].img} style={styles.img} />
@@ -106,6 +106,33 @@ storiesOf('DropdownMenu', module)
 				title="Ski Areas"
 				items={items}
 				defaultKey={'keystone'}
+			/>
+		);
+	})
+	.add('with style', () => {
+		const items = {
+			'breckenridge': {
+				displayName: 'Breckenridge',
+			},
+			'keystone': {
+				displayName: 'Keystone',
+			},
+			'heavenly': {
+				displayName: 'Heavenly',
+			},
+			'vail': {
+				displayName: 'Vail',
+			},
+			'arapahoe-basin': {
+				displayName: 'A-Basin',
+			},
+		};
+		return (
+			<StatefulDropdownMenu
+				title="Ski Areas"
+				items={items}
+				defaultKey={'keystone'}
+				style={{ width: 500 }}
 			/>
 		);
 	})

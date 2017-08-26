@@ -7,10 +7,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Color from 'color';
 import styled, { ThemeProvider } from 'styled-components';
 
-import ColorUtility from './utils/ColorUtility';
+import ColorUtility, { makeColor } from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
 const getHoverStyles = props => {
@@ -163,11 +162,23 @@ export default class VespyrInput extends React.Component {
 				{this.props.children}
 
 				<Underlines>
-					<UnderlineDefault color={Color(color)} disabled={disabled} />
-					<UnderlineInvalid disabled={disabled} invalidColor={Color(invalidColor)} invalid={invalid} />
-					<UnderlineFocus disabled={disabled} accentColor={Color(accentColor)} focused={focused} />
+					<UnderlineDefault color={makeColor(color)} disabled={disabled} />
+					<UnderlineInvalid
+						disabled={disabled}
+						invalidColor={makeColor(invalidColor)}
+						invalid={invalid} />
+					<UnderlineFocus
+						disabled={disabled}
+						accentColor={makeColor(accentColor)}
+						focused={focused} />
 				</Underlines>
-				<Title accentColor={Color(accentColor)} disabled={disabled} focused={focused} invalidColor={Color(invalidColor)} invalid={invalid} color={Color(color)}>
+				<Title
+					accentColor={makeColor(accentColor)}
+					disabled={disabled}
+					focused={focused}
+					invalidColor={makeColor(invalidColor)}
+					invalid={invalid}
+					color={makeColor(color)}>
 					{title}
 				</Title>
 			</InputContainer>

@@ -7,10 +7,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Color from 'color';
 import styled, { ThemeProvider } from 'styled-components';
 
-import ColorUtility from './utils/ColorUtility';
+import ColorUtility, { makeColor, colorsEqual } from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
 function calculateAccentColor(disabled, accentColor) {
@@ -44,7 +43,7 @@ function calculateSideAccentColor(disabled, accentColor) {
 
 function calculateFontColor(disabled, accentColor) {
 	if (disabled) {
-		if (accentColor.rgbNumber() !== ColorUtility.white().rgbNumber()) {
+		if (colorsEqual(accentColor, ColorUtility.white())) {
 			return ColorUtility.white().string();
 		}
 		return ColorUtility.disabledGray().string();
@@ -142,7 +141,7 @@ export default class BoldButton extends React.Component {
 		const { accentColor, disabled } = this.props;
 
 		return (
-			<Side accentColor={Color(accentColor)} disabled={disabled}>
+			<Side accentColor={makeColor(accentColor)} disabled={disabled}>
 				{this.props.children}
 			</Side>
 		);
@@ -154,7 +153,7 @@ export default class BoldButton extends React.Component {
 		return (
 			<ThemeProvider theme={DefaultFont}>
 				<Container disabled={disabled} onClick={this.invokeOnClick} style={style} className={className}>
-					<Top accentColor={Color(accentColor)} disabled={disabled} key="vespyrButtonTop">
+					<Top accentColor={makeColor(accentColor)} disabled={disabled} key="vespyrButtonTop">
 						{children}
 					</Top>
 					{this.renderShade()}

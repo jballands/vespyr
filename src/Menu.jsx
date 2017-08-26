@@ -9,7 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 
-import ColorUtility from './utils/ColorUtility';
+import ColorUtility, { makeColor } from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
 const Container = styled.div`
@@ -53,7 +53,7 @@ export default class Menu extends React.Component {
 
 		return (
 			<div>
-				<Title accentColor={accentColor}>
+				<Title accentColor={makeColor(accentColor)}>
 					{title}
 				</Title>
 				<div>

@@ -16,10 +16,26 @@ export default {
 	'hoverGray': () => Color('#EFEFEF'),
 	'red': () => Color('#D0011B'),
 	'white': () => Color('#FFFFFF'),
-	'makeColor': c => {
-		if (!c) {
-			return undefined;
-		}
-		return Color(c);
-	},
 };
+
+export function makeColor(c) {
+	if (!c) {
+		return undefined;
+	}
+	return Color(c);
+}
+
+export function colorsEqual(c1, c2) {
+	const _c1 = makeColor(c1);
+	const _c2 = makeColor(c2);
+
+	if (!_c1 || !_c2) {
+		return false;
+	}
+
+	if (_c1.rgbNumber() === _c2.rgbNumber()) {
+		return true;
+	}
+
+	return false;
+}

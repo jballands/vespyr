@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import VespyrInput from './VespyrInput';
-import ColorUtility from './utils/ColorUtility';
+import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 const Input = styled.input`
 	border: 0;
@@ -18,13 +18,13 @@ const Input = styled.input`
 	width: 100%;
 	padding: 5px 0;
 	font-size: 16px;
-	color: ${props => props.color};
+	color: ${props => props.color.string()};
 	background: transparent;
 	resize: none;
 
 	input::placeholder { 
 		font-style: italic;
-		color: ${props => props.hintColor};
+		color: ${props => props.hintColor.string()};
 	}
 
 	&:disabled {
@@ -102,10 +102,10 @@ export default class TextInput extends React.Component {
 				<TextArea
 					type={type}
 					key="VespyrTextInput"
-					color={color}
+					color={makeColor(color)}
 					disabled={disabled}
 					placeholder={hint}
-					hintColor={hintColor}
+					hintColor={makeColor(hintColor)}
 					ref={this.inputReference}
 					onChange={this.handleUpdate}
 					value={value ? value : ''}
@@ -124,10 +124,10 @@ export default class TextInput extends React.Component {
 			<div>
 				<Input type={type}
 					key="VespyrTextInput"
-					color={color}
+					color={makeColor(color)}
 					disabled={disabled}
 					placeholder={hint}
-					hintColor={hintColor}
+					hintColor={makeColor(hintColor)}
 					ref={this.inputReference}
 					onChange={this.handleUpdate}
 					value={value ? value : ''}

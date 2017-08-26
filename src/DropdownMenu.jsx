@@ -17,15 +17,18 @@ const Container = styled.div`
 	display: inline-flex;
 	flex-flow: row nowrap;
 	align-items: flex-end;
+	justify-content: space-between;
 	border: 0;
 	outline: none;
 	position: relative;
+	width: 250px;
 `;
 
 const Input = styled.div`
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: flex-start;
+	width: 100%;
 
 	&:hover {
 		cursor: pointer;
@@ -47,7 +50,9 @@ const Selection = styled.div`
 	font-size: 16px;
 `;
 
-const VespyrInputWithPointer = styled(VespyrInput)`
+const VespyrInputWithPointer = styled(VespyrInput)`	
+	width: 100%;
+
 	&:hover {
 		cursor: pointer;
 	}
@@ -117,7 +122,10 @@ export default class DropdownMenu extends React.Component {
 
 		return (
 			<Input>
-				<VespyrInputWithPointer focus={this.addFocus} isFocused={this.isFocused} {...vespyrInputProps}>
+				<VespyrInputWithPointer
+					focus={this.addFocus}
+					isFocused={this.isFocused}
+					{...vespyrInputProps}>
 					{this.renderSelection()}
 				</VespyrInputWithPointer>
 				{this.renderMenu()}
@@ -149,7 +157,12 @@ export default class DropdownMenu extends React.Component {
 		const { className, style } = this.props;
 
 		return (
-			<Container className={className} style={style} tabIndex="0" onFocus={this.addFocus} onBlur={this.removeFocus}>
+			<Container
+				className={className}
+				style={style}
+				tabIndex="0"
+				onFocus={this.addFocus}
+				onBlur={this.removeFocus}>
 				{this.renderInput()}
 				<StyledCaretDown />
 			</Container>
