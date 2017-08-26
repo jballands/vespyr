@@ -14,11 +14,13 @@ import ColorUtility from './utils/ColorUtility';
 import DefaultFont from './utils/DefaultFontStyles';
 
 function calculateAccentColor(disabled, accentColor = ColorUtility.white()) {
+	accentColor = Color(accentColor);
+
 	if (disabled) {
-		if (!accentColor) {
-			return ColorUtility.white().string();
+		if (accentColor.rgbNumber() !== ColorUtility.white().rgbNumber()) {
+			return ColorUtility.disabledGray().string();
 		}
-		return ColorUtility.disabledGray().string();
+		return ColorUtility.white().string();
 	}
 
 	return Color(accentColor).string();
@@ -44,14 +46,14 @@ function calculateSideAccentColor(disabled, accentColor = ColorUtility.white()) 
 }
 
 function calculateFontColor(disabled, accentColor = ColorUtility.white()) {
-	if (disabled) {
-		if (!accentColor) {
-			return ColorUtility.disabledGray().string();
-		}
-		return ColorUtility.white().string();
-	}
-
 	accentColor = Color(accentColor);
+
+	if (disabled) {
+		if (accentColor.rgbNumber() !== ColorUtility.white().rgbNumber()) {
+			return ColorUtility.white().string();
+		}
+		return ColorUtility.disabledGray().string();
+	}
 
 	const luminosity = accentColor.luminosity();
 

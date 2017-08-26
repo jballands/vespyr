@@ -7,27 +7,25 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium from 'radium';
 import { spring, TransitionMotion } from 'react-motion';
+import styled from 'styled-components';
 
 import Menu from './Menu';
 import ColorUtility from './utils/ColorUtility';
-
-function getStyles(props, params) {
-	return {
-		menu: {
-			transform: `translateY(${params.y}px)`,
-			opacity: params.opacity,
-			boxShadow: `0px ${params.shadowDistance}px ${params.shadowSpread}px 0px ${ColorUtility.black().alpha(0.25)}`
-		},
-	};
-}
 
 function springTo(value) {
 	return spring(value, { stiffness: 500, damping: 50 });
 }
 
-@Radium
+const StyledMenu = styled(Menu).attrs({
+	style: props => ({
+		transform: `translateY(${props.y}px)`,
+		opacity: props.opacity,
+		boxShadow: `0px ${props.shadowDistance}px ${props.shadowSpread}px 0px ${ColorUtility.black().alpha(0.25).string()}`,
+		...props.menuStyle,
+	}),
+})``;
+
 export default class AnimatedMenu extends React.Component {
 
 	static displayName = 'AnimatedMenu';
@@ -74,10 +72,18 @@ export default class AnimatedMenu extends React.Component {
 		return (
 			<div>
 				{values.map(config => {
-					const styles = getStyles(this.props, config.style);
+					const { opacity, shadowDistance, shadowSpread, y} = config.style;
 
 					return (
-						<Menu style={[styles.menu, style]} key={config.key} {...menuProps} />
+						<StyledMenu
+							opacity={opacity}
+							shadowDistance={shadowDistance}
+							shadowSpread={shadowSpread}
+							y={y}
+							menuStyle={style}
+							key={config.key}
+							{...menuProps}
+						/>
 					);
 				})}
 			</div>

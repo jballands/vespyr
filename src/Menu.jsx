@@ -68,6 +68,8 @@ export default class Menu extends React.Component {
 		const { style } = this.props;
 		const styles = getStyles(this.props);
 
+		console.log(style);
+
 		return (
 			<div style={[DefaultFont, styles.base, style]}>
 				{this.renderContent(styles)}
