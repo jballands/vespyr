@@ -22,9 +22,9 @@ const Input = styled.input`
 	background: transparent;
 	resize: none;
 
-	input::placeholder { 
+	&::placeholder { 
 		font-style: italic;
-		color: ${props => props.hintColor.string()};
+		color: ${props => props.disabled ? ColorUtility.disabledGray().string() : props.hintColor.string()};
 	}
 
 	&:disabled {
@@ -71,19 +71,18 @@ export default class TextInput extends React.Component {
 		isFocused: false,
 	};
 
-	focus = e => {
+	focus = () => {
 		this.setState({ isFocused: true });
-		// this.input.focus();
-		e.preventDefault();
+		this.input.focus();
 	};
 
 	unfocus = () => {
 		this.setState({ isFocused: false });
+		this.input.blur();
 	};
 
 	isFocused = () => {
 		return this.state.isFocused;
-		// return Radium.getState(this.state, 'VespyrTextInput', ':focus');
 	};
 
 	handleUpdate = e => {
@@ -106,7 +105,7 @@ export default class TextInput extends React.Component {
 					disabled={disabled}
 					placeholder={hint}
 					hintColor={makeColor(hintColor)}
-					ref={this.inputReference}
+					innerRef={this.inputReference}
 					onChange={this.handleUpdate}
 					value={value ? value : ''}
 					rows={lines}
@@ -128,7 +127,7 @@ export default class TextInput extends React.Component {
 					disabled={disabled}
 					placeholder={hint}
 					hintColor={makeColor(hintColor)}
-					ref={this.inputReference}
+					innerRef={this.inputReference}
 					onChange={this.handleUpdate}
 					value={value ? value : ''}
 					onFocus={this.focus}
@@ -163,7 +162,10 @@ export default class TextInput extends React.Component {
 		};
 
 		return (
-			<VespyrInput focus={this.focus} isFocused={this.isFocused} {...vespyrInputProps}>
+			<VespyrInput
+				focus={this.focus}
+				isFocused={this.isFocused}
+				{...vespyrInputProps}>
 				{this.renderInput()}
 			</VespyrInput>
 		);

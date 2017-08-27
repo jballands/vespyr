@@ -141,6 +141,13 @@ export default class VespyrInput extends React.Component {
 		invalidColor: ColorUtility.red(),
 	};
 
+	requestFocus = () => {
+		const { disabled, focus } = this.props;
+		if (!disabled) {
+			focus();
+		}
+	};
+
 	renderIcon = () => {
 		const { icon } = this.props;
 		if (!icon) {
@@ -186,7 +193,7 @@ export default class VespyrInput extends React.Component {
 	};
 
 	render() {
-		const { className, disabled, focus, style } = this.props;
+		const { className, disabled, style } = this.props;
 
 		return (
 			<ThemeProvider theme={DefaultFont}>
@@ -194,7 +201,7 @@ export default class VespyrInput extends React.Component {
 					disabled={disabled}
 					style={style}
 					className={className}
-					onClick={focus}>
+					onClick={this.requestFocus}>
 					{this.renderIcon()}
 					{this.renderInputContainer()}
 				</Container>

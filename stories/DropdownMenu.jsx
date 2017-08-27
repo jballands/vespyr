@@ -5,6 +5,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import DropdownMenu from '../src/DropdownMenu';
 import MenuItem from '../src/MenuItem';
+import MenuSeperator from '../src/MenuSeperator';
 
 class StatefulDropdownMenu extends React.Component {
 
@@ -23,9 +24,12 @@ class StatefulDropdownMenu extends React.Component {
 
 		return (
 			<DropdownMenu {...this.props} value={items[this.state.selectedKey].displayName}>
-				{keys.map(k => (
-					<MenuItem key={k} id={k} onClick={this.respond}>{items[k].displayName}</MenuItem>
-				))}
+				{keys.map(k => {
+					if (items[k].seperator) {
+						return <MenuSeperator key={k} title={items[k].displayName} />;
+					}
+					return <MenuItem key={k} id={k} onClick={this.respond}>{items[k].displayName}</MenuItem>;
+				})}
 			</DropdownMenu>
 		);
 	};
@@ -132,7 +136,57 @@ storiesOf('DropdownMenu', module)
 				title="Ski Areas"
 				items={items}
 				defaultKey={'keystone'}
-				style={{ width: '100%' }}
+				style={{ width: 500 }}
+			/>
+		);
+	})
+	.add('with seperators', () => {
+		const items = {
+			'vegatables': {
+				displayName: 'Vegatables',
+				seperator: true,
+			},
+			'broccoli': {
+				displayName: 'Broccoli',
+			},
+			'carrots': {
+				displayName: 'Carrots',
+			},
+			'onions': {
+				displayName: 'Onions',
+			},
+			'dairy': {
+				displayName: 'Dairy',
+				seperator: true,
+			},
+			'cheese': {
+				displayName: 'Cheese',
+			},
+			'eggs': {
+				displayName: 'Eggs',
+			},
+			'milk': {
+				displayName: 'Milk',
+			},
+			'yogurt': {
+				displayName: 'Yogurt',
+			},
+			'misc': {
+				displayName: 'Misc.',
+				seperator: true,
+			},
+			'detergent': {
+				displayName: 'Detergent',
+			},
+			'toothpaste': {
+				displayName: 'Toothpaste',
+			},
+		};
+		return (
+			<StatefulDropdownMenu
+				title="Groceries"
+				items={items}
+				defaultKey={'broccoli'}
 			/>
 		);
 	})
@@ -172,7 +226,7 @@ storiesOf('DropdownMenu', module)
 			/>
 		);
 	})
-	.add('with arbitrary children & value', () => {
+	.add('as complex DropdownMenu', () => {
 		const items = {
 			'brutalmoose': {
 				displayName: 'Brutalmoose',

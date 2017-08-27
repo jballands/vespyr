@@ -16,7 +16,12 @@ storiesOf('FlatButton', module)
 			FlatButton
 		</FlatButton>
 	))
-	.add('with accent color', () => (
+	.add('with style', () => (
+		<FlatButton style={{ width: 200 }} onClick={action('FlatButton')}>
+			FlatButton
+		</FlatButton>
+	))
+	.add('with accentColor', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
 			<FlatButton accentColor={'#00B7FF'} onClick={action('FlatButton')}>
 				#00B7FF
@@ -29,7 +34,7 @@ storiesOf('FlatButton', module)
 			</FlatButton>
 		</div>
 	))
-	.add('with arbitrary children', () => (
+	.add('with children', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
 			<FlatButton onClick={action('FlatButton')}>
 				<div style={{ display: 'flex', flexFlow: 'row nowrap', alignContent: 'center' }}>
@@ -40,14 +45,14 @@ storiesOf('FlatButton', module)
 			</FlatButton>
 		</div>
 	))
-	.add('as disabled', () => (
+	.add('with disabled', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
 			<FlatButton disabled onClick={action('FlatButton')}>
 				Disabled
 			</FlatButton>
 		</div>
 	))
-	.add('as disabled with accent color', () => (
+	.add('with disabled & accentColor', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
 			<FlatButton disabled accentColor={'#49C617'} onClick={action('FlatButton')}>
 				Disabled

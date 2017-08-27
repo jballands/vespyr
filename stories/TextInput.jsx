@@ -40,6 +40,13 @@ storiesOf('TextInput', module)
 			hint="What's your name?"
 		/>
 	))
+	.add('with style', () => (
+		<StatefulTextInput
+			title="Name"
+			hint="What's your name?"
+			style={{ width: 500 }}
+		/>
+	))
 	.add('with icon', () => (
 		<StatefulTextInput
 			title="Search"
@@ -47,7 +54,7 @@ storiesOf('TextInput', module)
 			icon={<img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-magnifier-2.png" />}
 		/>
 	))
-	.add('with default value', () => (
+	.add('with value', () => (
 		<StatefulTextInput
 			title="Favorite Streamer"
 			value="Brutalmoose"
@@ -60,42 +67,42 @@ storiesOf('TextInput', module)
 			color="#FFA100"
 		/>
 	))
-	.add('with accent color', () => (
+	.add('with accentColor', () => (
 		<StatefulTextInput
 			title="Accent Color"
 			hint="Click me..."
 			accentColor="#F71CFF"
 		/>
 	))
-	.add('with hint color', () => (
+	.add('with hintColor', () => (
 		<StatefulTextInput
 			title="Hint Color"
 			hint="I'm blue"
 			hintColor="#00B7FF"
 		/>
 	))
-	.add('with input type', () => (
+	.add('with type', () => (
 		<StatefulTextInput
 			title="Secret Message"
 			hint="Psst!"
 			type="password"
 		/>
 	))
-	.add('with multi-line', () => (
+	.add('with lines', () => (
 		<StatefulTextInput
 			title="Multi-line"
 			hint="Type a long sentence..."
 			lines={3}
 		/>
 	))
-	.add('as disabled', () => (
+	.add('with disabled', () => (
 		<StatefulTextInput
 			title="Disabled"
 			hint="I can't take input right now"
 			disabled
 		/>
 	))
-	.add('with validation', () => (
+	.add('with validateInput', () => (
 		<StatefulTextInput
 			title="Name"
 			hint="Type 'Brutalmoose'"

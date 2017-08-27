@@ -23,7 +23,9 @@ function getColor(props) {
 }
 
 const Container = styled.div`
-	display: inline-block;
+	display: inline-flex;
+	flex-flow: column nowrap;
+	align-items: center;
 	padding: 5px;
 
 	&:hover {
@@ -41,6 +43,7 @@ const Text = styled.div`
 `;
 
 const Underline = styled.div`
+	width: 100%;
 	margin-top: 3px;
 	display: block;
 	content: '';

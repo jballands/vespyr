@@ -14,6 +14,7 @@ export default {
 	'defaultGray': () => Color('#EBEBEB'),
 	'disabledGray': () => Color('#DADADA'),
 	'hoverGray': () => Color('#EFEFEF'),
+	'secondaryGray': () => Color('#CCCCCC'),
 	'red': () => Color('#D0011B'),
 	'white': () => Color('#FFFFFF'),
 };
