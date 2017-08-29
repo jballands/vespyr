@@ -7,9 +7,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 
-import DefaultFont from './utils/DefaultFontStyles';
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 function getColor(props) {
@@ -38,8 +37,6 @@ const Text = styled.div`
 	font-size: 12px;
 	user-select: none;
 	color: ${props => getColor(props)};
-	font-family: ${props => props.theme.fontFamily};
-	letter-spacing: ${props => props.theme.letterSpacing};
 `;
 
 const Underline = styled.div`
@@ -88,24 +85,22 @@ export default class FlatButton extends React.Component {
 		const { children, className, accentColor, disabled, style } = this.props;
 
 		return (
-			<ThemeProvider theme={DefaultFont}>
-				<Container
+			<Container
+				accentColor={makeColor(accentColor)}
+				disabled={disabled}
+				style={style}
+				onClick={this.invokeOnClick}
+				className={className}
+				onMouseOver={this.mouseOver}
+				onMouseOut={this.mouseOut}>
+				<Text accentColor={makeColor(accentColor)} disabled={disabled}>
+					{children}
+				</Text>
+				<Underline
 					accentColor={makeColor(accentColor)}
 					disabled={disabled}
-					style={style}
-					onClick={this.invokeOnClick}
-					className={className}
-					onMouseOver={this.mouseOver}
-					onMouseOut={this.mouseOut}>
-					<Text accentColor={makeColor(accentColor)} disabled={disabled}>
-						{children}
-					</Text>
-					<Underline
-						accentColor={makeColor(accentColor)}
-						disabled={disabled}
-						isHovering={this.state.isHovering} />
-				</Container>
-			</ThemeProvider>
+					isHovering={this.state.isHovering} />
+			</Container>
 		);
 	}
 

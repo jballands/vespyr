@@ -7,10 +7,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 
 import ColorUtility, { makeColor } from './utils/ColorUtility';
-import DefaultFont from './utils/DefaultFontStyles';
 
 const Container = styled.div`
 	padding: 5px 0 5px 0;
@@ -18,8 +17,6 @@ const Container = styled.div`
 	box-shadow: 0 3px 5px 0 ${ColorUtility.black().alpha(0.25).string()};
 	width: calc(100% - 20px);
 	z-index: 1;
-	font-family: ${props => props.theme.fontFamily};
-	letter-spacing: ${props => props.theme.letterSpacing};
 `;
 
 const Title = styled.div`
@@ -67,11 +64,9 @@ export default class Menu extends React.Component {
 		const { className, style } = this.props;
 
 		return (
-			<ThemeProvider theme={DefaultFont}>
-				<Container style={style} className={className}>
-					{this.renderContent()}
-				</Container>
-			</ThemeProvider>
+			<Container style={style} className={className}>
+				{this.renderContent()}
+			</Container>
 		);
 	}
 

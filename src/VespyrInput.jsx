@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 
 import ColorUtility, { makeColor } from './utils/ColorUtility';
-import DefaultFont from './utils/DefaultFontStyles';
 
 const getHoverStyles = props => {
 	if (props.disabled) {
@@ -26,8 +25,6 @@ const Container = styled.div`
 	user-select: none;
 	cursor: default;
 	width: 250px;
-	font-family: ${props => props.theme.fontFamily};
-	letter-spacing: ${props => props.theme.letterSpacing};
 
 	&:hover { ${props => getHoverStyles(props)} }
 `;
@@ -196,16 +193,14 @@ export default class VespyrInput extends React.Component {
 		const { className, disabled, style } = this.props;
 
 		return (
-			<ThemeProvider theme={DefaultFont}>
-				<Container
-					disabled={disabled}
-					style={style}
-					className={className}
-					onClick={this.requestFocus}>
-					{this.renderIcon()}
-					{this.renderInputContainer()}
-				</Container>
-			</ThemeProvider>
+			<Container
+				disabled={disabled}
+				style={style}
+				className={className}
+				onClick={this.requestFocus}>
+				{this.renderIcon()}
+				{this.renderInputContainer()}
+			</Container>
 		);
 	}
 

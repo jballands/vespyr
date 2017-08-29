@@ -14,7 +14,7 @@ import Menu from './Menu';
 import ColorUtility from './utils/ColorUtility';
 
 function springTo(value) {
-	return spring(value, { stiffness: 500, damping: 50 });
+	return spring(value, { stiffness: 200, damping: 18, precision: 1 });
 }
 
 const StyledMenu = styled(Menu).attrs({

@@ -5,6 +5,7 @@ function loadStories() {
 	require('../stories/FlatButton.jsx');
 	require('../stories/TextInput.jsx');
 	require('../stories/DropdownMenu.jsx');
+	require('../stories/RadioGroup.jsx');
 }
 
 configure(loadStories, module);

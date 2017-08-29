@@ -7,10 +7,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 
 import ColorUtility, { makeColor, colorsEqual } from './utils/ColorUtility';
-import DefaultFont from './utils/DefaultFontStyles';
 
 function calculateAccentColor(disabled, accentColor) {
 	if (disabled) {
@@ -95,8 +94,6 @@ const Base = styled.div`
 	text-transform: uppercase;
 	transition: all ease 200ms;
 	color: ${props => calculateFontColor(props.disabled, props.accentColor)};
-	font-family: ${props => props.theme.fontFamily};
-	letter-spacing: ${props => props.theme.letterSpacing};
 `;
 
 const Top = Base.extend`
@@ -155,21 +152,19 @@ export default class BoldButton extends React.Component {
 		const { accentColor, children, className, disabled, style } = this.props;
 
 		return (
-			<ThemeProvider theme={DefaultFont}>
-				<Container
+			<Container
+				disabled={disabled}
+				onClick={this.invokeOnClick}
+				className={className}>
+				<Top
+					accentColor={makeColor(accentColor)}
 					disabled={disabled}
-					onClick={this.invokeOnClick}
-					className={className}>
-					<Top
-						accentColor={makeColor(accentColor)}
-						disabled={disabled}
-						key="vespyrButtonTop"
-						style={style}>
-						{children}
-					</Top>
-					{this.renderShade()}
-				</Container>
-			</ThemeProvider>
+					key="vespyrButtonTop"
+					style={style}>
+					{children}
+				</Top>
+				{this.renderShade()}
+			</Container>
 		);
 	}
 

@@ -7,7 +7,7 @@ import BoldButton from '../src/BoldButton';
 
 storiesOf('BoldButton', module)
 	.addDecorator(story => (
-		<div style={{ margin: '20px 5px' }}>
+		<div style={{ margin: '20px 5px', fontFamily: '\"Roboto\", system, -apple-system, BlinkMacSystemFont', letterSpacing: '1.0px' }}>
 			{story()}
 		</div>
 	))

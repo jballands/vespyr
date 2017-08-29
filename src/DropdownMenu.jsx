@@ -36,7 +36,7 @@ const Input = styled.div`
 `;
 
 const StyledCaretDown = styled(CaretDown)`
-	padding-bottom: 10px;
+	padding-bottom: 14px;
 	margin-left: 7px;
 `;
 

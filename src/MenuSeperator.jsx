@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 
 import ColorUtility from './utils/ColorUtility';
-import DefaultFont from './utils/DefaultFontStyles';
 
 const Container = styled.div`
 	display: flex;
@@ -20,8 +19,6 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-	font-family: ${props => props.theme.fontFamily};
-	letter-spacing: ${props => props.theme.letterSpacing};
 	font-size: 10px;
 	text-transform: uppercase;
 	margin-right: 7px;
@@ -46,12 +43,10 @@ export default class MenuSeperator extends React.Component {
 		const { title } = this.props;
 
 		return (
-			<ThemeProvider theme={DefaultFont}>
-				<Container>
-					{title && <Title>{title}</Title>}
-					<Seperator />
-				</Container>
-			</ThemeProvider>
+			<Container>
+				{title && <Title>{title}</Title>}
+				<Seperator />
+			</Container>
 		);
 	}
 
