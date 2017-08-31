@@ -24,9 +24,9 @@ const Svg = styled.svg`
 	height: 100%;
 `;
 
-export default class CaretDown extends React.Component {
+export default class Checkmark extends React.Component {
 
-	static displayName = 'CaretDown';
+	static displayName = 'Checkmark';
 
 	static propTypes = {
 		className: PropTypes.string,
@@ -44,7 +44,7 @@ export default class CaretDown extends React.Component {
 		return (
 			<Container className={className} style={style}>
 				<Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-					<path d="M12 21l-12-18h24z" fill={color} />
+					<path d="M9 21.035l-9-8.638 2.791-2.87 6.156 5.874 12.21-12.436 2.843 2.817z" fill={color} />
 				</Svg>
 			</Container>
 		);

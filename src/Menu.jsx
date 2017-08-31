@@ -17,6 +17,10 @@ const Container = styled.div`
 	box-shadow: 0 3px 5px 0 ${ColorUtility.black().alpha(0.25).string()};
 	width: calc(100% - 20px);
 	z-index: 1;
+
+	&:hover {
+		cursor: auto;
+	}
 `;
 
 const Title = styled.div`

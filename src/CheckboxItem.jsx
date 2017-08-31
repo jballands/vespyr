@@ -1,6 +1,6 @@
 //
 //	jballands/vespyr
-//	RadioItem.jsx
+//	CheckboxItem.jsx
 //
 //	© 2017 Jonathan Ballands
 //
@@ -9,6 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Checkmark from './svg/Checkmark';
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 const Container = styled.div`
@@ -22,23 +23,30 @@ const Container = styled.div`
 	}
 `;
 
-const RadioOutline = styled.div`
-	border-radius: 50%;
-	border: 1px solid ${props => props.mouseIsDown ? props.accentColor.string() : 'black'};
+const CheckboxOutline = styled.div`
 	width: 16px;
 	height: 16px;
-	position: relative;
+	border: 1px solid ${props => props.mouseIsDown ? props.accentColor.string() : 'black'};
 	transition: all ${props => props.mouseIsDown ? 0 : 500}ms ease;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
-const RadioFill = styled.div`
+const CheckboxFill = styled.div`
+	width: 14px;
+	height: 14px;
+	background: ${props => props.selected ? props.accentColor.string() : 'transparent'};
+	display: inline-block;
+	position: relative;
+`;
+
+const StyledCheckmark = styled(Checkmark)`
 	position: absolute;
-	width: ${props => props.selected ? '12px' : 0};
-	height: ${props => props.selected ? '12px' : 0};
-	border-radius: 50%;
-	background: ${props => props.accentColor.string()};
-	top: calc(50% - 6px);
-	left: calc(50% - 6px);
+	width: 10px;
+	height: 10px;
+	top: calc(50% - 5px);
+	left: calc(50% - 5px);
 `;
 
 const Text = styled.div`
@@ -48,9 +56,9 @@ const Text = styled.div`
 	transition: all ${props => props.mouseIsDown ? 0 : 500}ms ease;
 `;
 
-export default class RadioItem extends React.Component {
+export default class CheckboxItem extends React.Component {
 
-	static displayName = 'RadioItem';
+	static displayName = 'CheckboxItem';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -85,12 +93,14 @@ export default class RadioItem extends React.Component {
 		const { mouseIsDown } = this.state;
 
 		return (
-			<RadioOutline
+			<CheckboxOutline
 				mouseIsDown={mouseIsDown}
 				accentColor={makeColor(accentColor)}
 				selected={selected}>
-				<RadioFill accentColor={makeColor(accentColor)} selected={selected} />
-			</RadioOutline>
+				<CheckboxFill accentColor={makeColor(accentColor)} selected={selected}>
+					{selected && <StyledCheckmark color={makeColor(ColorUtility.white())} />}
+				</CheckboxFill>
+			</CheckboxOutline>
 		);
 	};
 

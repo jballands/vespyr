@@ -16,6 +16,7 @@ const Container = styled.div`
 
 	&:hover {
 		background: ${ColorUtility.hoverGray().string()};
+		cursor: pointer;
 	}
 `;
 
