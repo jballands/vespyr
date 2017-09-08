@@ -7,14 +7,18 @@ import FlatButton from '../src/FlatButton';
 
 storiesOf('FlatButton', module)
 	.addDecorator(story => (
-		<div style={{ margin: '20px 5px', fontFamily: '\"Roboto\", system, -apple-system, BlinkMacSystemFont', letterSpacing: '1.0px' }}>
+		<div
+			style={{
+				margin: '20px 5px',
+				fontFamily:
+					'"Roboto", system, -apple-system, BlinkMacSystemFont',
+				letterSpacing: '1.0px',
+			}}>
 			{story()}
 		</div>
 	))
 	.add('as default', () => (
-		<FlatButton onClick={action('FlatButton')}>
-			FlatButton
-		</FlatButton>
+		<FlatButton onClick={action('FlatButton')}>FlatButton</FlatButton>
 	))
 	.add('with style', () => (
 		<FlatButton style={{ width: 200 }} onClick={action('FlatButton')}>
@@ -37,9 +41,16 @@ storiesOf('FlatButton', module)
 	.add('with children', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
 			<FlatButton onClick={action('FlatButton')}>
-				<div style={{ display: 'flex', flexFlow: 'row nowrap', alignContent: 'center' }}>
-					<img src='https://cdns.iconmonstr.com/wp-content/assets/preview/2017/240/iconmonstr-x-mark-10.png' 
-						style={{ width: 17, height: 17, marginRight: 5 }} />
+				<div
+					style={{
+						display: 'flex',
+						flexFlow: 'row nowrap',
+						alignContent: 'center',
+					}}>
+					<img
+						src="https://cdns.iconmonstr.com/wp-content/assets/preview/2017/240/iconmonstr-x-mark-10.png"
+						style={{ width: 17, height: 17, marginRight: 5 }}
+					/>
 					<span>Delete</span>
 				</div>
 			</FlatButton>
@@ -54,7 +65,10 @@ storiesOf('FlatButton', module)
 	))
 	.add('with disabled & accentColor', () => (
 		<div style={{ display: 'flex', flexFlow: 'row nowrap' }}>
-			<FlatButton disabled accentColor={'#49C617'} onClick={action('FlatButton')}>
+			<FlatButton
+				disabled
+				accentColor={'#49C617'}
+				onClick={action('FlatButton')}>
 				Disabled
 			</FlatButton>
 		</div>

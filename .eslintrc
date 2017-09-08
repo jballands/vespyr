@@ -24,7 +24,6 @@
     "no-underscore-dangle": 0,
     "consistent-this": [1, "self"],
     "eqeqeq": [1, "smart"],
-    "indent": [2, "tab", {"SwitchCase": 1}],
     "key-spacing": 0,
     "new-cap": [1, {"capIsNew": false, "newIsCap": true}],
     "new-parens": 0,

@@ -25,7 +25,6 @@ const Svg = styled.svg`
 `;
 
 export default class CaretDown extends React.Component {
-
 	static displayName = 'CaretDown';
 
 	static propTypes = {
@@ -49,5 +48,4 @@ export default class CaretDown extends React.Component {
 			</Container>
 		);
 	}
-
 }

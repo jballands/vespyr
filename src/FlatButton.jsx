@@ -1,7 +1,7 @@
 //
 //	jballands/vespyr
 //	FlatButton.jsx
-//	
+//
 //	© 2017 Jonathan Ballands
 //
 
@@ -14,8 +14,7 @@ import ColorUtility, { makeColor } from './utils/ColorUtility';
 function getColor(props) {
 	if (props.disabled) {
 		return ColorUtility.disabledGray().string();
-	}
-	else if (props.accentColor) {
+	} else if (props.accentColor) {
 		return props.accentColor.string();
 	}
 	return ColorUtility.black().string();
@@ -28,7 +27,7 @@ const Container = styled.div`
 	padding: 5px;
 
 	&:hover {
-		cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 	}
 `;
 
@@ -45,12 +44,12 @@ const Underline = styled.div`
 	display: block;
 	content: '';
 	border-bottom: solid 1px ${props => getColor(props)};
-	transform: ${props => props.isHovering && !props.disabled ? 'scaleX(1)' : 'scaleX(0)'};
+	transform: ${props =>
+		props.isHovering && !props.disabled ? 'scaleX(1)' : 'scaleX(0)'};
 	transition: transform 250ms ease;
 `;
 
 export default class FlatButton extends React.Component {
-
 	static displayName = 'FlatButton';
 
 	static propTypes = {
@@ -82,7 +81,13 @@ export default class FlatButton extends React.Component {
 	};
 
 	render() {
-		const { children, className, accentColor, disabled, style } = this.props;
+		const {
+			children,
+			className,
+			accentColor,
+			disabled,
+			style,
+		} = this.props;
 
 		return (
 			<Container
@@ -99,9 +104,9 @@ export default class FlatButton extends React.Component {
 				<Underline
 					accentColor={makeColor(accentColor)}
 					disabled={disabled}
-					isHovering={this.state.isHovering} />
+					isHovering={this.state.isHovering}
+				/>
 			</Container>
 		);
 	}
-
 }

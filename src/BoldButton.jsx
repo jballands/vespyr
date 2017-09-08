@@ -1,7 +1,7 @@
 //
 //	jballands/vespyr
 //	BoldButton.jsx
-//	
+//
 //	© 2017 Jonathan Ballands
 //
 
@@ -30,12 +30,10 @@ function calculateSideAccentColor(disabled, accentColor) {
 	const luminosity = accentColor.luminosity();
 
 	if (luminosity > 0.91) {
-		return accentColor.darken(0.10).string();
-	}
-	else if (luminosity <= 0.91 && luminosity > 0.74) {
-		return accentColor.darken(0.30).string();
-	}
-	else {
+		return accentColor.darken(0.1).string();
+	} else if (luminosity <= 0.91 && luminosity > 0.74) {
+		return accentColor.darken(0.3).string();
+	} else {
 		return accentColor.darken(0.25).string();
 	}
 }
@@ -60,14 +58,17 @@ const Container = styled.div`
 	display: block;
 	position: relative;
 	margin: 5px;
-	cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+	cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 	userSelect: none;
 `;
 
 const getHoverStyles = props => {
 	if (!props.disabled) {
 		return `
-			border: 2px solid ${calculateSideAccentColor(props.disabled, props.accentColor)};
+			border: 2px solid ${calculateSideAccentColor(
+				props.disabled,
+				props.accentColor,
+			)};
 			transform: translate(0, -5px);
 		`;
 	}
@@ -75,7 +76,10 @@ const getHoverStyles = props => {
 const getActiveStyles = props => {
 	if (!props.disabled) {
 		return `
-			border: 2px solid ${calculateSideAccentColor(props.disabled, props.accentColor)};
+			border: 2px solid ${calculateSideAccentColor(
+				props.disabled,
+				props.accentColor,
+			)};
 			transform: translate(0, 0);
 		`;
 	}
@@ -87,8 +91,10 @@ const Base = styled.div`
 	flex-flow: row nowrap;
 	align-items: center;
 	justify-content: center;
-	background: ${props => calculateAccentColor(props.disabled, props.accentColor)};
-	border: 2px solid ${props => calculateSideAccentColor(props.disabled, props.accentColor)};
+	background: ${props =>
+		calculateAccentColor(props.disabled, props.accentColor)};
+	border: 2px solid
+		${props => calculateSideAccentColor(props.disabled, props.accentColor)};
 	border-radius: 5px;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -97,21 +103,25 @@ const Base = styled.div`
 `;
 
 const Top = Base.extend`
-	&:hover { ${props => getHoverStyles(props)} }
-	&:active { ${props => getActiveStyles(props)} }
+	&:hover {
+		${props => getHoverStyles(props)};
+	}
+	&:active {
+		${props => getActiveStyles(props)};
+	}
 `;
 
 const Side = Base.extend`
 	display: inline-block;
 	position: static;
-	background: ${props => calculateSideAccentColor(props.disabled, props.accentColor)};
+	background: ${props =>
+		calculateSideAccentColor(props.disabled, props.accentColor)};
 	left: 0;
 	top: 0;
 	zIndex: -1;
 `;
 
 export default class BoldButton extends React.Component {
-
 	static displayName = 'BoldButton';
 
 	static propTypes = {
@@ -149,7 +159,13 @@ export default class BoldButton extends React.Component {
 	};
 
 	render() {
-		const { accentColor, children, className, disabled, style } = this.props;
+		const {
+			accentColor,
+			children,
+			className,
+			disabled,
+			style,
+		} = this.props;
 
 		return (
 			<Container
@@ -167,5 +183,4 @@ export default class BoldButton extends React.Component {
 			</Container>
 		);
 	}
-
 }

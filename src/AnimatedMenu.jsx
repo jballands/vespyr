@@ -21,13 +21,14 @@ const StyledMenu = styled(Menu).attrs({
 	style: props => ({
 		transform: `translateY(${props.y}px)`,
 		opacity: props.opacity,
-		boxShadow: `0px ${props.shadowDistance}px ${props.shadowSpread}px 0px ${ColorUtility.black().alpha(0.25).string()}`,
+		boxShadow: `0px ${props.shadowDistance}px ${props.shadowSpread}px 0px ${ColorUtility.black()
+			.alpha(0.25)
+			.string()}`,
 		...props.passedStyles,
 	}),
 })``;
 
 export default class AnimatedMenu extends React.Component {
-
 	static displayName = 'AnimatedMenu';
 
 	static propTypes = {
@@ -75,7 +76,12 @@ export default class AnimatedMenu extends React.Component {
 		return (
 			<div>
 				{values.map(config => {
-					const { opacity, shadowDistance, shadowSpread, y} = config.style;
+					const {
+						opacity,
+						shadowDistance,
+						shadowSpread,
+						y,
+					} = config.style;
 
 					return (
 						<StyledMenu
@@ -95,24 +101,27 @@ export default class AnimatedMenu extends React.Component {
 	render() {
 		const { show } = this.props;
 
-		const motionStyles = show ? [{
-			key: 'vespyr-menu',
-			style: {
-				y: springTo(0),
-				opacity: springTo(1),
-				shadowSpread: springTo(5),
-				shadowDistance: springTo(3),
-			},
-		}] : [];
+		const motionStyles = show
+			? [
+					{
+						key: 'vespyr-menu',
+						style: {
+							y: springTo(0),
+							opacity: springTo(1),
+							shadowSpread: springTo(5),
+							shadowDistance: springTo(3),
+						},
+					},
+				]
+			: [];
 
 		return (
 			<TransitionMotion
 				willEnter={this.willEnter}
 				willLeave={this.willLeave}
 				styles={motionStyles}>
-				{ values => this.renderMenu(values)}
+				{values => this.renderMenu(values)}
 			</TransitionMotion>
 		);
 	}
-
 }

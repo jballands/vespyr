@@ -1,7 +1,7 @@
 //
 //	jballands/vespyr
 //	DropdownMenu.jsx
-//	
+//
 //	© 2017 Jonathan Ballands
 //
 
@@ -50,7 +50,7 @@ const Selection = styled.div`
 	font-size: 16px;
 `;
 
-const VespyrInputWithPointer = styled(VespyrInput)`	
+const VespyrInputWithPointer = styled(VespyrInput)`
 	width: 100%;
 
 	&:hover {
@@ -59,7 +59,6 @@ const VespyrInputWithPointer = styled(VespyrInput)`
 `;
 
 export default class DropdownMenu extends React.Component {
-
 	static displayName = 'DropdownMenu';
 
 	static propTypes = {
@@ -109,7 +108,15 @@ export default class DropdownMenu extends React.Component {
 	};
 
 	renderInput = () => {
-		const { accentColor, color, disabled, icon, invalid, invalidColor, title } = this.props;
+		const {
+			accentColor,
+			color,
+			disabled,
+			icon,
+			invalid,
+			invalidColor,
+			title,
+		} = this.props;
 		const vespyrInputProps = {
 			accentColor,
 			color,
@@ -136,11 +143,7 @@ export default class DropdownMenu extends React.Component {
 	renderSelection = () => {
 		const { value } = this.props;
 
-		return (
-			<Selection>
-				{value}
-			</Selection>
-		);
+		return <Selection>{value}</Selection>;
 	};
 
 	renderMenu = () => {
@@ -168,5 +171,4 @@ export default class DropdownMenu extends React.Component {
 			</Container>
 		);
 	}
-
 }

@@ -1,13 +1,13 @@
 //
 //	jballands/vespyr
 //	VespyrInput.jsx
-//	
+//
 //	© 2017 Jonathan Ballands
 //
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
@@ -26,7 +26,9 @@ const Container = styled.div`
 	cursor: default;
 	width: 250px;
 
-	&:hover { ${props => getHoverStyles(props)} }
+	&:hover {
+		${props => getHoverStyles(props)};
+	}
 `;
 
 const Icon = styled.div`
@@ -40,13 +42,9 @@ const Icon = styled.div`
 	}
 `;
 
-const InputContainer = styled.div`
-	width: 100%;
-`;
+const InputContainer = styled.div`width: 100%;`;
 
-const Underlines = styled.div`
-	position: relative;
-`;
+const Underlines = styled.div`position: relative;`;
 
 const UnderlineDefault = styled.div`
 	position: absolute;
@@ -55,7 +53,11 @@ const UnderlineDefault = styled.div`
 	width: 100%;
 	display: block;
 	content: '';
-	border-bottom: solid 1px ${props => props.disabled ? ColorUtility.disabledGray().string() : props.color.string()};
+	border-bottom: solid 1px
+		${props =>
+			props.disabled
+				? ColorUtility.disabledGray().string()
+				: props.color.string()};
 `;
 
 const UnderlineInvalid = styled.div`
@@ -65,8 +67,12 @@ const UnderlineInvalid = styled.div`
 	width: 100%;
 	display: block;
 	content: '';
-	border-bottom: solid 1px ${props => props.disabled ? ColorUtility.disabledGray().string() : props.invalidColor.string()};
-	transform: ${props => props.invalid ? 'scaleX(1)' : 'scaleX(0)'};
+	border-bottom: solid 1px
+		${props =>
+			props.disabled
+				? ColorUtility.disabledGray().string()
+				: props.invalidColor.string()};
+	transform: ${props => (props.invalid ? 'scaleX(1)' : 'scaleX(0)')};
 	transition: transform 250ms ease;
 `;
 
@@ -77,19 +83,21 @@ const UnderlineFocus = styled.div`
 	width: 100%;
 	display: block;
 	content: '';
-	border-bottom: solid 1px ${props => props.disabled ? ColorUtility.disabledGray().string() : props.accentColor.string()};
-	transform: ${props => props.focused ? 'scaleX(1)' : 'scaleX(0)'};
+	border-bottom: solid 1px
+		${props =>
+			props.disabled
+				? ColorUtility.disabledGray().string()
+				: props.accentColor.string()};
+	transform: ${props => (props.focused ? 'scaleX(1)' : 'scaleX(0)')};
 	transition: transform 250ms ease;
 `;
 
 const getTitleColor = props => {
 	if (props.focused) {
 		return props.accentColor.string();
-	}
-	else if (props.invalid) {
+	} else if (props.invalid) {
 		return props.invalidColor.string();
-	}
-	else if (props.disabled) {
+	} else if (props.disabled) {
 		return ColorUtility.disabledGray().string();
 	}
 	return props.color.string();
@@ -99,11 +107,10 @@ const Title = styled.div`
 	text-transform: uppercase;
 	margin-top: 3px;
 	transition: color 250ms ease;
-	color: ${props => getTitleColor(props)}
+	color: ${props => getTitleColor(props)};
 `;
 
 export default class VespyrInput extends React.Component {
-
 	static displayName = 'VespyrInput';
 
 	static propTypes = {
@@ -150,15 +157,19 @@ export default class VespyrInput extends React.Component {
 		if (!icon) {
 			return null;
 		}
-		return (
-			<Icon>
-				{icon}
-			</Icon>
-		);
+		return <Icon>{icon}</Icon>;
 	};
 
 	renderInputContainer = () => {
-		const { accentColor, color, disabled, isFocused, invalid, invalidColor, title } = this.props;
+		const {
+			accentColor,
+			color,
+			disabled,
+			isFocused,
+			invalid,
+			invalidColor,
+			title,
+		} = this.props;
 		const focused = isFocused ? isFocused() : false;
 
 		return (
@@ -166,15 +177,20 @@ export default class VespyrInput extends React.Component {
 				{this.props.children}
 
 				<Underlines>
-					<UnderlineDefault color={makeColor(color)} disabled={disabled} />
+					<UnderlineDefault
+						color={makeColor(color)}
+						disabled={disabled}
+					/>
 					<UnderlineInvalid
 						disabled={disabled}
 						invalidColor={makeColor(invalidColor)}
-						invalid={invalid} />
+						invalid={invalid}
+					/>
 					<UnderlineFocus
 						disabled={disabled}
 						accentColor={makeColor(accentColor)}
-						focused={focused} />
+						focused={focused}
+					/>
 				</Underlines>
 				<Title
 					accentColor={makeColor(accentColor)}
@@ -203,5 +219,4 @@ export default class VespyrInput extends React.Component {
 			</Container>
 		);
 	}
-
 }

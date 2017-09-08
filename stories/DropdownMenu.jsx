@@ -8,14 +8,15 @@ import MenuItem from '../src/MenuItem';
 import MenuSeperator from '../src/MenuSeperator';
 
 class StatefulDropdownMenu extends React.Component {
-
-	state ={
+	state = {
 		selectedKey: this.props.defaultKey,
 	};
 
 	respond = key => {
 		this.setState({ selectedKey: key });
-		action(`DropdownMenu -> ${key}: ${this.props.items[key].displayName}`)();
+		action(
+			`DropdownMenu -> ${key}: ${this.props.items[key].displayName}`,
+		)();
 	};
 
 	renderNormal = () => {
@@ -23,12 +24,23 @@ class StatefulDropdownMenu extends React.Component {
 		const keys = Object.keys(items);
 
 		return (
-			<DropdownMenu {...this.props} value={items[this.state.selectedKey].displayName}>
+			<DropdownMenu
+				{...this.props}
+				value={items[this.state.selectedKey].displayName}>
 				{keys.map(k => {
 					if (items[k].seperator) {
-						return <MenuSeperator key={k} title={items[k].displayName} />;
+						return (
+							<MenuSeperator
+								key={k}
+								title={items[k].displayName}
+							/>
+						);
 					}
-					return <MenuItem key={k} id={k} onClick={this.respond}>{items[k].displayName}</MenuItem>;
+					return (
+						<MenuItem key={k} id={k} onClick={this.respond}>
+							{items[k].displayName}
+						</MenuItem>
+					);
 				})}
 			</DropdownMenu>
 		);
@@ -54,7 +66,10 @@ class StatefulDropdownMenu extends React.Component {
 
 		const value = (
 			<div style={styles.wrapper}>
-				<img src={items[this.state.selectedKey].img} style={styles.img} />
+				<img
+					src={items[this.state.selectedKey].img}
+					style={styles.img}
+				/>
 				<span>{items[this.state.selectedKey].displayName}</span>
 			</div>
 		);
@@ -62,7 +77,11 @@ class StatefulDropdownMenu extends React.Component {
 		return (
 			<DropdownMenu {...this.props} value={value} style={style}>
 				{keys.map(k => (
-					<MenuItem key={k} id={k} onClick={this.respond} style={styles.wrapper}>
+					<MenuItem
+						key={k}
+						id={k}
+						onClick={this.respond}
+						style={styles.wrapper}>
 						<img src={items[k].img} style={styles.img} />
 						<span>{items[k].displayName}</span>
 					</MenuItem>
@@ -83,22 +102,28 @@ class StatefulDropdownMenu extends React.Component {
 
 storiesOf('DropdownMenu', module)
 	.addDecorator(story => (
-		<div style={{ margin: '20px 5px', fontFamily: '\"Roboto\", system, -apple-system, BlinkMacSystemFont', letterSpacing: '1.0px' }}>
+		<div
+			style={{
+				margin: '20px 5px',
+				fontFamily:
+					'"Roboto", system, -apple-system, BlinkMacSystemFont',
+				letterSpacing: '1.0px',
+			}}>
 			{story()}
 		</div>
 	))
 	.add('as default', () => {
 		const items = {
-			'breckenridge': {
+			breckenridge: {
 				displayName: 'Breckenridge',
 			},
-			'keystone': {
+			keystone: {
 				displayName: 'Keystone',
 			},
-			'heavenly': {
+			heavenly: {
 				displayName: 'Heavenly',
 			},
-			'vail': {
+			vail: {
 				displayName: 'Vail',
 			},
 			'arapahoe-basin': {
@@ -115,16 +140,16 @@ storiesOf('DropdownMenu', module)
 	})
 	.add('with style', () => {
 		const items = {
-			'breckenridge': {
+			breckenridge: {
 				displayName: 'Breckenridge',
 			},
-			'keystone': {
+			keystone: {
 				displayName: 'Keystone',
 			},
-			'heavenly': {
+			heavenly: {
 				displayName: 'Heavenly',
 			},
-			'vail': {
+			vail: {
 				displayName: 'Vail',
 			},
 			'arapahoe-basin': {
@@ -142,43 +167,43 @@ storiesOf('DropdownMenu', module)
 	})
 	.add('with seperators', () => {
 		const items = {
-			'vegatables': {
+			vegatables: {
 				displayName: 'Vegatables',
 				seperator: true,
 			},
-			'broccoli': {
+			broccoli: {
 				displayName: 'Broccoli',
 			},
-			'carrots': {
+			carrots: {
 				displayName: 'Carrots',
 			},
-			'onions': {
+			onions: {
 				displayName: 'Onions',
 			},
-			'dairy': {
+			dairy: {
 				displayName: 'Dairy',
 				seperator: true,
 			},
-			'cheese': {
+			cheese: {
 				displayName: 'Cheese',
 			},
-			'eggs': {
+			eggs: {
 				displayName: 'Eggs',
 			},
-			'milk': {
+			milk: {
 				displayName: 'Milk',
 			},
-			'yogurt': {
+			yogurt: {
 				displayName: 'Yogurt',
 			},
-			'misc': {
+			misc: {
 				displayName: 'Misc.',
 				seperator: true,
 			},
-			'detergent': {
+			detergent: {
 				displayName: 'Detergent',
 			},
-			'toothpaste': {
+			toothpaste: {
 				displayName: 'Toothpaste',
 			},
 		};
@@ -192,25 +217,25 @@ storiesOf('DropdownMenu', module)
 	})
 	.add('with shouldLoseFocus', () => {
 		const items = {
-			'nes': {
+			nes: {
 				displayName: 'Nintendo',
 			},
-			'snes': {
+			snes: {
 				displayName: 'Super Nintendo',
 			},
-			'n64': {
+			n64: {
 				displayName: 'Nintendo 64',
 			},
-			'gamecube': {
+			gamecube: {
 				displayName: 'Gamecube',
 			},
-			'wii': {
+			wii: {
 				displayName: 'Wii',
 			},
 			'wii-u': {
 				displayName: 'Wii U',
 			},
-			'switch': {
+			switch: {
 				displayName: 'Switch',
 			},
 		};
@@ -228,21 +253,25 @@ storiesOf('DropdownMenu', module)
 	})
 	.add('as complex DropdownMenu', () => {
 		const items = {
-			'brutalmoose': {
+			brutalmoose: {
 				displayName: 'Brutalmoose',
-				img: 'https://yt3.ggpht.com/-9V4pafhXtos/AAAAAAAAAAI/AAAAAAAAAAA/3GVxGvlr5R0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg',
+				img:
+					'https://yt3.ggpht.com/-9V4pafhXtos/AAAAAAAAAAI/AAAAAAAAAAA/3GVxGvlr5R0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg',
 			},
-			'lucahjin': {
+			lucahjin: {
 				displayName: 'Lucahjin',
-				img: 'https://yt3.ggpht.com/-l2kxhA1OASo/AAAAAAAAAAI/AAAAAAAAAAA/xk1yr1qNXSw/s100-c-k-no-mo-rj-c0xffffff/photo.jpg',
+				img:
+					'https://yt3.ggpht.com/-l2kxhA1OASo/AAAAAAAAAAI/AAAAAAAAAAA/xk1yr1qNXSw/s100-c-k-no-mo-rj-c0xffffff/photo.jpg',
 			},
-			'squirrel': {
+			squirrel: {
 				displayName: 'Squirrel',
-				img: 'https://yt3.ggpht.com/-nLMVlrExeAQ/AAAAAAAAAAI/AAAAAAAAAAA/zbauonBmKh0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg',
+				img:
+					'https://yt3.ggpht.com/-nLMVlrExeAQ/AAAAAAAAAAI/AAAAAAAAAAA/zbauonBmKh0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg',
 			},
-			'lgr': {
+			lgr: {
 				displayName: 'LGR',
-				img: 'https://yt3.ggpht.com/-CsHahRaj2wE/AAAAAAAAAAI/AAAAAAAAAAA/3PP6XFMR-wk/s100-c-k-no-mo-rj-c0xffffff/photo.jpg',
+				img:
+					'https://yt3.ggpht.com/-CsHahRaj2wE/AAAAAAAAAAI/AAAAAAAAAAA/3PP6XFMR-wk/s100-c-k-no-mo-rj-c0xffffff/photo.jpg',
 			},
 		};
 

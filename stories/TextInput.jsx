@@ -23,22 +23,30 @@ class StatefulTextInput extends React.Component {
 		}
 
 		return (
-			<TextInput {...this.props} onUpdate={this.update} value={this.state.value} invalid={isInvalid} />
+			<TextInput
+				{...this.props}
+				onUpdate={this.update}
+				value={this.state.value}
+				invalid={isInvalid}
+			/>
 		);
 	}
-};
+}
 
 storiesOf('TextInput', module)
 	.addDecorator(story => (
-		<div style={{ margin: '20px 5px', fontFamily: '\"Roboto\", system, -apple-system, BlinkMacSystemFont', letterSpacing: '1.0px' }}>
+		<div
+			style={{
+				margin: '20px 5px',
+				fontFamily:
+					'"Roboto", system, -apple-system, BlinkMacSystemFont',
+				letterSpacing: '1.0px',
+			}}>
 			{story()}
 		</div>
 	))
 	.add('as default', () => (
-		<StatefulTextInput
-			title="Name"
-			hint="What's your name?"
-		/>
+		<StatefulTextInput title="Name" hint="What's your name?" />
 	))
 	.add('with style', () => (
 		<StatefulTextInput
@@ -51,14 +59,13 @@ storiesOf('TextInput', module)
 		<StatefulTextInput
 			title="Search"
 			hint="Look for something..."
-			icon={<img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-magnifier-2.png" />}
+			icon={
+				<img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-magnifier-2.png" />
+			}
 		/>
 	))
 	.add('with value', () => (
-		<StatefulTextInput
-			title="Favorite Streamer"
-			value="Brutalmoose"
-		/>
+		<StatefulTextInput title="Favorite Streamer" value="Brutalmoose" />
 	))
 	.add('with color', () => (
 		<StatefulTextInput

@@ -21,7 +21,6 @@ const Container = styled.div`
 `;
 
 export default class MenuItem extends React.Component {
-
 	static displayName = 'MenuItem';
 
 	static propTypes = {
@@ -50,5 +49,4 @@ export default class MenuItem extends React.Component {
 			</Container>
 		);
 	}
-
 }

@@ -32,7 +32,6 @@ const Seperator = styled.div`
 `;
 
 export default class MenuSeperator extends React.Component {
-
 	static displayName = 'MenuSeperator';
 
 	static propTypes = {
@@ -49,5 +48,4 @@ export default class MenuSeperator extends React.Component {
 			</Container>
 		);
 	}
-
 }

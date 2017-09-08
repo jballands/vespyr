@@ -1,7 +1,7 @@
 //
 //	jballands/vespyr
 //	TextInput.jsx
-//	
+//
 //	© 2017 Jonathan Ballands
 //
 
@@ -22,9 +22,12 @@ const Input = styled.input`
 	background: transparent;
 	resize: none;
 
-	&::placeholder { 
+	&::placeholder {
 		font-style: italic;
-		color: ${props => props.disabled ? ColorUtility.disabledGray().string() : props.hintColor.string()};
+		color: ${props =>
+			props.disabled
+				? ColorUtility.disabledGray().string()
+				: props.hintColor.string()};
 	}
 
 	&:disabled {
@@ -35,7 +38,6 @@ const Input = styled.input`
 const TextArea = Input.withComponent('textarea');
 
 export default class TextInput extends React.Component {
-
 	static displayName = 'TextInput';
 
 	static propTypes = {
@@ -94,7 +96,15 @@ export default class TextInput extends React.Component {
 	};
 
 	renderTextArea = () => {
-		const { color, disabled, hint, hintColor, lines, type, value } = this.props;
+		const {
+			color,
+			disabled,
+			hint,
+			hintColor,
+			lines,
+			type,
+			value,
+		} = this.props;
 
 		return (
 			<div>
@@ -121,7 +131,8 @@ export default class TextInput extends React.Component {
 
 		return (
 			<div>
-				<Input type={type}
+				<Input
+					type={type}
 					key="VespyrTextInput"
 					color={makeColor(color)}
 					disabled={disabled}
@@ -146,8 +157,17 @@ export default class TextInput extends React.Component {
 	};
 
 	render() {
-		const { accentColor, className, color, disabled, icon, invalid,
-			invalidColor, style, title } = this.props;
+		const {
+			accentColor,
+			className,
+			color,
+			disabled,
+			icon,
+			invalid,
+			invalidColor,
+			style,
+			title,
+		} = this.props;
 
 		const vespyrInputProps = {
 			accentColor,
@@ -170,5 +190,4 @@ export default class TextInput extends React.Component {
 			</VespyrInput>
 		);
 	}
-
 }

@@ -18,25 +18,34 @@ const Container = styled.div`
 	user-select: none;
 
 	&:hover {
-		cursor: pointer;
+		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 	}
 `;
 
 const RadioOutline = styled.div`
 	border-radius: 50%;
-	border: 1px solid ${props => props.mouseIsDown ? props.accentColor.string() : 'black'};
+	border: 1px solid
+		${props =>
+			props.disabled
+				? ColorUtility.disabledGray().string()
+				: props.mouseIsDown
+					? props.accentColor.string()
+					: props.color.string()};
 	width: 16px;
 	height: 16px;
 	position: relative;
-	transition: all ${props => props.mouseIsDown ? 0 : 500}ms ease;
+	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
 `;
 
 const RadioFill = styled.div`
 	position: absolute;
-	width: ${props => props.selected ? '12px' : 0};
-	height: ${props => props.selected ? '12px' : 0};
+	width: ${props => (props.selected ? '12px' : 0)};
+	height: ${props => (props.selected ? '12px' : 0)};
 	border-radius: 50%;
-	background: ${props => props.accentColor.string()};
+	background: ${props =>
+		props.disabled
+			? ColorUtility.disabledGray().string()
+			: props.accentColor.string()};
 	top: calc(50% - 6px);
 	left: calc(50% - 6px);
 `;
@@ -44,19 +53,25 @@ const RadioFill = styled.div`
 const Text = styled.div`
 	margin-left: 7px;
 	font-size: 16px;
-	color: ${props => props.mouseIsDown ? props.accentColor.string() : 'black'};
-	transition: all ${props => props.mouseIsDown ? 0 : 500}ms ease;
+	color: ${props =>
+		props.disabled
+			? ColorUtility.disabledGray().string()
+			: props.mouseIsDown
+				? props.accentColor.string()
+				: props.color.string()};
+	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
 `;
 
 export default class RadioItem extends React.Component {
-
 	static displayName = 'RadioItem';
 
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
 		className: PropTypes.string,
+		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		disabled: PropTypes.bool,
+		id: PropTypes.string.isRequired,
 		onClick: PropTypes.func,
 		selected: PropTypes.bool,
 		style: PropTypes.object,
@@ -64,6 +79,7 @@ export default class RadioItem extends React.Component {
 
 	static defaultProps = {
 		accentColor: ColorUtility.blue(),
+		color: ColorUtility.black(),
 		disabled: false,
 		selected: false,
 	};
@@ -80,33 +96,52 @@ export default class RadioItem extends React.Component {
 		this.setState({ mouseIsDown: false });
 	};
 
+	handleOnClick = () => {
+		const { disabled, id, onClick } = this.props;
+		if (!disabled) {
+			onClick && onClick(id);
+		}
+	};
+
 	renderRadio = () => {
-		const { accentColor, selected } = this.props;
+		const { accentColor, color, disabled, selected } = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
 			<RadioOutline
+				disabled={disabled}
 				mouseIsDown={mouseIsDown}
 				accentColor={makeColor(accentColor)}
-				selected={selected}>
-				<RadioFill accentColor={makeColor(accentColor)} selected={selected} />
+				selected={selected}
+				color={makeColor(color)}>
+				<RadioFill
+					accentColor={makeColor(accentColor)}
+					disabled={disabled}
+					selected={selected}
+				/>
 			</RadioOutline>
 		);
 	};
 
 	render() {
-		const { accentColor, children, onClick } = this.props;
+		const { accentColor, children, color, disabled } = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
 			<Container
-				onClick={onClick}
+				onClick={this.handleOnClick}
 				onMouseDown={this.handleMouseDown}
-				onMouseUp={this.handleMouseUp}>
+				onMouseUp={this.handleMouseUp}
+				disabled={disabled}>
 				{this.renderRadio()}
-				<Text accentColor={accentColor} mouseIsDown={mouseIsDown}>{children}</Text>
+				<Text
+					accentColor={makeColor(accentColor)}
+					color={makeColor(color)}
+					disabled={disabled}
+					mouseIsDown={mouseIsDown}>
+					{children}
+				</Text>
 			</Container>
 		);
 	}
-
 }

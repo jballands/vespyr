@@ -14,7 +14,10 @@ import ColorUtility, { makeColor } from './utils/ColorUtility';
 const Container = styled.div`
 	padding: 5px 0 5px 0;
 	background: ${ColorUtility.white().string()};
-	box-shadow: 0 3px 5px 0 ${ColorUtility.black().alpha(0.25).string()};
+	box-shadow: 0 3px 5px 0
+		${ColorUtility.black()
+			.alpha(0.25)
+			.string()};
 	width: calc(100% - 20px);
 	z-index: 1;
 
@@ -34,7 +37,6 @@ const Title = styled.div`
 `;
 
 export default class Menu extends React.Component {
-
 	static displayName = 'Menu';
 
 	static propTypes = {
@@ -47,19 +49,15 @@ export default class Menu extends React.Component {
 
 	static defaultProps = {
 		accentColor: ColorUtility.blue(),
-	}
+	};
 
 	renderContent = () => {
 		const { accentColor, children, title } = this.props;
 
 		return (
 			<div>
-				<Title accentColor={makeColor(accentColor)}>
-					{title}
-				</Title>
-				<div>
-					{children}
-				</div>
+				<Title accentColor={makeColor(accentColor)}>{title}</Title>
+				<div>{children}</div>
 			</div>
 		);
 	};
@@ -73,5 +71,4 @@ export default class Menu extends React.Component {
 			</Container>
 		);
 	}
-
 }

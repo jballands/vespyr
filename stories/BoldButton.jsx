@@ -7,17 +7,23 @@ import BoldButton from '../src/BoldButton';
 
 storiesOf('BoldButton', module)
 	.addDecorator(story => (
-		<div style={{ margin: '20px 5px', fontFamily: '\"Roboto\", system, -apple-system, BlinkMacSystemFont', letterSpacing: '1.0px' }}>
+		<div
+			style={{
+				margin: '20px 5px',
+				fontFamily:
+					'"Roboto", system, -apple-system, BlinkMacSystemFont',
+				letterSpacing: '1.0px',
+			}}>
 			{story()}
 		</div>
 	))
 	.add('as default', () => (
-		<BoldButton onClick={action('BoldButton')}>
-			BoldButton
-		</BoldButton>
+		<BoldButton onClick={action('BoldButton')}>BoldButton</BoldButton>
 	))
 	.add('with style', () => (
-		<BoldButton onClick={action('BoldButton')} style={{ width: 200, height: 100 }}>
+		<BoldButton
+			onClick={action('BoldButton')}
+			style={{ width: 200, height: 100 }}>
 			BoldButton
 		</BoldButton>
 	))
@@ -36,9 +42,16 @@ storiesOf('BoldButton', module)
 	))
 	.add('with children', () => (
 		<BoldButton onClick={action('BoldButton')}>
-			<div style={{ display: 'flex', flexFlow: 'row nowrap', alignContent: 'center' }}>
-				<img src='https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-paper-plane-1.png' 
-					style={{ width: 17, height: 17, marginRight: 5 }} />
+			<div
+				style={{
+					display: 'flex',
+					flexFlow: 'row nowrap',
+					alignContent: 'center',
+				}}>
+				<img
+					src="https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-paper-plane-1.png"
+					style={{ width: 17, height: 17, marginRight: 5 }}
+				/>
 				<span>Send</span>
 			</div>
 		</BoldButton>
@@ -49,7 +62,10 @@ storiesOf('BoldButton', module)
 		</BoldButton>
 	))
 	.add('with disabled & accentColor', () => (
-		<BoldButton disabled accentColor={'#00B7FF'} onClick={action('BoldButton')}>
+		<BoldButton
+			disabled
+			accentColor={'#00B7FF'}
+			onClick={action('BoldButton')}>
 			Disabled
 		</BoldButton>
 	));
