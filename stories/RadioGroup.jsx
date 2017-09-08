@@ -16,6 +16,7 @@ class StatefulRadioButtons extends React.Component {
 		this.setState({
 			selected: [id],
 		});
+		action(`RadioGroup -> ${id}`)();
 	};
 
 	render() {
@@ -191,6 +192,7 @@ storiesOf('RadioGroup', module)
 			<StatefulRadioButtons
 				disabled
 				items={items}
+				title="Creators"
 				startSelection="brutalmoose"
 			/>
 		);
@@ -280,6 +282,10 @@ storiesOf('RadioGroup', module)
 		];
 
 		return (
-			<StatefulRadioButtons items={items} startSelection="brutalmoose" />
+			<StatefulRadioButtons
+				items={items}
+				startSelection="brutalmoose"
+				title="Creators"
+			/>
 		);
 	});

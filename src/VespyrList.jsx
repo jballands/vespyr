@@ -88,7 +88,11 @@ export default class VespyrList extends React.Component {
 
 		return (
 			<Container disabled={disabled}>
-				{title && <Title color={makeColor(color)}>{title}</Title>}
+				{title && (
+					<Title color={makeColor(color)} disabled={disabled}>
+						{title}
+					</Title>
+				)}
 				<Children>{cloned}</Children>
 			</Container>
 		);

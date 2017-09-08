@@ -14,9 +14,7 @@ class StatefulDropdownMenu extends React.Component {
 
 	respond = key => {
 		this.setState({ selectedKey: key });
-		action(
-			`DropdownMenu -> ${key}: ${this.props.items[key].displayName}`,
-		)();
+		action(`DropdownMenu -> ${key}`)();
 	};
 
 	renderNormal = () => {
