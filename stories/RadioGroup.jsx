@@ -57,8 +57,12 @@ storiesOf('RadioGroup', module)
 				children: 'Lucahjin',
 			},
 			{
-				id: 'flux',
-				children: 'Flux',
+				id: 'squirrel',
+				children: 'Squirrel',
+			},
+			{
+				id: 'lgr',
+				children: 'LGR',
 			},
 		];
 
@@ -126,6 +130,7 @@ storiesOf('RadioGroup', module)
 			<StatefulRadioButtons
 				color="#FFA100"
 				items={items}
+				title="Ski Areas"
 				startSelection="keystone"
 			/>
 		);
@@ -173,8 +178,12 @@ storiesOf('RadioGroup', module)
 				children: 'Lucahjin',
 			},
 			{
-				id: 'flux',
-				children: 'Flux',
+				id: 'squirrel',
+				children: 'Squirrel',
+			},
+			{
+				id: 'lgr',
+				children: 'LGR',
 			},
 		];
 
@@ -184,5 +193,93 @@ storiesOf('RadioGroup', module)
 				items={items}
 				startSelection="brutalmoose"
 			/>
+		);
+	})
+	.add('as complex RadioGroup', () => {
+		const items = [
+			{
+				id: 'brutalmoose',
+				children: (
+					<div
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+						}}>
+						<img
+							style={{
+								width: 50,
+								borderRadius: '50%',
+								marginRight: 15,
+							}}
+							src="https://yt3.ggpht.com/-9V4pafhXtos/AAAAAAAAAAI/AAAAAAAAAAA/3GVxGvlr5R0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
+						/>
+						Brutalmoose
+					</div>
+				),
+			},
+			{
+				id: 'lucahjin',
+				children: (
+					<div
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+						}}>
+						<img
+							style={{
+								width: 50,
+								borderRadius: '50%',
+								marginRight: 15,
+							}}
+							src="https://yt3.ggpht.com/-l2kxhA1OASo/AAAAAAAAAAI/AAAAAAAAAAA/xk1yr1qNXSw/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
+						/>
+						Lucahjin
+					</div>
+				),
+			},
+			{
+				id: 'squirrel',
+				children: (
+					<div
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+						}}>
+						<img
+							style={{
+								width: 50,
+								borderRadius: '50%',
+								marginRight: 15,
+							}}
+							src="https://yt3.ggpht.com/-nLMVlrExeAQ/AAAAAAAAAAI/AAAAAAAAAAA/zbauonBmKh0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
+						/>
+						Squirrel
+					</div>
+				),
+			},
+			{
+				id: 'lgr',
+				children: (
+					<div
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+						}}>
+						<img
+							style={{
+								width: 50,
+								borderRadius: '50%',
+								marginRight: 15,
+							}}
+							src="https://yt3.ggpht.com/-CsHahRaj2wE/AAAAAAAAAAI/AAAAAAAAAAA/3PP6XFMR-wk/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
+						/>
+						LGR
+					</div>
+				),
+			},
+		];
+
+		return (
+			<StatefulRadioButtons items={items} startSelection="brutalmoose" />
 		);
 	});
