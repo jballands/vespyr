@@ -19,7 +19,7 @@ const Container = styled.div`
 	user-select: none;
 
 	&:hover {
-		cursor: pointer;
+		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 	}
 `;
 
@@ -27,7 +27,12 @@ const CheckboxOutline = styled.div`
 	width: 16px;
 	height: 16px;
 	border: 1px solid
-		${props => (props.mouseIsDown ? props.accentColor.string() : 'black')};
+		${props =>
+			props.disabled
+				? ColorUtility.disabledGray().string()
+				: props.mouseIsDown
+					? props.accentColor.string()
+					: props.color.string()};
 	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
 	display: flex;
 	justify-content: center;
@@ -38,7 +43,9 @@ const CheckboxFill = styled.div`
 	width: 14px;
 	height: 14px;
 	background: ${props =>
-		props.selected ? props.accentColor.string() : 'transparent'};
+		props.disabled
+			? ColorUtility.disabledGray().string()
+			: props.accentColor.string()};
 	display: inline-block;
 	position: relative;
 `;
@@ -55,7 +62,11 @@ const Text = styled.div`
 	margin-left: 7px;
 	font-size: 16px;
 	color: ${props =>
-		props.mouseIsDown ? props.accentColor.string() : 'black'};
+		props.disabled
+			? ColorUtility.disabledGray().string()
+			: props.mouseIsDown
+				? props.accentColor.string()
+				: props.color.string()};
 	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
 `;
 
@@ -66,6 +77,7 @@ export default class CheckboxItem extends React.Component {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
 		className: PropTypes.string,
+		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		disabled: PropTypes.bool,
 		id: PropTypes.string.isRequired,
 		onClick: PropTypes.func,
@@ -75,6 +87,7 @@ export default class CheckboxItem extends React.Component {
 
 	static defaultProps = {
 		accentColor: ColorUtility.blue(),
+		color: ColorUtility.black(),
 		disabled: false,
 		selected: false,
 	};
@@ -91,39 +104,48 @@ export default class CheckboxItem extends React.Component {
 		this.setState({ mouseIsDown: false });
 	};
 
-	renderRadio = () => {
-		const { accentColor, selected } = this.props;
+	handleOnClick = () => {
+		const { disabled, id, onClick } = this.props;
+		if (!disabled) {
+			onClick && onClick(id);
+		}
+	};
+
+	renderCheckmark = () => {
+		const { accentColor, color, selected } = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
 			<CheckboxOutline
 				mouseIsDown={mouseIsDown}
 				accentColor={makeColor(accentColor)}
-				selected={selected}>
-				<CheckboxFill
-					accentColor={makeColor(accentColor)}
-					selected={selected}>
-					{selected && (
+				selected={selected}
+				color={color}>
+				{selected && (
+					<CheckboxFill accentColor={makeColor(accentColor)}>
 						<StyledCheckmark
 							color={makeColor(ColorUtility.white())}
 						/>
-					)}
-				</CheckboxFill>
+					</CheckboxFill>
+				)}
 			</CheckboxOutline>
 		);
 	};
 
 	render() {
-		const { accentColor, children, onClick } = this.props;
+		const { accentColor, children, color } = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
 			<Container
-				onClick={onClick}
+				onClick={this.handleOnClick}
 				onMouseDown={this.handleMouseDown}
 				onMouseUp={this.handleMouseUp}>
-				{this.renderRadio()}
-				<Text accentColor={accentColor} mouseIsDown={mouseIsDown}>
+				{this.renderCheckmark()}
+				<Text
+					accentColor={accentColor}
+					color={color}
+					mouseIsDown={mouseIsDown}>
 					{children}
 				</Text>
 			</Container>

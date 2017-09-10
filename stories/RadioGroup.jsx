@@ -13,6 +13,10 @@ class StatefulRadioButtons extends React.Component {
 	};
 
 	handleOnOptionClick = id => {
+		console.log(id);
+		console.log(this.state);
+		console.log('----');
+
 		this.setState({
 			selected: [id],
 		});

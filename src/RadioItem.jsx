@@ -39,8 +39,8 @@ const RadioOutline = styled.div`
 
 const RadioFill = styled.div`
 	position: absolute;
-	width: ${props => (props.selected ? '12px' : 0)};
-	height: ${props => (props.selected ? '12px' : 0)};
+	width: 12px;
+	height: 12px;
 	border-radius: 50%;
 	background: ${props =>
 		props.disabled
@@ -114,11 +114,12 @@ export default class RadioItem extends React.Component {
 				accentColor={makeColor(accentColor)}
 				selected={selected}
 				color={makeColor(color)}>
-				<RadioFill
-					accentColor={makeColor(accentColor)}
-					disabled={disabled}
-					selected={selected}
-				/>
+				{selected && (
+					<RadioFill
+						accentColor={makeColor(accentColor)}
+						disabled={disabled}
+					/>
+				)}
 			</RadioOutline>
 		);
 	};
