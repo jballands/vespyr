@@ -4,40 +4,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import VespyrList from '../src/VespyrList';
+import RadioGroup from '../src/RadioGroup';
 import RadioItem from '../src/RadioItem';
-
-class StatefulRadioButtons extends React.Component {
-	state = {
-		selected: this.props.startSelection,
-	};
-
-	handleOnOptionClick = id => {
-		console.log(id);
-		console.log(this.state);
-		console.log('----');
-
-		this.setState({
-			selected: [id],
-		});
-		action(`RadioGroup -> ${id}`)();
-	};
-
-	render() {
-		return (
-			<VespyrList
-				selected={this.state.selected}
-				onOptionClick={this.handleOnOptionClick}
-				{...this.props}>
-				{this.props.items.map(item => (
-					<RadioItem key={item.id} id={item.id}>
-						{item.children}
-					</RadioItem>
-				))}
-			</VespyrList>
-		);
-	}
-}
 
 storiesOf('RadioGroup', module)
 	.addDecorator(story => (
@@ -51,245 +19,137 @@ storiesOf('RadioGroup', module)
 			{story()}
 		</div>
 	))
-	.add('as default', () => {
-		const items = [
-			{
-				id: 'brutalmoose',
-				children: 'Brutalmoose',
-			},
-			{
-				id: 'lucahjin',
-				children: 'Lucahjin',
-			},
-			{
-				id: 'squirrel',
-				children: 'Squirrel',
-			},
-			{
-				id: 'lgr',
-				children: 'LGR',
-			},
-		];
-
-		return (
-			<StatefulRadioButtons items={items} startSelection="brutalmoose" />
-		);
-	})
-	.add('with title', () => {
-		const items = [
-			{
-				id: 'breckenridge',
-				children: 'Breckenridge',
-			},
-			{
-				id: 'keystone',
-				children: 'Keystone',
-			},
-			{
-				id: 'heavenly',
-				children: 'Heavenly',
-			},
-			{
-				id: 'vail',
-				children: 'Vail',
-			},
-			{
-				id: 'abasin',
-				children: 'A-Basin',
-			},
-		];
-
-		return (
-			<StatefulRadioButtons
-				title={'Ski Areas'}
-				items={items}
-				startSelection="keystone"
-			/>
-		);
-	})
-	.add('with color', () => {
-		const items = [
-			{
-				id: 'breckenridge',
-				children: 'Breckenridge',
-			},
-			{
-				id: 'keystone',
-				children: 'Keystone',
-			},
-			{
-				id: 'heavenly',
-				children: 'Heavenly',
-			},
-			{
-				id: 'vail',
-				children: 'Vail',
-			},
-			{
-				id: 'abasin',
-				children: 'A-Basin',
-			},
-		];
-
-		return (
-			<StatefulRadioButtons
-				color="#FFA100"
-				items={items}
-				title="Ski Areas"
-				startSelection="keystone"
-			/>
-		);
-	})
-	.add('with accentColor', () => {
-		const items = [
-			{
-				id: 'breckenridge',
-				children: 'Breckenridge',
-			},
-			{
-				id: 'keystone',
-				children: 'Keystone',
-			},
-			{
-				id: 'heavenly',
-				children: 'Heavenly',
-			},
-			{
-				id: 'vail',
-				children: 'Vail',
-			},
-			{
-				id: 'abasin',
-				children: 'A-Basin',
-			},
-		];
-
-		return (
-			<StatefulRadioButtons
-				accentColor="#F71CFF"
-				items={items}
-				startSelection="keystone"
-			/>
-		);
-	})
-	.add('with disabled', () => {
-		const items = [
-			{
-				id: 'brutalmoose',
-				children: 'Brutalmoose',
-			},
-			{
-				id: 'lucahjin',
-				children: 'Lucahjin',
-			},
-			{
-				id: 'squirrel',
-				children: 'Squirrel',
-			},
-			{
-				id: 'lgr',
-				children: 'LGR',
-			},
-		];
-
-		return (
-			<StatefulRadioButtons
-				disabled
-				items={items}
-				title="Creators"
-				startSelection="brutalmoose"
-			/>
-		);
-	})
-	.add('as complex RadioGroup', () => {
-		const items = [
-			{
-				id: 'brutalmoose',
-				children: (
-					<div
+	.add('as default', () => (
+		<RadioGroup
+			defaultSelection="netflix"
+			onOptionClick={id => action(`RadioGroup -> ${id}`)()}>
+			<RadioItem id="netflix">Netflix</RadioItem>
+			<RadioItem id="hulu">Hulu</RadioItem>
+			<RadioItem id="youtube">YouTube Red</RadioItem>
+		</RadioGroup>
+	))
+	.add('with title', () => (
+		<RadioGroup
+			defaultSelection="breckenridge"
+			title="Ski Areas"
+			onOptionClick={id => action(`RadioGroup -> ${id}`)()}>
+			<RadioItem id="breckenridge">Breckenridge</RadioItem>
+			<RadioItem id="keystone">Keystone</RadioItem>
+			<RadioItem id="heavenly">Heavenly</RadioItem>
+			<RadioItem id="vail">Vail</RadioItem>
+			<RadioItem id="abasin">A-Basin</RadioItem>
+		</RadioGroup>
+	))
+	.add('with color', () => (
+		<RadioGroup
+			defaultSelection="light"
+			color="#FFA100"
+			title="Coffee Beans"
+			onOptionClick={id => action(`RadioGroup -> ${id}`)()}>
+			<RadioItem id="light">Light Roast</RadioItem>
+			<RadioItem id="medium">Medium Roast</RadioItem>
+			<RadioItem id="dark">Dark Roast</RadioItem>
+		</RadioGroup>
+	))
+	.add('with accentColor', () => (
+		<RadioGroup
+			defaultSelection="easiest"
+			accentColor="#F71CFF"
+			title="Difficulty"
+			onOptionClick={id => action(`RadioGroup -> ${id}`)()}>
+			<RadioItem id="easiest">Easiest</RadioItem>
+			<RadioItem id="moredifficult">More Difficult</RadioItem>
+			<RadioItem id="mostdifficult">Most Difficult</RadioItem>
+			<RadioItem id="expertsonly">Experts Only</RadioItem>
+		</RadioGroup>
+	))
+	.add('with disabled', () => (
+		<RadioGroup
+			defaultSelection="nuhhuh"
+			disabled
+			title="Disabled"
+			onOptionClick={id => action(`RadioGroup -> ${id}`)()}>
+			<RadioItem id="nuhhuh">Can't Click This</RadioItem>
+			<RadioItem id="nada">Or This</RadioItem>
+			<RadioItem id="nope">...Or This</RadioItem>
+		</RadioGroup>
+	))
+	.add('as complex RadioGroup', () => (
+		<RadioGroup
+			defaultSelection="brutalmoose"
+			title="Creators"
+			onOptionClick={id => action(`RadioGroup -> ${id}`)()}>
+			<RadioItem id="brutalmoose">
+				<div
+					style={{
+						display: 'flex',
+						flexFlow: 'row',
+						alignItems: 'center',
+					}}>
+					<img
 						style={{
-							display: 'flex',
-							alignItems: 'center',
-						}}>
-						<img
-							style={{
-								width: 50,
-								borderRadius: '50%',
-								marginRight: 15,
-							}}
-							src="https://yt3.ggpht.com/-9V4pafhXtos/AAAAAAAAAAI/AAAAAAAAAAA/3GVxGvlr5R0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
-						/>
-						Brutalmoose
-					</div>
-				),
-			},
-			{
-				id: 'lucahjin',
-				children: (
-					<div
+							borderRadius: '50%',
+							width: 50,
+							marginRight: 10,
+						}}
+						src="https://yt3.ggpht.com/-9V4pafhXtos/AAAAAAAAAAI/AAAAAAAAAAA/3GVxGvlr5R0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
+					/>
+					Brutalmoose
+				</div>
+			</RadioItem>
+			<RadioItem id="lucahjin">
+				<div
+					style={{
+						display: 'flex',
+						flexFlow: 'row',
+						alignItems: 'center',
+					}}>
+					<img
 						style={{
-							display: 'flex',
-							alignItems: 'center',
-						}}>
-						<img
-							style={{
-								width: 50,
-								borderRadius: '50%',
-								marginRight: 15,
-							}}
-							src="https://yt3.ggpht.com/-l2kxhA1OASo/AAAAAAAAAAI/AAAAAAAAAAA/xk1yr1qNXSw/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
-						/>
-						Lucahjin
-					</div>
-				),
-			},
-			{
-				id: 'squirrel',
-				children: (
-					<div
+							borderRadius: '50%',
+							width: 50,
+							marginRight: 10,
+						}}
+						src="https://yt3.ggpht.com/-l2kxhA1OASo/AAAAAAAAAAI/AAAAAAAAAAA/xk1yr1qNXSw/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
+					/>
+					Lucahjin
+				</div>
+			</RadioItem>
+			<RadioItem id="squirrel">
+				<div
+					style={{
+						display: 'flex',
+						flexFlow: 'row',
+						alignItems: 'center',
+					}}>
+					<img
 						style={{
-							display: 'flex',
-							alignItems: 'center',
-						}}>
-						<img
-							style={{
-								width: 50,
-								borderRadius: '50%',
-								marginRight: 15,
-							}}
-							src="https://yt3.ggpht.com/-nLMVlrExeAQ/AAAAAAAAAAI/AAAAAAAAAAA/zbauonBmKh0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
-						/>
-						Squirrel
-					</div>
-				),
-			},
-			{
-				id: 'lgr',
-				children: (
-					<div
+							borderRadius: '50%',
+							width: 50,
+							marginRight: 10,
+						}}
+						src="https://yt3.ggpht.com/-nLMVlrExeAQ/AAAAAAAAAAI/AAAAAAAAAAA/zbauonBmKh0/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
+					/>
+					Squirrel
+				</div>
+			</RadioItem>
+			<RadioItem id="lgr">
+				<div
+					style={{
+						display: 'flex',
+						flexFlow: 'row',
+						alignItems: 'center',
+					}}>
+					<img
 						style={{
-							display: 'flex',
-							alignItems: 'center',
-						}}>
-						<img
-							style={{
-								width: 50,
-								borderRadius: '50%',
-								marginRight: 15,
-							}}
-							src="https://yt3.ggpht.com/-CsHahRaj2wE/AAAAAAAAAAI/AAAAAAAAAAA/3PP6XFMR-wk/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
-						/>
-						LGR
-					</div>
-				),
-			},
-		];
-
-		return (
-			<StatefulRadioButtons
-				items={items}
-				startSelection="brutalmoose"
-				title="Creators"
-			/>
-		);
-	});
+							borderRadius: '50%',
+							width: 50,
+							marginRight: 10,
+						}}
+						src="https://yt3.ggpht.com/-CsHahRaj2wE/AAAAAAAAAAI/AAAAAAAAAAA/3PP6XFMR-wk/s100-c-k-no-mo-rj-c0xffffff/photo.jpg"
+					/>
+					LGR
+				</div>
+			</RadioItem>
+		</RadioGroup>
+	));
