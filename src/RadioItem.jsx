@@ -8,6 +8,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import cx from 'classnames';
 
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
@@ -125,7 +126,14 @@ export default class RadioItem extends React.Component {
 	};
 
 	render() {
-		const { accentColor, children, color, disabled } = this.props;
+		const {
+			accentColor,
+			children,
+			className,
+			color,
+			disabled,
+			style,
+		} = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
@@ -133,7 +141,9 @@ export default class RadioItem extends React.Component {
 				onClick={this.handleOnClick}
 				onMouseDown={this.handleMouseDown}
 				onMouseUp={this.handleMouseUp}
-				disabled={disabled}>
+				disabled={disabled}
+				className={cx('vespyr-list-item', className)}
+				style={style}>
 				{this.renderRadio()}
 				<Text
 					accentColor={makeColor(accentColor)}

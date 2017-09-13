@@ -25,7 +25,7 @@ const Children = styled.div`
 	flex-flow: column wrap;
 	align-items: flex-start;
 
-	div + div {
+	.vespyr-list-item + .vespyr-list-item {
 		margin-top: 3px;
 	}
 `;

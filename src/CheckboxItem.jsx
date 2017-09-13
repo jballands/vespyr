@@ -8,6 +8,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import cx from 'classnames';
 
 import Checkmark from './svg/Checkmark';
 import ColorUtility, { makeColor } from './utils/ColorUtility';
@@ -136,15 +137,24 @@ export default class CheckboxItem extends React.Component {
 	};
 
 	render() {
-		const { accentColor, children, color, disabled } = this.props;
+		const {
+			accentColor,
+			children,
+			className,
+			color,
+			disabled,
+			style,
+		} = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
 			<Container
+				className={cx('vespyr-list-item', className)}
 				onClick={this.handleOnClick}
 				onMouseDown={this.handleMouseDown}
 				onMouseUp={this.handleMouseUp}
-				disabled={disabled}>
+				disabled={disabled}
+				style={style}>
 				{this.renderCheckmark()}
 				<Text
 					accentColor={makeColor(accentColor)}
