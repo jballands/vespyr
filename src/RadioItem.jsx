@@ -125,8 +125,6 @@ export default class RadioItem extends React.Component {
 	};
 
 	render() {
-		console.log(this.props);
-
 		const { accentColor, children, color, disabled } = this.props;
 		const { mouseIsDown } = this.state;
 

@@ -112,7 +112,7 @@ export default class CheckboxItem extends React.Component {
 	};
 
 	renderCheckmark = () => {
-		const { accentColor, color, selected } = this.props;
+		const { accentColor, color, disabled, selected } = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
@@ -120,9 +120,12 @@ export default class CheckboxItem extends React.Component {
 				mouseIsDown={mouseIsDown}
 				accentColor={makeColor(accentColor)}
 				selected={selected}
-				color={color}>
+				disabled={disabled}
+				color={makeColor(color)}>
 				{selected && (
-					<CheckboxFill accentColor={makeColor(accentColor)}>
+					<CheckboxFill
+						accentColor={makeColor(accentColor)}
+						disabled={disabled}>
 						<StyledCheckmark
 							color={makeColor(ColorUtility.white())}
 						/>
@@ -133,19 +136,21 @@ export default class CheckboxItem extends React.Component {
 	};
 
 	render() {
-		const { accentColor, children, color } = this.props;
+		const { accentColor, children, color, disabled } = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
 			<Container
 				onClick={this.handleOnClick}
 				onMouseDown={this.handleMouseDown}
-				onMouseUp={this.handleMouseUp}>
+				onMouseUp={this.handleMouseUp}
+				disabled={disabled}>
 				{this.renderCheckmark()}
 				<Text
-					accentColor={accentColor}
-					color={color}
-					mouseIsDown={mouseIsDown}>
+					accentColor={makeColor(accentColor)}
+					color={makeColor(color)}
+					mouseIsDown={mouseIsDown}
+					disabled={disabled}>
 					{children}
 				</Text>
 			</Container>
