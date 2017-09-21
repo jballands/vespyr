@@ -7,6 +7,7 @@ function loadStories() {
 	require('../stories/DropdownMenu.jsx');
 	require('../stories/RadioGroup.jsx');
 	require('../stories/CheckboxGroup.jsx');
+	require('../stories/Slider.jsx');
 }
 
 configure(loadStories, module);

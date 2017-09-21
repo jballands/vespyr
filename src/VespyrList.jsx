@@ -8,6 +8,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 const Container = styled.div`
@@ -70,9 +71,11 @@ export default class VespyrList extends React.Component {
 		const {
 			accentColor,
 			children,
+			className,
 			color,
 			disabled,
 			selected,
+			style,
 			title,
 		} = this.props;
 
@@ -87,7 +90,7 @@ export default class VespyrList extends React.Component {
 		);
 
 		return (
-			<Container disabled={disabled}>
+			<Container className={className} disabled={disabled} style={style}>
 				{title && (
 					<Title color={makeColor(color)} disabled={disabled}>
 						{title}

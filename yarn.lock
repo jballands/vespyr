@@ -4164,6 +4164,10 @@ react-simple-di@^1.2.0:
     babel-runtime "6.x.x"
     hoist-non-react-statics "1.x.x"
 
+react-slider@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-slider/-/react-slider-0.9.0.tgz#584ae63325be115581fc08bf7753adb8e4d4a0b1"
+
 react-split-pane@^0.1.63:
   version "0.1.64"
   resolved "https://registry.yarnpkg.com/react-split-pane/-/react-split-pane-0.1.64.tgz#725029b9fcb51059aa82f2b8622832473849f559"

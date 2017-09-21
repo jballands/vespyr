@@ -7,6 +7,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import VespyrList from './VespyrList';
 
 export default class RadioGroup extends React.Component {
