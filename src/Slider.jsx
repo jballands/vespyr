@@ -16,12 +16,17 @@ const Container = styled.div`
 	width: 300px;
 	display: flex;
 	flex-flow: column nowrap;
+
+	&:hover {
+		cursor: ${props => (props.disabled ? 'not-allowed' : 'default')};
+	}
 `;
 
 const TrackWithLabelsContainer = styled.div`
 	display: flex;
 	flex-flow: row nowrap;
 	width: 100%;
+	pointer-events: ${props => (props.disabled ? 'none' : 'all')};
 `;
 
 const Title = styled.div`
@@ -33,14 +38,19 @@ const Title = styled.div`
 		props.disabled
 			? ColorUtility.disabledGray().string()
 			: props.color.string()};
+	user-select: none;
 `;
 
 const Label = styled.div`
 	font-size: 10px;
-	color: ${props => props.color.string()};
+	color: ${props =>
+		props.disabled
+			? ColorUtility.disabledGray().string()
+			: props.color.string()};
 	display: flex;
 	align-items: flex-end;
 	margin-bottom: 2px;
+	user-select: none;
 `;
 
 const LeftLabel = Label.extend`margin-right: 7px;`;
@@ -72,7 +82,10 @@ const Track = styled.div`
 	height: 2px;
 	left: 6px;
 	width: calc(100% - 12px);
-	background: ${props => props.color.string()};
+	background: ${props =>
+		props.disabled
+			? ColorUtility.disabledGray().string()
+			: props.color.string()};
 `;
 
 const HandleContainer = styled.div`
@@ -89,26 +102,50 @@ const HandleContainer = styled.div`
 	}
 `;
 
+const getBorderColor = props => {
+	if (props.disabled) {
+		return ColorUtility.disabledGray().string();
+	} else if (props.active) {
+		return props.accentColor.string();
+	}
+	return props.color.string();
+};
+
+const getBackgroundColor = props => {
+	if (props.disabled) {
+		return ColorUtility.disabledGray().string();
+	} else if (props.active) {
+		return props.accentColor.string();
+	}
+	return ColorUtility.white().string();
+};
+
 const Handle = styled.div`
 	width: 12px;
 	height: 12px;
 	border-radius: 50%;
-	border: 1px solid
-		${props =>
-			props.active ? props.accentColor.string() : props.color.string()};
-	background: ${props =>
-		props.active ? props.accentColor.string() : 'white'};
+	border: 1px solid ${props => getBorderColor(props)};
+	background: ${props => getBackgroundColor(props)};
 	transition: all 200ms ease;
 `;
+
+const getColor = props => {
+	if (props.disabled) {
+		return ColorUtility.disabledGray().string();
+	} else if (props.active) {
+		return props.accentColor.string();
+	}
+	return props.color.string();
+};
 
 const Value = styled.div`
 	transform: ${props => (props.active ? 'scale(1.4)' : 'scale(1)')};
 	font-size: 14px;
-	color: ${props =>
-		props.active ? props.accentColor.string() : props.color.string()};
+	color: ${props => getColor(props)};
 	transition: all 200ms ease;
 	transform-origin: center;
 	margin-bottom: 2px;
+	user-select: none;
 `;
 
 export default class Slider extends React.Component {
@@ -164,24 +201,19 @@ export default class Slider extends React.Component {
 	renderTrack = () => {
 		const {
 			accentColor,
-			className,
 			color,
 			disabled,
-			leftLabel,
 			max,
 			min,
-			rightLabel,
 			showValue,
-			style,
 			value,
-			title,
 		} = this.props;
 
 		const { isDragging } = this.state;
 
 		return (
 			<TrackContainer>
-				<Track color={makeColor(color)} />
+				<Track color={makeColor(color)} disabled={disabled} />
 				<StyledReactSlider
 					orientation="horizontal"
 					onBeforeChange={this.handleOnBeforeChange}
@@ -196,7 +228,8 @@ export default class Slider extends React.Component {
 							<Value
 								accentColor={makeColor(accentColor)}
 								active={isDragging}
-								color={makeColor(color)}>
+								color={makeColor(color)}
+								disabled={disabled}>
 								{value}
 							</Value>
 						)}
@@ -204,6 +237,7 @@ export default class Slider extends React.Component {
 							accentColor={makeColor(accentColor)}
 							active={isDragging}
 							color={makeColor(color)}
+							disabled={disabled}
 						/>
 					</HandleContainer>
 				</StyledReactSlider>
@@ -213,33 +247,28 @@ export default class Slider extends React.Component {
 
 	render() {
 		const {
-			accentColor,
 			className,
 			color,
 			disabled,
 			leftLabel,
-			max,
-			min,
 			rightLabel,
-			showValue,
 			style,
-			value,
 			title,
 		} = this.props;
 
-		const { isDragging } = this.state;
-
 		return (
-			<Container className={className} style={style}>
-				<TrackWithLabelsContainer>
+			<Container className={className} style={style} disabled={disabled}>
+				<TrackWithLabelsContainer disabled={disabled}>
 					{leftLabel && (
-						<LeftLabel color={makeColor(color)}>
+						<LeftLabel color={makeColor(color)} disabled={disabled}>
 							{leftLabel}
 						</LeftLabel>
 					)}
 					{this.renderTrack()}
 					{rightLabel && (
-						<RightLabel color={makeColor(color)}>
+						<RightLabel
+							color={makeColor(color)}
+							disabled={disabled}>
 							{rightLabel}
 						</RightLabel>
 					)}

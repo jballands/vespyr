@@ -59,7 +59,7 @@ const Container = styled.div`
 	position: relative;
 	margin: 5px;
 	cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-	userSelect: none;
+	user-select: none;
 `;
 
 const getHoverStyles = props => {

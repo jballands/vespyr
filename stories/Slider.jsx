@@ -49,12 +49,24 @@ storiesOf('Slider', module)
 	.add('with labels', () => (
 		<SmartSlider leftLabel="Low" rightLabel="High" title="Engagement" />
 	))
+	.add('with disabled', () => (
+		<SmartSlider
+			leftLabel="No"
+			rightLabel="Chance"
+			title="Disabled"
+			disabled
+			showValue
+		/>
+	))
 	.add('with showValue', () => (
 		<SmartSlider
-			title="Engagement"
+			title="Wind Speed"
+			leftLabel="Weaker"
+			rightLabel="Stronger"
 			showValue
-			min={0}
-			max={10000}
-			defaultValue={5000}
+			min={45}
+			max={160}
+			defaultValue={70}
+			style={{ width: 400 }}
 		/>
 	));
