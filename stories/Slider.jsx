@@ -51,8 +51,6 @@ storiesOf('Slider', module)
 	))
 	.add('with showValue', () => (
 		<SmartSlider
-			leftLabel="Low"
-			rightLabel="High"
 			title="Engagement"
 			showValue
 			min={0}

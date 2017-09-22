@@ -21,6 +21,7 @@ const Container = styled.div`
 const TrackWithLabelsContainer = styled.div`
 	display: flex;
 	flex-flow: row nowrap;
+	width: 100%;
 `;
 
 const Title = styled.div`
@@ -47,13 +48,15 @@ const LeftLabel = Label.extend`margin-right: 7px;`;
 const RightLabel = Label.extend`margin-left: 7px;`;
 
 const TrackContainer = styled.div`
-	flex: 1 0 100%;
+	display: block;
+	flex: 1 0;
 	position: relative;
 `;
 
 const StyledReactSlider = styled(ReactSlider)`
+	display: block;
 	width: calc(100% - 12px);
-	height: ${props => (props.showValue ? '30px' : '12px')};
+	height: ${props => (props.showValue ? '30px' : '100%')};
 	z-index: 1;
 	position: relative;
 
