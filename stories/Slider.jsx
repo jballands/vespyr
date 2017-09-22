@@ -28,5 +28,8 @@ storiesOf('Slider', module)
 			rightLabel="High"
 			title="Engagement"
 			showValue
+			min={0}
+			max={10000}
+			defaultValue={5000}
 		/>
 	));

@@ -13,6 +13,7 @@ import ReactSlider from 'react-slider';
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 const Container = styled.div`
+	position: relative;
 	width: 300px;
 	display: flex;
 	flex-flow: column nowrap;
@@ -30,24 +31,24 @@ const Container = styled.div`
 // 	height: 12px;
 // `;
 
+const Track = styled.div`
+	position: absolute;
+	bottom: 6px;
+	height: 2px;
+	left: 6px;
+	width: 100%;
+	background: ${props => props.color.string()};
+`;
+
 const StyledReactSlider = styled(ReactSlider)`
 	width: 100%;
-	height: 25px;
+	height: ${props => (props.showValue ? '30px' : 'auto')};
 	z-index: 1;
 
 	.handle {
 		height: 100%;
 	}
 `;
-
-// const Track = styled.div`
-// 	position: absolute;
-// 	top: 6px;
-// 	left: 6px;
-// 	width: calc(100% - 12px);
-// 	height: 2px;
-// 	background: ${props => props.color.string()};
-// `;
 
 // const Title = styled.div`
 // 	font-size: 10px;
@@ -75,6 +76,8 @@ const HandleContainer = styled.div`
 	align-items: center;
 	position: absolute;
 	bottom: 0;
+	width: 12px;
+	overflow: visible;
 
 	&:hover {
 		cursor: pointer;
@@ -110,6 +113,7 @@ export default class Slider extends React.Component {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		defaultValue: PropTypes.number,
 		disabled: PropTypes.bool,
 		leftLabel: PropTypes.string,
 		max: PropTypes.number,
@@ -117,7 +121,6 @@ export default class Slider extends React.Component {
 		rightLabel: PropTypes.string,
 		showValue: PropTypes.bool,
 		style: PropTypes.object,
-		value: PropTypes.number,
 		title: PropTypes.string,
 	};
 
@@ -128,12 +131,12 @@ export default class Slider extends React.Component {
 		max: 100,
 		min: 0,
 		showValue: false,
-		value: 50,
+		defaultValue: 50,
 	};
 
 	state = {
 		isDragging: false,
-		value: this.props.value,
+		value: this.props.defaultValue,
 	};
 
 	handleOnBeforeChange = () => {
@@ -173,6 +176,7 @@ export default class Slider extends React.Component {
 
 		return (
 			<Container className={className} style={style}>
+				<Track color={makeColor(color)} />
 				<StyledReactSlider
 					orientation="horizontal"
 					onBeforeChange={this.handleOnBeforeChange}
@@ -180,7 +184,8 @@ export default class Slider extends React.Component {
 					onAfterChange={this.handleOnAfterChange}
 					value={value}
 					min={min}
-					max={max}>
+					max={max}
+					showValue={showValue}>
 					<HandleContainer>
 						{showValue && (
 							<Value
