@@ -34,6 +34,7 @@ export default class AnimatedMenu extends React.Component {
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		className: PropTypes.string,
+		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
 		show: PropTypes.bool,
 		style: PropTypes.object,
@@ -63,13 +64,21 @@ export default class AnimatedMenu extends React.Component {
 	};
 
 	renderMenu = values => {
-		const { accentColor, className, children, style, title } = this.props;
+		const {
+			accentColor,
+			className,
+			children,
+			color,
+			style,
+			title,
+		} = this.props;
 
 		const menuProps = {
 			passedStyles: style,
 			accentColor,
 			className,
 			children,
+			color,
 			title,
 		};
 

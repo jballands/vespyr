@@ -29,28 +29,34 @@ const TrackWithLabelsContainer = styled.div`
 	pointer-events: ${props => (props.disabled ? 'none' : 'all')};
 `;
 
+const getTitleColor = props => {
+	if (props.disabled) {
+		return ColorUtility.disabledGray().string();
+	} else if (props.active) {
+		return props.accentColor.string();
+	}
+	return props.color.string();
+};
+
 const Title = styled.div`
 	font-size: 10px;
 	text-transform: uppercase;
 	margin-top: 7px;
-	transition: color 250ms ease;
-	color: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.color.string()};
+	transition: color 200ms ease;
+	color: ${props => getTitleColor(props)};
 	user-select: none;
 `;
 
 const Label = styled.div`
 	font-size: 10px;
-	color: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.color.string()};
 	display: flex;
 	align-items: flex-end;
 	margin-bottom: 2px;
 	user-select: none;
+	color: ${props =>
+		props.disabled
+			? ColorUtility.disabledGray().string()
+			: props.color.string()};
 `;
 
 const LeftLabel = Label.extend`margin-right: 7px;`;
@@ -102,7 +108,7 @@ const HandleContainer = styled.div`
 	}
 `;
 
-const getBorderColor = props => {
+const getHandleBorderColor = props => {
 	if (props.disabled) {
 		return ColorUtility.disabledGray().string();
 	} else if (props.active) {
@@ -111,7 +117,7 @@ const getBorderColor = props => {
 	return props.color.string();
 };
 
-const getBackgroundColor = props => {
+const getHandleBackgroundColor = props => {
 	if (props.disabled) {
 		return ColorUtility.disabledGray().string();
 	} else if (props.active) {
@@ -124,12 +130,12 @@ const Handle = styled.div`
 	width: 12px;
 	height: 12px;
 	border-radius: 50%;
-	border: 1px solid ${props => getBorderColor(props)};
-	background: ${props => getBackgroundColor(props)};
+	border: 1px solid ${props => getHandleBorderColor(props)};
+	background: ${props => getHandleBackgroundColor(props)};
 	transition: all 200ms ease;
 `;
 
-const getColor = props => {
+const getValueColor = props => {
 	if (props.disabled) {
 		return ColorUtility.disabledGray().string();
 	} else if (props.active) {
@@ -141,7 +147,7 @@ const getColor = props => {
 const Value = styled.div`
 	transform: ${props => (props.active ? 'scale(1.4)' : 'scale(1)')};
 	font-size: 14px;
-	color: ${props => getColor(props)};
+	color: ${props => getValueColor(props)};
 	transition: all 200ms ease;
 	transform-origin: center;
 	margin-bottom: 2px;
@@ -247,6 +253,7 @@ export default class Slider extends React.Component {
 
 	render() {
 		const {
+			accentColor,
 			className,
 			color,
 			disabled,
@@ -255,6 +262,8 @@ export default class Slider extends React.Component {
 			style,
 			title,
 		} = this.props;
+
+		const { isDragging } = this.state;
 
 		return (
 			<Container className={className} style={style} disabled={disabled}>
@@ -274,7 +283,11 @@ export default class Slider extends React.Component {
 					)}
 				</TrackWithLabelsContainer>
 				{title && (
-					<Title color={makeColor(color)} disabled={disabled}>
+					<Title
+						accentColor={makeColor(accentColor)}
+						active={isDragging}
+						color={makeColor(color)}
+						disabled={disabled}>
 						{title}
 					</Title>
 				)}

@@ -249,6 +249,62 @@ storiesOf('DropdownMenu', module)
 			/>
 		);
 	})
+	.add('with color', () => {
+		const items = {
+			breckenridge: {
+				displayName: 'Breckenridge',
+			},
+			keystone: {
+				displayName: 'Keystone',
+			},
+			heavenly: {
+				displayName: 'Heavenly',
+			},
+			vail: {
+				displayName: 'Vail',
+			},
+			'arapahoe-basin': {
+				displayName: 'A-Basin',
+			},
+		};
+		return (
+			<StatefulDropdownMenu
+				title="Ski Areas"
+				items={items}
+				defaultKey={'keystone'}
+				style={{ width: 500 }}
+				color="#FFA100"
+			/>
+		);
+	})
+	.add('with accentColor', () => {
+		const items = {
+			breckenridge: {
+				displayName: 'Breckenridge',
+			},
+			keystone: {
+				displayName: 'Keystone',
+			},
+			heavenly: {
+				displayName: 'Heavenly',
+			},
+			vail: {
+				displayName: 'Vail',
+			},
+			'arapahoe-basin': {
+				displayName: 'A-Basin',
+			},
+		};
+		return (
+			<StatefulDropdownMenu
+				title="Ski Areas"
+				items={items}
+				defaultKey={'keystone'}
+				style={{ width: 500 }}
+				accentColor="#F71CFF"
+			/>
+		);
+	})
 	.add('as complex DropdownMenu', () => {
 		const items = {
 			brutalmoose: {

@@ -42,6 +42,7 @@ export default class Menu extends React.Component {
 	static propTypes = {
 		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		className: PropTypes.string,
+		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
 		style: PropTypes.object,
 		title: PropTypes.string,
@@ -49,15 +50,22 @@ export default class Menu extends React.Component {
 
 	static defaultProps = {
 		accentColor: ColorUtility.blue(),
+		color: ColorUtility.black(),
 	};
 
 	renderContent = () => {
-		const { accentColor, children, title } = this.props;
+		const { accentColor, children, color, title } = this.props;
+
+		const cloned = React.Children.map(children, child =>
+			React.cloneElement(child, {
+				color,
+			}),
+		);
 
 		return (
 			<div>
 				<Title accentColor={makeColor(accentColor)}>{title}</Title>
-				<div>{children}</div>
+				<div>{cloned}</div>
 			</div>
 		);
 	};

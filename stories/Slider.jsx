@@ -49,15 +49,6 @@ storiesOf('Slider', module)
 	.add('with labels', () => (
 		<SmartSlider leftLabel="Low" rightLabel="High" title="Engagement" />
 	))
-	.add('with disabled', () => (
-		<SmartSlider
-			leftLabel="No"
-			rightLabel="Chance"
-			title="Disabled"
-			disabled
-			showValue
-		/>
-	))
 	.add('with showValue', () => (
 		<SmartSlider
 			title="Wind Speed"
@@ -68,5 +59,32 @@ storiesOf('Slider', module)
 			max={160}
 			defaultValue={70}
 			style={{ width: 400 }}
+		/>
+	))
+	.add('with color', () => (
+		<SmartSlider
+			leftLabel="Shallow"
+			rightLabel="Deep"
+			title="Bass"
+			color="#FFA100"
+			showValue
+		/>
+	))
+	.add('with accentColor', () => (
+		<SmartSlider
+			leftLabel="Easy"
+			rightLabel="Hard"
+			title="Difficulty"
+			accentColor="#F71CFF"
+			showValue
+		/>
+	))
+	.add('with disabled', () => (
+		<SmartSlider
+			leftLabel="No"
+			rightLabel="Chance"
+			title="Disabled"
+			disabled
+			showValue
 		/>
 	));

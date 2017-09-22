@@ -13,6 +13,8 @@ import VespyrInput from './VespyrInput';
 import AnimatedMenu from './AnimatedMenu';
 import CaretDown from './svg/CaretDown';
 
+import ColorUtility, { makeColor } from './utils/ColorUtility';
+
 const Container = styled.div`
 	display: inline-flex;
 	flex-flow: row nowrap;
@@ -48,6 +50,7 @@ const PositionedAnimatedMenu = styled(AnimatedMenu)`
 const Selection = styled.div`
 	padding: 4px 0;
 	font-size: 16px;
+	color: ${props => props.color.string()};
 `;
 
 const VespyrInputWithPointer = styled(VespyrInput)`
@@ -82,6 +85,11 @@ export default class DropdownMenu extends React.Component {
 
 		style: PropTypes.object,
 		title: PropTypes.string,
+	};
+
+	static defaultProps = {
+		accentColor: ColorUtility.blue(),
+		color: ColorUtility.black(),
 	};
 
 	state = {
@@ -141,23 +149,25 @@ export default class DropdownMenu extends React.Component {
 	};
 
 	renderSelection = () => {
-		const { value } = this.props;
-
-		return <Selection>{value}</Selection>;
+		const { color, value } = this.props;
+		return <Selection color={makeColor(color)}>{value}</Selection>;
 	};
 
 	renderMenu = () => {
-		const { children, title } = this.props;
+		const { children, color, title } = this.props;
 
 		return (
-			<PositionedAnimatedMenu title={title} show={this.state.focused}>
+			<PositionedAnimatedMenu
+				color={makeColor(color)}
+				title={title}
+				show={this.state.focused}>
 				{children}
 			</PositionedAnimatedMenu>
 		);
 	};
 
 	render() {
-		const { className, style } = this.props;
+		const { className, color, style } = this.props;
 
 		return (
 			<Container
@@ -167,7 +177,7 @@ export default class DropdownMenu extends React.Component {
 				onFocus={this.addFocus}
 				onBlur={this.removeFocus}>
 				{this.renderInput()}
-				<StyledCaretDown />
+				<StyledCaretDown color={makeColor(color)} />
 			</Container>
 		);
 	}
