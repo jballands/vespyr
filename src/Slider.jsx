@@ -162,6 +162,7 @@ export default class Slider extends React.Component {
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		disabled: PropTypes.bool,
+		formatter: PropTypes.func,
 		leftLabel: PropTypes.string,
 		max: PropTypes.number,
 		min: PropTypes.number,
@@ -209,6 +210,7 @@ export default class Slider extends React.Component {
 			accentColor,
 			color,
 			disabled,
+			formatter,
 			max,
 			min,
 			showValue,
@@ -236,7 +238,7 @@ export default class Slider extends React.Component {
 								active={isDragging}
 								color={makeColor(color)}
 								disabled={disabled}>
-								{value}
+								{formatter ? formatter(value) : value}
 							</Value>
 						)}
 						<Handle

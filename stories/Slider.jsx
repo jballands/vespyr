@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import Slider from '../src/Slider';
 
 class SmartSlider extends React.Component {
@@ -18,6 +19,7 @@ class SmartSlider extends React.Component {
 		this.setState({
 			value,
 		});
+		action(`Slider -> ${value}`)();
 	};
 
 	render() {
@@ -59,6 +61,18 @@ storiesOf('Slider', module)
 			max={160}
 			defaultValue={70}
 			style={{ width: 400 }}
+		/>
+	))
+	.add('with formatter', () => (
+		<SmartSlider
+			leftLabel="F"
+			rightLabel="A+"
+			title="Grade"
+			min={60}
+			max={100}
+			defaultValue={92}
+			formatter={value => `${value}%`}
+			showValue
 		/>
 	))
 	.add('with color', () => (

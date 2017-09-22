@@ -27,7 +27,7 @@ const Children = styled.div`
 	align-items: flex-start;
 
 	.vespyr-list-item + .vespyr-list-item {
-		margin-top: 3px;
+		margin-top: 5px;
 	}
 `;
 
