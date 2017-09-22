@@ -18,37 +18,67 @@ const Container = styled.div`
 	flex-flow: column nowrap;
 `;
 
-const TrackWithLabelsContainer = styled.div`
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-`;
+// const TrackWithLabelsContainer = styled.div`
+// 	display: flex;
+// 	flex-flow: row nowrap;
+// 	align-items: center;
+// `;
 
-const TrackContainer = styled.div`
-	position: relative;
-	width: 100%;
-	height: 12px;
-`;
+// const TrackContainer = styled.div`
+// 	position: relative;
+// 	width: 100%;
+// 	height: 12px;
+// `;
 
 const StyledReactSlider = styled(ReactSlider)`
 	width: 100%;
+	height: 25px;
 	z-index: 1;
+
+	.handle {
+		height: 100%;
+	}
 `;
 
-const Track = styled.div`
-	position: absolute;
-	top: 6px;
-	left: 6px;
-	width: calc(100% - 12px);
-	height: 2px;
-	background: ${props => props.color.string()};
-`;
+// const Track = styled.div`
+// 	position: absolute;
+// 	top: 6px;
+// 	left: 6px;
+// 	width: calc(100% - 12px);
+// 	height: 2px;
+// 	background: ${props => props.color.string()};
+// `;
+
+// const Title = styled.div`
+// 	font-size: 10px;
+// 	text-transform: uppercase;
+// 	margin-top: 7px;
+// 	transition: color 250ms ease;
+// 	color: ${props =>
+// 		props.disabled
+// 			? ColorUtility.disabledGray().string()
+// 			: props.color.string()};
+// `;
+
+// const Label = styled.div`
+// 	font-size: 10px;
+// 	color: ${props => props.color.string()};
+// `;
+
+// const LeftLabel = Label.extend`margin-right: 7px;`;
+
+// const RightLabel = Label.extend`margin-left: 7px;`;
 
 const HandleContainer = styled.div`
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
-	justify-content: center;
+	position: absolute;
+	bottom: 0;
+
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const Handle = styled.div`
@@ -61,37 +91,16 @@ const Handle = styled.div`
 	background: ${props =>
 		props.active ? props.accentColor.string() : 'white'};
 	transition: all 250ms ease;
-
-	&:hover {
-		cursor: pointer;
-	}
 `;
-
-const Title = styled.div`
-	font-size: 10px;
-	text-transform: uppercase;
-	margin-top: 7px;
-	transition: color 250ms ease;
-	color: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.color.string()};
-`;
-
-const Label = styled.div`
-	font-size: 10px;
-	color: ${props => props.color.string()};
-`;
-
-const LeftLabel = Label.extend`margin-right: 7px;`;
-
-const RightLabel = Label.extend`margin-left: 7px;`;
 
 const Value = styled.div`
-	font-size: ${props => (props.active ? '18px' : '12px')};
+	transform: ${props => (props.active ? 'scale(1.4)' : 'scale(1)')};
+	font-size: 14px;
 	color: ${props =>
 		props.active ? props.accentColor.string() : props.color.string()};
 	transition: all 250ms ease;
+	transform-origin: center;
+	margin-bottom: 2px;
 `;
 
 export default class Slider extends React.Component {
@@ -164,50 +173,30 @@ export default class Slider extends React.Component {
 
 		return (
 			<Container className={className} style={style}>
-				<TrackWithLabelsContainer>
-					{leftLabel && (
-						<LeftLabel color={makeColor(color)}>
-							{leftLabel}
-						</LeftLabel>
-					)}
-					<TrackContainer>
-						<Track color={makeColor(color)} />
-						<StyledReactSlider
-							orientation="horizontal"
-							onBeforeChange={this.handleOnBeforeChange}
-							onChange={this.handleOnChange}
-							onAfterChange={this.handleOnAfterChange}
-							value={value}
-							min={min}
-							max={max}>
-							<HandleContainer>
-								{showValue && (
-									<Value
-										accentColor={makeColor(accentColor)}
-										active={isDragging}
-										color={makeColor(color)}>
-										{value}
-									</Value>
-								)}
-								<Handle
-									accentColor={makeColor(accentColor)}
-									active={isDragging}
-									color={makeColor(color)}
-								/>
-							</HandleContainer>
-						</StyledReactSlider>
-					</TrackContainer>
-					{rightLabel && (
-						<RightLabel color={makeColor(color)}>
-							{rightLabel}
-						</RightLabel>
-					)}
-				</TrackWithLabelsContainer>
-				{title && (
-					<Title color={makeColor(color)} disabled={disabled}>
-						{title}
-					</Title>
-				)}
+				<StyledReactSlider
+					orientation="horizontal"
+					onBeforeChange={this.handleOnBeforeChange}
+					onChange={this.handleOnChange}
+					onAfterChange={this.handleOnAfterChange}
+					value={value}
+					min={min}
+					max={max}>
+					<HandleContainer>
+						{showValue && (
+							<Value
+								accentColor={makeColor(accentColor)}
+								active={isDragging}
+								color={makeColor(color)}>
+								{value}
+							</Value>
+						)}
+						<Handle
+							accentColor={makeColor(accentColor)}
+							active={isDragging}
+							color={makeColor(color)}
+						/>
+					</HandleContainer>
+				</StyledReactSlider>
 			</Container>
 		);
 	}
