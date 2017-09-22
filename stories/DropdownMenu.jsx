@@ -251,56 +251,48 @@ storiesOf('DropdownMenu', module)
 	})
 	.add('with color', () => {
 		const items = {
-			breckenridge: {
-				displayName: 'Breckenridge',
+			coke: {
+				displayName: 'Coca-Cola',
 			},
-			keystone: {
-				displayName: 'Keystone',
+			pepsi: {
+				displayName: 'Pepsi',
 			},
-			heavenly: {
-				displayName: 'Heavenly',
+			drpepper: {
+				displayName: 'Dr. Pepper',
 			},
-			vail: {
-				displayName: 'Vail',
-			},
-			'arapahoe-basin': {
-				displayName: 'A-Basin',
+			rc: {
+				displayName: 'RC',
 			},
 		};
 		return (
 			<StatefulDropdownMenu
-				title="Ski Areas"
+				title="Sodas"
 				items={items}
-				defaultKey={'keystone'}
-				style={{ width: 500 }}
+				defaultKey={'coke'}
 				color="#FFA100"
 			/>
 		);
 	})
 	.add('with accentColor', () => {
 		const items = {
-			breckenridge: {
-				displayName: 'Breckenridge',
+			easiest: {
+				displayName: 'Easiest',
 			},
-			keystone: {
-				displayName: 'Keystone',
+			moredifficult: {
+				displayName: 'More Difficult',
 			},
-			heavenly: {
-				displayName: 'Heavenly',
+			mostdifficult: {
+				displayName: 'Most Difficult',
 			},
-			vail: {
-				displayName: 'Vail',
-			},
-			'arapahoe-basin': {
-				displayName: 'A-Basin',
+			expertsonly: {
+				displayName: 'Experts Only',
 			},
 		};
 		return (
 			<StatefulDropdownMenu
-				title="Ski Areas"
+				title="Difficulty"
 				items={items}
-				defaultKey={'keystone'}
-				style={{ width: 500 }}
+				defaultKey={'easiest'}
 				accentColor="#F71CFF"
 			/>
 		);
