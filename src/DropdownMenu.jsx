@@ -154,10 +154,11 @@ export default class DropdownMenu extends React.Component {
 	};
 
 	renderMenu = () => {
-		const { children, color, title } = this.props;
+		const { accentColor, children, color, title } = this.props;
 
 		return (
 			<PositionedAnimatedMenu
+				accentColor={makeColor(accentColor)}
 				color={makeColor(color)}
 				title={title}
 				show={this.state.focused}>
