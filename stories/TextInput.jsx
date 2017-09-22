@@ -39,7 +39,7 @@ storiesOf('TextInput', module)
 			style={{
 				margin: '20px 5px',
 				fontFamily:
-					'"Roboto", system, -apple-system, BlinkMacSystemFont',
+					'-apple-system, BlinkMacSystemFont, "Roboto", system, "Helvetica", "Arial", san-serif',
 				letterSpacing: '1.0px',
 			}}>
 			{story()}
