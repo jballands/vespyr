@@ -8,7 +8,7 @@
   "scripts": {
     "build": "babel --out-dir lib src",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "export-storybook": "build-storybook -c .storybook -o .storybook/.out",
+    "export-storybook": "build-storybook -c .storybook -o docs",
     "prepublish": "npm run build"
   },
   "dependencies": {
