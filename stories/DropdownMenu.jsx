@@ -299,6 +299,13 @@ storiesOf('DropdownMenu', module)
 	})
 	.add('with darkMode', () => {
 		const items = {
+			none: {
+				displayName: 'None',
+			},
+			medals: {
+				displayName: 'Top 3',
+				seperator: true,
+			},
 			bronze: {
 				displayName: 'Bronze',
 			},
@@ -311,7 +318,7 @@ storiesOf('DropdownMenu', module)
 		};
 		return (
 			<StatefulDropdownMenu
-				title="Medals"
+				title="Position"
 				items={items}
 				defaultKey={'bronze'}
 				darkMode
