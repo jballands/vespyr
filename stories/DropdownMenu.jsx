@@ -297,6 +297,27 @@ storiesOf('DropdownMenu', module)
 			/>
 		);
 	})
+	.add('with darkMode', () => {
+		const items = {
+			bronze: {
+				displayName: 'Bronze',
+			},
+			silver: {
+				displayName: 'Silver',
+			},
+			gold: {
+				displayName: 'Gold',
+			},
+		};
+		return (
+			<StatefulDropdownMenu
+				title="Medals"
+				items={items}
+				defaultKey={'bronze'}
+				darkMode
+			/>
+		);
+	})
 	.add('as complex DropdownMenu', () => {
 		const items = {
 			brutalmoose: {

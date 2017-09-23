@@ -36,6 +36,7 @@ export default class AnimatedMenu extends React.Component {
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
+		darkMode: PropTypes.bool,
 		show: PropTypes.bool,
 		style: PropTypes.object,
 		title: PropTypes.string,
@@ -69,6 +70,7 @@ export default class AnimatedMenu extends React.Component {
 			className,
 			children,
 			color,
+			darkMode,
 			style,
 			title,
 		} = this.props;
@@ -79,6 +81,7 @@ export default class AnimatedMenu extends React.Component {
 			className,
 			children,
 			color,
+			darkMode,
 			title,
 		};
 

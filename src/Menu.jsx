@@ -13,7 +13,10 @@ import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 const Container = styled.div`
 	padding: 5px 0 5px 0;
-	background: ${ColorUtility.white().string()};
+	background: ${props =>
+		props.darkMode
+			? ColorUtility.dark().string()
+			: ColorUtility.white().string()};
 	box-shadow: 0 3px 5px 0
 		${ColorUtility.black()
 			.alpha(0.25)
@@ -44,6 +47,7 @@ export default class Menu extends React.Component {
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
+		darkMode: PropTypes.bool,
 		style: PropTypes.object,
 		title: PropTypes.string,
 	};
@@ -51,14 +55,16 @@ export default class Menu extends React.Component {
 	static defaultProps = {
 		accentColor: ColorUtility.blue(),
 		color: ColorUtility.black(),
+		darkMode: false,
 	};
 
 	renderContent = () => {
-		const { accentColor, children, color, title } = this.props;
+		const { accentColor, children, color, darkMode, title } = this.props;
 
 		const cloned = React.Children.map(children, child =>
 			React.cloneElement(child, {
 				color,
+				darkMode,
 			}),
 		);
 
@@ -71,10 +77,10 @@ export default class Menu extends React.Component {
 	};
 
 	render() {
-		const { className, style } = this.props;
+		const { className, darkMode, style } = this.props;
 
 		return (
-			<Container style={style} className={className}>
+			<Container style={style} className={className} darkMode={darkMode}>
 				{this.renderContent()}
 			</Container>
 		);

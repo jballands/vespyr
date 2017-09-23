@@ -16,7 +16,10 @@ const Container = styled.div`
 	color: ${props => props.color.string()};
 
 	&:hover {
-		background: ${ColorUtility.hoverGray().string()};
+		background: ${props =>
+			props.darkMode
+				? ColorUtility.darkHoverGray().string()
+				: ColorUtility.hoverGray().string()};
 		cursor: pointer;
 	}
 `;
@@ -27,6 +30,7 @@ export default class MenuItem extends React.Component {
 	static propTypes = {
 		children: PropTypes.node,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		darkMode: PropTypes.bool,
 		id: PropTypes.string,
 		onClick: PropTypes.func,
 		seperator: PropTypes.bool,
@@ -35,6 +39,7 @@ export default class MenuItem extends React.Component {
 
 	static defaultProps = {
 		color: ColorUtility.black(),
+		darkMode: false,
 		seperator: false,
 	};
 
@@ -44,11 +49,12 @@ export default class MenuItem extends React.Component {
 	};
 
 	render() {
-		const { children, color, style } = this.props;
+		const { children, color, darkMode, style } = this.props;
 
 		return (
 			<Container
 				color={makeColor(color)}
+				darkMode={darkMode}
 				style={style}
 				onClick={this.handleClick}>
 				{children}

@@ -69,6 +69,7 @@ export default class DropdownMenu extends React.Component {
 		children: PropTypes.node,
 		className: PropTypes.string,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		darkMode: PropTypes.bool,
 		disabled: PropTypes.bool,
 		hint: PropTypes.string,
 		hintColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -154,13 +155,16 @@ export default class DropdownMenu extends React.Component {
 	};
 
 	renderMenu = () => {
-		const { accentColor, children, color, title } = this.props;
+		const { accentColor, children, darkMode, title } = this.props;
+
+		const color = darkMode ? ColorUtility.offWhite() : ColorUtility.black();
 
 		return (
 			<PositionedAnimatedMenu
 				accentColor={makeColor(accentColor)}
-				color={makeColor(color)}
+				color={color}
 				title={title}
+				darkMode={darkMode}
 				show={this.state.focused}>
 				{children}
 			</PositionedAnimatedMenu>
