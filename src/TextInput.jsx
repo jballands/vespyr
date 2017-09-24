@@ -88,7 +88,8 @@ export default class TextInput extends React.Component {
 	};
 
 	handleUpdate = e => {
-		this.props.onUpdate(e.target.value);
+		const { onUpdate } = this.props;
+		onUpdate && onUpdate(e.target.value);
 	};
 
 	inputReference = input => {
