@@ -152,6 +152,7 @@ const Value = styled.div`
 	transform-origin: center;
 	margin-bottom: 2px;
 	user-select: none;
+	white-space: nowrap;
 `;
 
 export default class Slider extends React.Component {

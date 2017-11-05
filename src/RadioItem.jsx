@@ -49,6 +49,7 @@ const RadioFill = styled.div`
 			: props.accentColor.string()};
 	top: calc(50% - 6px);
 	left: calc(50% - 6px);
+	transition: background 300ms ease;
 `;
 
 const Text = styled.div`

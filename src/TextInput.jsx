@@ -52,7 +52,7 @@ export default class TextInput extends React.Component {
 		invalidColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		lines: PropTypes.number,
 		onUpdate: PropTypes.func,
-		value: PropTypes.string,
+		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		style: PropTypes.object,
 		title: PropTypes.string,
 		type: PropTypes.string,
@@ -89,7 +89,7 @@ export default class TextInput extends React.Component {
 
 	handleUpdate = e => {
 		const { onUpdate } = this.props;
-		onUpdate && onUpdate(e.target.value);
+		onUpdate && onUpdate(e.target.value, e);
 	};
 
 	inputReference = input => {
