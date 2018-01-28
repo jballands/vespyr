@@ -32,7 +32,6 @@ const Container = styled.div`
 `;
 
 const Text = styled.div`
-	text-transform: uppercase;
 	font-size: 12px;
 	user-select: none;
 	color: ${props => getColor(props)};

@@ -97,12 +97,13 @@ const Base = styled.div`
 		${props => calculateSideAccentColor(props.disabled, props.accentColor)};
 	border-radius: 5px;
 	font-size: 12px;
-	text-transform: uppercase;
 	transition: all ease 200ms;
 	color: ${props => calculateFontColor(props.disabled, props.accentColor)};
 `;
 
 const Top = Base.extend`
+	display: inline-flex;
+
 	&:hover {
 		${props => getHoverStyles(props)};
 	}
@@ -112,13 +113,13 @@ const Top = Base.extend`
 `;
 
 const Side = Base.extend`
-	display: inline-block;
+	display: inline-flex;
 	position: static;
 	background: ${props =>
 		calculateSideAccentColor(props.disabled, props.accentColor)};
 	left: 0;
 	top: 0;
-	zIndex: -1;
+	zindex: -1;
 `;
 
 export default class BoldButton extends React.Component {
@@ -146,12 +147,13 @@ export default class BoldButton extends React.Component {
 	};
 
 	renderShade = () => {
-		const { accentColor, disabled, style } = this.props;
+		const { accentColor, className, disabled, style } = this.props;
 
 		return (
 			<Side
 				accentColor={makeColor(accentColor)}
 				disabled={disabled}
+				className={className}
 				style={style}>
 				{this.props.children}
 			</Side>
@@ -168,15 +170,13 @@ export default class BoldButton extends React.Component {
 		} = this.props;
 
 		return (
-			<Container
-				disabled={disabled}
-				onClick={this.invokeOnClick}
-				className={className}>
+			<Container disabled={disabled} onClick={this.invokeOnClick}>
 				<Top
 					accentColor={makeColor(accentColor)}
 					disabled={disabled}
 					key="vespyrButtonTop"
-					style={style}>
+					style={style}
+					className={className}>
 					{children}
 				</Top>
 				{this.renderShade()}
