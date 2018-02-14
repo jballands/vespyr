@@ -20,11 +20,11 @@
     "styled-components": "^2.1.2"
   },
   "peerDependencies": {
-    "react": "^15.6.1"
+    "react": ">=15.6.1"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.1.9",
-    "@storybook/react": "^3.1.8",
+    "@storybook/addon-actions": "^3.3.0",
+    "@storybook/react": "^3.3.0",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -33,7 +33,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.2.0",
     "eslint-plugin-react": "^7.1.0",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   }
 }
