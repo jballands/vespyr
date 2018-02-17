@@ -5,6 +5,17 @@
   "repository": "github.com/jballands/vespyr",
   "author": "Jon Ballands <jballands@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "vespyr",
+    "React",
+    "UI",
+    "library",
+    "jonathanballands"
+  ],
+  "bugs": {
+    "url": "https://github.com/jballands/vespyr/issues"
+  },
+  "homepage": "https://jballands.github.io/vespyr",
   "scripts": {
     "build": "babel --out-dir lib src",
     "storybook": "start-storybook -p 9001 -c .storybook",
