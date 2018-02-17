@@ -1,6 +1,6 @@
 # vespyr
 
-Vespyr is a UI library for my personal website,  [jonathanballands.me](https://github.com/jballands/jonthanballands.me). 
+Vespyr is a UI library for my personal website,  [jonathanballands.me](https://github.com/jballands/jonathanballands.me). 
 It is written in React.
 
 You can go [here](https://jballands.github.io/vespyr) to see all that Vespyr offers.
