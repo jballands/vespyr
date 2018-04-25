@@ -105,7 +105,6 @@ storiesOf('DropdownMenu', module)
 				margin: '20px 5px',
 				fontFamily: '"Roboto", system, "Helvetica", "Arial", san-serif',
 				letterSpacing: '1.0px',
-				fontSize: '20px',
 			}}>
 			{story()}
 		</div>
@@ -159,7 +158,7 @@ storiesOf('DropdownMenu', module)
 				title="Ski Areas"
 				items={items}
 				defaultKey={'keystone'}
-				style={{ width: 500 }}
+				style={{ width: 500, fontSize: '24px' }}
 			/>
 		);
 	})
