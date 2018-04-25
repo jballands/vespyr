@@ -49,7 +49,6 @@ const PositionedAnimatedMenu = styled(AnimatedMenu)`
 
 const Selection = styled.div`
 	padding: 4px 0;
-	font-size: 16px;
 	color: ${props => props.color.string()};
 `;
 

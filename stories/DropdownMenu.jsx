@@ -103,9 +103,9 @@ storiesOf('DropdownMenu', module)
 		<div
 			style={{
 				margin: '20px 5px',
-				fontFamily:
-					'-apple-system, BlinkMacSystemFont, "Roboto", system, "Helvetica", "Arial", san-serif',
+				fontFamily: '"Roboto", system, "Helvetica", "Arial", san-serif',
 				letterSpacing: '1.0px',
+				fontSize: '20px',
 			}}>
 			{story()}
 		</div>
