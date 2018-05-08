@@ -44,7 +44,9 @@ const StyledCaretDown = styled(CaretDown)`
 
 const PositionedAnimatedMenu = styled(AnimatedMenu)`
 	position: absolute;
-	top: calc(100% - 14px);
+	top: calc(100% - 15px);
+	left: 0;
+	width: 100%;
 `;
 
 const Selection = styled.div`
@@ -140,10 +142,10 @@ export default class DropdownMenu extends React.Component {
 				<VespyrInputWithPointer
 					focus={this.addFocus}
 					isFocused={this.isFocused}
+					renderMenu={this.renderMenu()}
 					{...vespyrInputProps}>
 					{this.renderSelection()}
 				</VespyrInputWithPointer>
-				{this.renderMenu()}
 			</Input>
 		);
 	};

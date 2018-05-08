@@ -32,19 +32,18 @@ const Container = styled.div`
 `;
 
 const Icon = styled.div`
-	max-width: 25px;
-	max-height: 25px;
 	margin-right: 10px;
-
-	* {
-		max-width: 100%;
-		max-height: 100%;
-	}
+	margin-top: 0.5em;
 `;
 
-const InputContainer = styled.div`width: 100%;`;
+const InputContainer = styled.div`
+	width: 100%;
+	position: relative;
+`;
 
-const Underlines = styled.div`position: relative;`;
+const Underlines = styled.div`
+	position: relative;
+`;
 
 const UnderlineDefault = styled.div`
 	position: absolute;
@@ -133,6 +132,7 @@ export default class VespyrInput extends React.Component {
 		icon: PropTypes.node,
 		invalid: PropTypes.bool,
 		invalidColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		renderMenu: PropTypes.node,
 		style: PropTypes.object,
 		title: PropTypes.string,
 	};
@@ -175,7 +175,7 @@ export default class VespyrInput extends React.Component {
 		return (
 			<InputContainer>
 				{this.props.children}
-
+				{this.props.renderMenu}
 				<Underlines>
 					<UnderlineDefault
 						color={makeColor(color)}

@@ -35,7 +35,11 @@ class StatefulDropdownMenu extends React.Component {
 						);
 					}
 					return (
-						<MenuItem key={k} id={k} onClick={this.respond}>
+						<MenuItem
+							key={k}
+							id={k}
+							disabled={items[k].disabled}
+							onClick={this.respond}>
 							{items[k].displayName}
 						</MenuItem>
 					);
@@ -321,6 +325,33 @@ storiesOf('DropdownMenu', module)
 				items={items}
 				defaultKey={'bronze'}
 				darkMode
+			/>
+		);
+	})
+	.add('with disabled items', () => {
+		const items = {
+			breckenridge: {
+				displayName: 'Breckenridge',
+			},
+			keystone: {
+				displayName: 'Keystone',
+			},
+			heavenly: {
+				displayName: 'Heavenly',
+				disabled: true,
+			},
+			vail: {
+				displayName: 'Vail',
+			},
+			'arapahoe-basin': {
+				displayName: 'A-Basin',
+			},
+		};
+		return (
+			<StatefulDropdownMenu
+				title="Ski Areas"
+				items={items}
+				defaultKey={'keystone'}
 			/>
 		);
 	})

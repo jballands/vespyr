@@ -22,11 +22,7 @@ function calculateAccentColor(disabled, accentColor) {
 	return accentColor.string();
 }
 
-function calculateSideAccentColor(disabled, accentColor) {
-	if (disabled) {
-		return ColorUtility.disabledGray().string();
-	}
-
+function calculateSideAccentColor(accentColor) {
 	const luminosity = accentColor.luminosity();
 
 	if (luminosity > 0.91) {
@@ -38,14 +34,7 @@ function calculateSideAccentColor(disabled, accentColor) {
 	}
 }
 
-function calculateFontColor(disabled, accentColor) {
-	if (disabled) {
-		if (!colorsEqual(accentColor, ColorUtility.white())) {
-			return ColorUtility.white().string();
-		}
-		return ColorUtility.disabledGray().string();
-	}
-
+function calculateFontColor(accentColor) {
 	const luminosity = accentColor.luminosity();
 
 	if (luminosity > 0.75) {
@@ -60,15 +49,13 @@ const Container = styled.div`
 	margin: 5px;
 	cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 	user-select: none;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 const getHoverStyles = props => {
 	if (!props.disabled) {
 		return `
-			border: 2px solid ${calculateSideAccentColor(
-				props.disabled,
-				props.accentColor,
-			)};
+			border: 2px solid ${calculateSideAccentColor(props.accentColor)};
 			transform: translate(0, -5px);
 		`;
 	}
@@ -76,10 +63,7 @@ const getHoverStyles = props => {
 const getActiveStyles = props => {
 	if (!props.disabled) {
 		return `
-			border: 2px solid ${calculateSideAccentColor(
-				props.disabled,
-				props.accentColor,
-			)};
+			border: 2px solid ${calculateSideAccentColor(props.accentColor)};
 			transform: translate(0, 0);
 		`;
 	}
@@ -91,14 +75,12 @@ const Base = styled.div`
 	flex-flow: row nowrap;
 	align-items: center;
 	justify-content: center;
-	background: ${props =>
-		calculateAccentColor(props.disabled, props.accentColor)};
-	border: 2px solid
-		${props => calculateSideAccentColor(props.disabled, props.accentColor)};
+	background: ${props => props.accentColor.string()};
+	border: 2px solid ${props => calculateSideAccentColor(props.accentColor)};
 	border-radius: 5px;
 	font-size: 12px;
 	transition: all ease 200ms;
-	color: ${props => calculateFontColor(props.disabled, props.accentColor)};
+	color: ${props => calculateFontColor(props.accentColor)};
 `;
 
 const Top = Base.extend`
@@ -115,8 +97,7 @@ const Top = Base.extend`
 const Side = Base.extend`
 	display: inline-flex;
 	position: static;
-	background: ${props =>
-		calculateSideAccentColor(props.disabled, props.accentColor)};
+	background: ${props => calculateSideAccentColor(props.accentColor)};
 	left: 0;
 	top: 0;
 	zindex: -1;
