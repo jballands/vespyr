@@ -328,6 +328,33 @@ storiesOf('DropdownMenu', module)
 			/>
 		);
 	})
+	.add('with disabled', () => {
+		const items = {
+			breckenridge: {
+				displayName: 'Breckenridge',
+			},
+			keystone: {
+				displayName: 'Keystone',
+			},
+			heavenly: {
+				displayName: 'Heavenly',
+			},
+			vail: {
+				displayName: 'Vail',
+			},
+			'arapahoe-basin': {
+				displayName: 'A-Basin',
+			},
+		};
+		return (
+			<StatefulDropdownMenu
+				title="Ski Areas"
+				items={items}
+				defaultKey={'keystone'}
+				disabled
+			/>
+		);
+	})
 	.add('with disabled items', () => {
 		const items = {
 			breckenridge: {

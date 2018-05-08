@@ -22,6 +22,9 @@ const Container = styled.div`
 const Svg = styled.svg`
 	width: 100%;
 	height: 100%;
+	* {
+		transition: fill 200ms ease;
+	}
 `;
 
 export default class CaretDown extends React.Component {

@@ -11,25 +11,13 @@ import styled from 'styled-components';
 
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
-const getHoverStyles = props => {
-	if (props.disabled) {
-		return `
-			cursor: not-allowed;
-		`;
-	}
-};
 const Container = styled.div`
 	display: inline-flex;
 	flex-flow: row nowrap;
 	align-items: center;
 	user-select: none;
-	cursor: default;
 	width: 250px;
 	opacity: ${props => (props.disabled ? 0.25 : 1)};
-
-	&:hover {
-		${props => getHoverStyles(props)};
-	}
 `;
 
 const Icon = styled.div`

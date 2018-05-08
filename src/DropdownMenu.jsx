@@ -24,6 +24,10 @@ const Container = styled.div`
 	outline: none;
 	position: relative;
 	width: 250px;
+
+	&:hover {
+		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+	}
 `;
 
 const Input = styled.div`
@@ -33,13 +37,14 @@ const Input = styled.div`
 	width: 100%;
 
 	&:hover {
-		cursor: pointer;
+		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 	}
 `;
 
 const StyledCaretDown = styled(CaretDown)`
 	padding-bottom: 10px;
 	margin-left: 7px;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 const PositionedAnimatedMenu = styled(AnimatedMenu)`
@@ -56,10 +61,6 @@ const Selection = styled.div`
 
 const VespyrInputWithPointer = styled(VespyrInput)`
 	width: 100%;
-
-	&:hover {
-		cursor: pointer;
-	}
 `;
 
 export default class DropdownMenu extends React.Component {
@@ -106,7 +107,7 @@ export default class DropdownMenu extends React.Component {
 	}
 
 	addFocus = () => {
-		this.setState({ focused: true });
+		!this.props.disabled && this.setState({ focused: true });
 	};
 
 	removeFocus = () => {
@@ -138,7 +139,7 @@ export default class DropdownMenu extends React.Component {
 		};
 
 		return (
-			<Input>
+			<Input disabled={disabled}>
 				<VespyrInputWithPointer
 					focus={this.addFocus}
 					isFocused={this.isFocused}
@@ -173,17 +174,21 @@ export default class DropdownMenu extends React.Component {
 	};
 
 	render() {
-		const { className, color, style } = this.props;
+		const { accentColor, className, color, disabled, style } = this.props;
 
 		return (
 			<Container
 				className={className}
+				disabled={disabled}
 				style={style}
 				tabIndex="0"
 				onFocus={this.addFocus}
 				onBlur={this.removeFocus}>
 				{this.renderInput()}
-				<StyledCaretDown color={makeColor(color)} />
+				<StyledCaretDown
+					disabled={disabled}
+					color={makeColor(this.state.focused ? accentColor : color)}
+				/>
 			</Container>
 		);
 	}
