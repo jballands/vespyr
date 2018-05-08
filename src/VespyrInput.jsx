@@ -25,6 +25,7 @@ const Container = styled.div`
 	user-select: none;
 	cursor: default;
 	width: 250px;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 
 	&:hover {
 		${props => getHoverStyles(props)};
@@ -66,11 +67,7 @@ const UnderlineInvalid = styled.div`
 	width: 100%;
 	display: block;
 	content: '';
-	border-bottom: solid 1px
-		${props =>
-			props.disabled
-				? ColorUtility.disabledGray().string()
-				: props.invalidColor.string()};
+	border-bottom: solid 1px ${props => props.invalidColor.string()};
 	transform: ${props => (props.invalid ? 'scaleX(1)' : 'scaleX(0)')};
 	transition: transform 250ms ease;
 `;
@@ -82,11 +79,7 @@ const UnderlineFocus = styled.div`
 	width: 100%;
 	display: block;
 	content: '';
-	border-bottom: solid 1px
-		${props =>
-			props.disabled
-				? ColorUtility.disabledGray().string()
-				: props.accentColor.string()};
+	border-bottom: solid 1px ${props => props.accentColor.string()};
 	transform: ${props => (props.focused ? 'scaleX(1)' : 'scaleX(0)')};
 	transition: transform 250ms ease;
 `;
@@ -96,8 +89,6 @@ const getTitleColor = props => {
 		return props.accentColor.string();
 	} else if (props.invalid) {
 		return props.invalidColor.string();
-	} else if (props.disabled) {
-		return ColorUtility.disabledGray().string();
 	}
 	return props.color.string();
 };
@@ -164,7 +155,6 @@ export default class VespyrInput extends React.Component {
 		const {
 			accentColor,
 			color,
-			disabled,
 			isFocused,
 			invalid,
 			invalidColor,
@@ -177,24 +167,18 @@ export default class VespyrInput extends React.Component {
 				{this.props.children}
 				{this.props.renderMenu}
 				<Underlines>
-					<UnderlineDefault
-						color={makeColor(color)}
-						disabled={disabled}
-					/>
+					<UnderlineDefault color={makeColor(color)} />
 					<UnderlineInvalid
-						disabled={disabled}
 						invalidColor={makeColor(invalidColor)}
 						invalid={invalid}
 					/>
 					<UnderlineFocus
-						disabled={disabled}
 						accentColor={makeColor(accentColor)}
 						focused={focused}
 					/>
 				</Underlines>
 				<Title
 					accentColor={makeColor(accentColor)}
-					disabled={disabled}
 					focused={focused}
 					invalidColor={makeColor(invalidColor)}
 					invalid={invalid}

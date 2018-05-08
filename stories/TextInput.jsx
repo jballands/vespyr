@@ -109,10 +109,26 @@ storiesOf('TextInput', module)
 			disabled
 		/>
 	))
+	.add('with disabled and color', () => (
+		<StatefulTextInput
+			title="Disabled"
+			hint="I can't take input right now"
+			color="#FFA100"
+			disabled
+		/>
+	))
 	.add('with validateInput', () => (
 		<StatefulTextInput
 			title="Name"
 			hint="Type 'Brutalmoose'"
 			validateInput="Brutalmoose"
+		/>
+	))
+	.add('with validateInput and invalidColor', () => (
+		<StatefulTextInput
+			title="Name"
+			hint="Type 'Lucahjin'"
+			validateInput="Lucahjin"
+			invalidColor="#b482ff"
 		/>
 	));

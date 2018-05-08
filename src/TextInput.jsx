@@ -25,9 +25,7 @@ const Input = styled.input`
 	&::placeholder {
 		font-style: italic;
 		color: ${props =>
-			props.disabled
-				? ColorUtility.disabledGray().string()
-				: props.hintColor.string()};
+			props.disabled ? props.color.string() : props.hintColor.string()};
 	}
 
 	&:disabled {

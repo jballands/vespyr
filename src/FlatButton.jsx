@@ -12,9 +12,7 @@ import styled from 'styled-components';
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 function getColor(props) {
-	if (props.disabled) {
-		return ColorUtility.disabledGray().string();
-	} else if (props.accentColor) {
+	if (props.accentColor) {
 		return props.accentColor.string();
 	}
 	return ColorUtility.black().string();
@@ -25,6 +23,7 @@ const Container = styled.div`
 	flex-flow: column nowrap;
 	align-items: center;
 	padding: 5px;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 
 	&:hover {
 		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
