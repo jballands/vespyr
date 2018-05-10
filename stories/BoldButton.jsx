@@ -23,7 +23,7 @@ storiesOf('BoldButton', module)
 	.add('with style', () => (
 		<BoldButton
 			onClick={action('BoldButton')}
-			style={{ width: 200, height: 100 }}>
+			style={{ width: 200, height: 100, fontSize: '36px' }}>
 			BoldButton
 		</BoldButton>
 	))

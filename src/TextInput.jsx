@@ -126,11 +126,21 @@ export default class TextInput extends React.Component {
 	};
 
 	renderTextInput = () => {
-		const { color, disabled, hint, hintColor, type, value } = this.props;
+		const {
+			className,
+			color,
+			disabled,
+			hint,
+			hintColor,
+			type,
+			value,
+			style,
+		} = this.props;
 
 		return (
 			<div>
 				<Input
+					className={className}
 					type={type}
 					key="VespyrTextInput"
 					color={makeColor(color)}
@@ -142,6 +152,7 @@ export default class TextInput extends React.Component {
 					value={value ? value : ''}
 					onFocus={this.focus}
 					onBlur={this.unfocus}
+					style={style}
 				/>
 			</div>
 		);

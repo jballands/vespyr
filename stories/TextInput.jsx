@@ -52,7 +52,7 @@ storiesOf('TextInput', module)
 		<StatefulTextInput
 			title="Name"
 			hint="What's your name?"
-			style={{ width: 500 }}
+			style={{ width: 500, fontSize: '36px' }}
 		/>
 	))
 	.add('with icon', () => (
@@ -60,7 +60,10 @@ storiesOf('TextInput', module)
 			title="Search"
 			hint="Look for something..."
 			icon={
-				<img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-magnifier-2.png" />
+				<img
+					src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-magnifier-2.png"
+					style={{ width: '20px' }}
+				/>
 			}
 		/>
 	))

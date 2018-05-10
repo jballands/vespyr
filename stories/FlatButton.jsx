@@ -21,7 +21,9 @@ storiesOf('FlatButton', module)
 		<FlatButton onClick={action('FlatButton')}>FlatButton</FlatButton>
 	))
 	.add('with style', () => (
-		<FlatButton style={{ width: 200 }} onClick={action('FlatButton')}>
+		<FlatButton
+			style={{ width: 200, fontSize: '36px' }}
+			onClick={action('FlatButton')}>
 			FlatButton
 		</FlatButton>
 	))

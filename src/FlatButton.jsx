@@ -24,6 +24,7 @@ const Container = styled.div`
 	align-items: center;
 	padding: 5px;
 	opacity: ${props => (props.disabled ? 0.25 : 1)};
+	font-size: 12px;
 
 	&:hover {
 		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -31,7 +32,6 @@ const Container = styled.div`
 `;
 
 const Text = styled.div`
-	font-size: 12px;
 	user-select: none;
 	color: ${props => getColor(props)};
 `;
@@ -91,11 +91,11 @@ export default class FlatButton extends React.Component {
 			<Container
 				accentColor={makeColor(accentColor)}
 				disabled={disabled}
-				style={style}
 				onClick={this.invokeOnClick}
 				className={className}
 				onMouseOver={this.mouseOver}
-				onMouseOut={this.mouseOut}>
+				onMouseOut={this.mouseOut}
+				style={style}>
 				<Text accentColor={makeColor(accentColor)} disabled={disabled}>
 					{children}
 				</Text>
