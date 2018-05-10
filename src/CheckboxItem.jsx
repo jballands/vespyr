@@ -18,6 +18,7 @@ const Container = styled.div`
 	flex-flow: row nowrap;
 	align-items: center;
 	user-select: none;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 
 	&:hover {
 		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -36,7 +37,6 @@ const CheckboxOutline = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 const CheckboxFill = styled.div`
@@ -45,7 +45,6 @@ const CheckboxFill = styled.div`
 	background: ${props => props.accentColor.string()};
 	display: inline-block;
 	position: relative;
-	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 const StyledCheckmark = styled(Checkmark)`
@@ -62,7 +61,6 @@ const Text = styled.div`
 	color: ${props =>
 		props.mouseIsDown ? props.accentColor.string() : props.color.string()};
 	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
-	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 export default class CheckboxItem extends React.Component {
@@ -107,7 +105,7 @@ export default class CheckboxItem extends React.Component {
 	};
 
 	renderCheckmark = () => {
-		const { accentColor, color, disabled, selected } = this.props;
+		const { accentColor, color, selected } = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
@@ -115,12 +113,9 @@ export default class CheckboxItem extends React.Component {
 				mouseIsDown={mouseIsDown}
 				accentColor={makeColor(accentColor)}
 				selected={selected}
-				disabled={disabled}
 				color={makeColor(color)}>
 				{selected && (
-					<CheckboxFill
-						accentColor={makeColor(accentColor)}
-						disabled={disabled}>
+					<CheckboxFill accentColor={makeColor(accentColor)}>
 						<StyledCheckmark
 							color={makeColor(ColorUtility.white())}
 						/>
@@ -153,8 +148,7 @@ export default class CheckboxItem extends React.Component {
 				<Text
 					accentColor={makeColor(accentColor)}
 					color={makeColor(color)}
-					mouseIsDown={mouseIsDown}
-					disabled={disabled}>
+					mouseIsDown={mouseIsDown}>
 					{children}
 				</Text>
 			</Container>

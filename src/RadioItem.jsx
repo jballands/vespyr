@@ -17,6 +17,7 @@ const Container = styled.div`
 	flex-flow: row nowrap;
 	align-items: center;
 	user-select: none;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 
 	&:hover {
 		cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -30,7 +31,6 @@ const RadioOutline = styled.div`
 			props.mouseIsDown
 				? props.accentColor.string()
 				: props.color.string()};
-	opacity: ${props => (props.disabled ? 0.25 : 1)};
 	width: 16px;
 	height: 16px;
 	position: relative;
@@ -46,7 +46,6 @@ const RadioFill = styled.div`
 	top: calc(50% - 6px);
 	left: calc(50% - 6px);
 	transition: background 300ms ease;
-	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 const Text = styled.div`
@@ -55,7 +54,6 @@ const Text = styled.div`
 	color: ${props =>
 		props.mouseIsDown ? props.accentColor.string() : props.color.string()};
 	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
-	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 export default class RadioItem extends React.Component {
@@ -100,22 +98,16 @@ export default class RadioItem extends React.Component {
 	};
 
 	renderRadio = () => {
-		const { accentColor, color, disabled, selected } = this.props;
+		const { accentColor, color, selected } = this.props;
 		const { mouseIsDown } = this.state;
 
 		return (
 			<RadioOutline
-				disabled={disabled}
 				mouseIsDown={mouseIsDown}
 				accentColor={makeColor(accentColor)}
 				selected={selected}
 				color={makeColor(color)}>
-				{selected && (
-					<RadioFill
-						accentColor={makeColor(accentColor)}
-						disabled={disabled}
-					/>
-				)}
+				{selected && <RadioFill accentColor={makeColor(accentColor)} />}
 			</RadioOutline>
 		);
 	};
@@ -143,7 +135,6 @@ export default class RadioItem extends React.Component {
 				<Text
 					accentColor={makeColor(accentColor)}
 					color={makeColor(color)}
-					disabled={disabled}
 					mouseIsDown={mouseIsDown}>
 					{children}
 				</Text>

@@ -101,4 +101,14 @@ storiesOf('Slider', module)
 			disabled
 			showValue
 		/>
+	))
+	.add('with disabled and color', () => (
+		<SmartSlider
+			leftLabel="No"
+			rightLabel="Chance"
+			title="Disabled"
+			color="#FFA100"
+			disabled
+			showValue
+		/>
 	));

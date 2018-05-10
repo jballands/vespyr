@@ -16,6 +16,7 @@ const Container = styled.div`
 	width: 300px;
 	display: flex;
 	flex-flow: column nowrap;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 
 	&:hover {
 		cursor: ${props => (props.disabled ? 'not-allowed' : 'default')};
@@ -30,9 +31,7 @@ const TrackWithLabelsContainer = styled.div`
 `;
 
 const getTitleColor = props => {
-	if (props.disabled) {
-		return ColorUtility.disabledGray().string();
-	} else if (props.active) {
+	if (props.active) {
 		return props.accentColor.string();
 	}
 	return props.color.string();
@@ -53,15 +52,16 @@ const Label = styled.div`
 	align-items: flex-end;
 	margin-bottom: 2px;
 	user-select: none;
-	color: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.color.string()};
+	color: ${props => props.color.string()};
 `;
 
-const LeftLabel = Label.extend`margin-right: 7px;`;
+const LeftLabel = Label.extend`
+	margin-right: 7px;
+`;
 
-const RightLabel = Label.extend`margin-left: 7px;`;
+const RightLabel = Label.extend`
+	margin-left: 7px;
+`;
 
 const TrackContainer = styled.div`
 	display: block;
@@ -88,10 +88,7 @@ const Track = styled.div`
 	height: 2px;
 	left: 6px;
 	width: calc(100% - 12px);
-	background: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.color.string()};
+	background: ${props => props.color.string()};
 `;
 
 const HandleContainer = styled.div`
@@ -109,18 +106,14 @@ const HandleContainer = styled.div`
 `;
 
 const getHandleBorderColor = props => {
-	if (props.disabled) {
-		return ColorUtility.disabledGray().string();
-	} else if (props.active) {
+	if (props.active) {
 		return props.accentColor.string();
 	}
 	return props.color.string();
 };
 
 const getHandleBackgroundColor = props => {
-	if (props.disabled) {
-		return ColorUtility.disabledGray().string();
-	} else if (props.active) {
+	if (props.active) {
 		return props.accentColor.string();
 	}
 	return ColorUtility.white().string();
@@ -136,9 +129,7 @@ const Handle = styled.div`
 `;
 
 const getValueColor = props => {
-	if (props.disabled) {
-		return ColorUtility.disabledGray().string();
-	} else if (props.active) {
+	if (props.active) {
 		return props.accentColor.string();
 	}
 	return props.color.string();
