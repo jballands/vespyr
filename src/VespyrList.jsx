@@ -8,6 +8,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import _merge from 'lodash.merge';
 
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
@@ -37,10 +38,8 @@ const Title = styled.div`
 	margin-top: 3px;
 	transition: color 250ms ease;
 	margin-bottom: 7px;
-	color: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.color.string()};
+	color: ${props => props.color.string()};
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 export default class VespyrList extends React.Component {
@@ -79,15 +78,18 @@ export default class VespyrList extends React.Component {
 			title,
 		} = this.props;
 
-		const cloned = React.Children.map(children, child =>
-			React.cloneElement(child, {
-				selected: selected.indexOf(child.props.id) > -1,
-				onClick: this.handleOnClick,
-				accentColor,
-				color,
-				disabled,
-			}),
-		);
+		const cloned = React.Children.map(children, child => {
+			return React.cloneElement(
+				child,
+				_merge({}, child.props, {
+					selected: selected.indexOf(child.props.id) > -1,
+					onClick: this.handleOnClick,
+					accentColor,
+					color,
+					disabled,
+				}),
+			);
+		});
 
 		return (
 			<Container className={className} disabled={disabled} style={style}>

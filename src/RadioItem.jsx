@@ -27,11 +27,10 @@ const RadioOutline = styled.div`
 	border-radius: 50%;
 	border: 1px solid
 		${props =>
-			props.disabled
-				? ColorUtility.disabledGray().string()
-				: props.mouseIsDown
-					? props.accentColor.string()
-					: props.color.string()};
+			props.mouseIsDown
+				? props.accentColor.string()
+				: props.color.string()};
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 	width: 16px;
 	height: 16px;
 	position: relative;
@@ -43,25 +42,20 @@ const RadioFill = styled.div`
 	width: 12px;
 	height: 12px;
 	border-radius: 50%;
-	background: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.accentColor.string()};
+	background: ${props => props.accentColor.string()};
 	top: calc(50% - 6px);
 	left: calc(50% - 6px);
 	transition: background 300ms ease;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 const Text = styled.div`
 	margin-left: 7px;
 	font-size: 16px;
 	color: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.mouseIsDown
-				? props.accentColor.string()
-				: props.color.string()};
+		props.mouseIsDown ? props.accentColor.string() : props.color.string()};
 	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 export default class RadioItem extends React.Component {
@@ -91,11 +85,11 @@ export default class RadioItem extends React.Component {
 	};
 
 	handleMouseDown = () => {
-		this.setState({ mouseIsDown: true });
+		!this.props.disabled && this.setState({ mouseIsDown: true });
 	};
 
 	handleMouseUp = () => {
-		this.setState({ mouseIsDown: false });
+		!this.props.disabled && this.setState({ mouseIsDown: false });
 	};
 
 	handleOnClick = () => {

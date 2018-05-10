@@ -74,6 +74,30 @@ storiesOf('RadioGroup', module)
 			<RadioItem id="nope">...Or This</RadioItem>
 		</RadioGroup>
 	))
+	.add('with disabled and color', () => (
+		<RadioGroup
+			defaultSelection="nuhhuh"
+			disabled
+			color="#FFA100"
+			title="Disabled"
+			onOptionClick={id => action(`RadioGroup -> ${id}`)()}>
+			<RadioItem id="nuhhuh">Can't Click This</RadioItem>
+			<RadioItem id="nada">Or This</RadioItem>
+			<RadioItem id="nope">...Or This</RadioItem>
+		</RadioGroup>
+	))
+	.add('with RadioItem disabled', () => (
+		<RadioGroup
+			defaultSelection="medium"
+			title="Coffee Beans"
+			onOptionClick={id => action(`RadioGroup -> ${id}`)()}>
+			<RadioItem disabled id="light">
+				Light Roast
+			</RadioItem>
+			<RadioItem id="medium">Medium Roast</RadioItem>
+			<RadioItem id="dark">Dark Roast</RadioItem>
+		</RadioGroup>
+	))
 	.add('as complex RadioGroup', () => (
 		<RadioGroup
 			defaultSelection="brutalmoose"

@@ -74,6 +74,29 @@ storiesOf('CheckboxGroup', module)
 			<CheckboxItem id="nope">...Or This</CheckboxItem>
 		</CheckboxGroup>
 	))
+	.add('with disabled and color', () => (
+		<CheckboxGroup
+			defaultSelections={['light']}
+			color="#FFA100"
+			disabled
+			title="Coffee Beans"
+			onOptionClick={id => action(`CheckboxGroup -> ${id}`)()}>
+			<CheckboxItem id="light">Light Roast</CheckboxItem>
+			<CheckboxItem id="medium">Medium Roast</CheckboxItem>
+			<CheckboxItem id="dark">Dark Roast</CheckboxItem>
+		</CheckboxGroup>
+	))
+	.add('with CheckboxItem disabled', () => (
+		<CheckboxGroup
+			defaultSelections={['hulu']}
+			onOptionClick={id => action(`CheckboxGroup -> ${id}`)()}>
+			<CheckboxItem disabled id="netflix">
+				Netflix
+			</CheckboxItem>
+			<CheckboxItem id="hulu">Hulu</CheckboxItem>
+			<CheckboxItem id="youtube">YouTube Red</CheckboxItem>
+		</CheckboxGroup>
+	))
 	.add('as complex RadioGroup', () => (
 		<CheckboxGroup
 			defaultSelections={['brutalmoose']}

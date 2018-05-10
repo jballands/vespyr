@@ -29,26 +29,23 @@ const CheckboxOutline = styled.div`
 	height: 16px;
 	border: 1px solid
 		${props =>
-			props.disabled
-				? ColorUtility.disabledGray().string()
-				: props.mouseIsDown
-					? props.accentColor.string()
-					: props.color.string()};
+			props.mouseIsDown
+				? props.accentColor.string()
+				: props.color.string()};
 	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 const CheckboxFill = styled.div`
 	width: 14px;
 	height: 14px;
-	background: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.accentColor.string()};
+	background: ${props => props.accentColor.string()};
 	display: inline-block;
 	position: relative;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 const StyledCheckmark = styled(Checkmark)`
@@ -63,12 +60,9 @@ const Text = styled.div`
 	margin-left: 7px;
 	font-size: 16px;
 	color: ${props =>
-		props.disabled
-			? ColorUtility.disabledGray().string()
-			: props.mouseIsDown
-				? props.accentColor.string()
-				: props.color.string()};
+		props.mouseIsDown ? props.accentColor.string() : props.color.string()};
 	transition: all ${props => (props.mouseIsDown ? 0 : 500)}ms ease;
+	opacity: ${props => (props.disabled ? 0.25 : 1)};
 `;
 
 export default class CheckboxItem extends React.Component {
@@ -98,11 +92,11 @@ export default class CheckboxItem extends React.Component {
 	};
 
 	handleMouseDown = () => {
-		this.setState({ mouseIsDown: true });
+		!this.props.disabled && this.setState({ mouseIsDown: true });
 	};
 
 	handleMouseUp = () => {
-		this.setState({ mouseIsDown: false });
+		!this.props.disabled && this.setState({ mouseIsDown: false });
 	};
 
 	handleOnClick = () => {
