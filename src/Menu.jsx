@@ -63,6 +63,7 @@ export default class Menu extends React.Component {
 
 		const cloned = React.Children.map(children, child =>
 			React.cloneElement(child, {
+				accentColor,
 				color,
 				darkMode,
 			}),

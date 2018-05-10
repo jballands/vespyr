@@ -9,6 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Checkmark from './svg/Checkmark';
 import ColorUtility, { makeColor } from './utils/ColorUtility';
 
 function getHoverColor(props) {
@@ -21,11 +22,16 @@ function getHoverColor(props) {
 }
 
 const Container = styled.div`
+	display: flex;
+	flex-flow: row wrap;
 	padding: 7px 10px 7px 12px;
+	align-items: center;
 	color: ${props =>
 		props.disabled
 			? ColorUtility.disabledGray().string()
-			: props.color.string()};
+			: props.selected
+				? props.accentColor.string()
+				: props.color.string()};
 
 	&:hover {
 		background: ${props => getHoverColor(props)};
@@ -33,16 +39,25 @@ const Container = styled.div`
 	}
 `;
 
+const StyledCheckmark = styled(Checkmark)`
+	margin-right: 7px;
+	* {
+		fill: ${props => props.accentColor.string()};
+	}
+`;
+
 export default class MenuItem extends React.Component {
 	static displayName = 'MenuItem';
 
 	static propTypes = {
+		accentColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		children: PropTypes.node,
 		color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		darkMode: PropTypes.bool,
 		disabled: PropTypes.bool,
 		id: PropTypes.string,
 		onClick: PropTypes.func,
+		selected: PropTypes.bool,
 		seperator: PropTypes.bool,
 		style: PropTypes.object,
 	};
@@ -60,16 +75,29 @@ export default class MenuItem extends React.Component {
 		}
 	};
 
+	renderCheckmark = () => {};
+
 	render() {
-		const { children, color, darkMode, disabled, style } = this.props;
+		const {
+			accentColor,
+			children,
+			color,
+			darkMode,
+			disabled,
+			selected,
+			style,
+		} = this.props;
 
 		return (
 			<Container
+				accentColor={makeColor(accentColor)}
 				color={makeColor(color)}
 				darkMode={darkMode}
 				style={style}
 				onClick={this.handleClick}
-				disabled={disabled}>
+				disabled={disabled}
+				selected={selected}>
+				{selected && <StyledCheckmark accentColor={accentColor} />}{' '}
 				{children}
 			</Container>
 		);

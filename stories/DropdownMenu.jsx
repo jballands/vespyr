@@ -39,7 +39,8 @@ class StatefulDropdownMenu extends React.Component {
 							key={k}
 							id={k}
 							disabled={items[k].disabled}
-							onClick={this.respond}>
+							onClick={this.respond}
+							selected={k === this.state.selectedKey}>
 							{items[k].displayName}
 						</MenuItem>
 					);
@@ -83,7 +84,8 @@ class StatefulDropdownMenu extends React.Component {
 						key={k}
 						id={k}
 						onClick={this.respond}
-						style={styles.wrapper}>
+						style={styles.wrapper}
+						selected={k === this.state.selectedKey}>
 						<img src={items[k].img} style={styles.img} />
 						<span>{items[k].displayName}</span>
 					</MenuItem>
@@ -351,6 +353,34 @@ storiesOf('DropdownMenu', module)
 				title="Ski Areas"
 				items={items}
 				defaultKey={'keystone'}
+				disabled
+			/>
+		);
+	})
+	.add('with disabled and color', () => {
+		const items = {
+			breckenridge: {
+				displayName: 'Breckenridge',
+			},
+			keystone: {
+				displayName: 'Keystone',
+			},
+			heavenly: {
+				displayName: 'Heavenly',
+			},
+			vail: {
+				displayName: 'Vail',
+			},
+			'arapahoe-basin': {
+				displayName: 'A-Basin',
+			},
+		};
+		return (
+			<StatefulDropdownMenu
+				title="Ski Areas"
+				items={items}
+				defaultKey={'keystone'}
+				color="#FFA100"
 				disabled
 			/>
 		);
